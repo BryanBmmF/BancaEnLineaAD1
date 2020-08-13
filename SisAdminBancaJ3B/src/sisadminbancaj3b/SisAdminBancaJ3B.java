@@ -3,6 +3,8 @@
  */
 package sisadminbancaj3b;
 
+import frontend.vistas.Login.Login;
+
 /**
  *
  * @author bryan
@@ -13,7 +15,8 @@ public class SisAdminBancaJ3B {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Login login = new Login();
+        login.setVisible(true);
     }
     
 }
