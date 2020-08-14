@@ -5,32 +5,33 @@
  */
 package backend.pojos;
 
+import java.util.Date;
+
 /**
  *
  * @author jpmazate
  */
 public class UsuarioAdministrador {
     private String usuario;
-    private String contrasena;
     private String dpi;
-    private String codigoTrabajador;
-    private String nombreCompleto;
-    private int estado;
-    
-    
-    public UsuarioAdministrador(String usuario, String contrasena){
+    private String contrasena;
+    private String nombre;
+    private String apellido;
+    private Date fechaNacimiento;
+
+    public UsuarioAdministrador(String usuario, String contrasena) {
         this.usuario = usuario;
         this.contrasena = contrasena;
     }
 
-    public int getEstado() {
-        return estado;
+    public UsuarioAdministrador(String usuario, String dpi, String contrasena, String nombre, String apellido, Date fechaNacimiento) {
+        this.usuario = usuario;
+        this.dpi = dpi;
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
     }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
-    }
-    
 
     public String getUsuario() {
         return usuario;
@@ -38,6 +39,14 @@ public class UsuarioAdministrador {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public String getDpi() {
+        return dpi;
+    }
+
+    public void setDpi(String dpi) {
+        this.dpi = dpi;
     }
 
     public String getContrasena() {
@@ -48,30 +57,34 @@ public class UsuarioAdministrador {
         this.contrasena = contrasena;
     }
 
-
-    public String getDpi() {
-        return dpi;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setDpi(String dpi) {
-        this.dpi = dpi;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getCodigoTrabajador() {
-        return codigoTrabajador;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setCodigoTrabajador(String codigoTrabajador) {
-        this.codigoTrabajador = codigoTrabajador;
+    public void setApellido(String apelllido) {
+        this.apellido = apelllido;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
+    
+    
+    
+    
+    
     
     
     
