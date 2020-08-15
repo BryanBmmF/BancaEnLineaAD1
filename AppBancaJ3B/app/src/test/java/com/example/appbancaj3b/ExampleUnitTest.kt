@@ -1,4 +1,4 @@
-package com.example.appbanca
+package com.example.appbancaj3b
 
 import org.junit.Test
 
