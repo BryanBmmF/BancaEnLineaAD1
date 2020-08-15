@@ -32,20 +32,23 @@ public class VistaAdministracion extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel1.setText("Vista Administracion");
         desktopPane.add(jLabel1);
-        jLabel1.setBounds(180, 20, 160, 18);
+        jLabel1.setBounds(230, 50, 270, 29);
 
         jLabel2.setText("Usuario en Sesion:");
         desktopPane.add(jLabel2);
-        jLabel2.setBounds(10, 70, 140, 18);
+        jLabel2.setBounds(480, 10, 140, 18);
 
         textoUsuarioEnSesion.setText("Aqui va el usuario");
         desktopPane.add(textoUsuarioEnSesion);
-        textoUsuarioEnSesion.setBounds(150, 70, 120, 18);
+        textoUsuarioEnSesion.setBounds(620, 10, 120, 18);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Cerrar Sesion");
@@ -62,17 +65,30 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
         menuBar.add(fileMenu);
 
+        jMenu1.setText("Usuarios");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setText("Ver Usuarios");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        menuBar.add(jMenu1);
+
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
         );
 
         pack();
@@ -83,11 +99,18 @@ public class VistaAdministracion extends javax.swing.JFrame {
      
     }//GEN-LAST:event_openMenuItemActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+      VerUsuarios usuarios = new VerUsuarios();
+      usuarios.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JLabel textoUsuarioEnSesion;
