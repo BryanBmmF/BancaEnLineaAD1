@@ -6,6 +6,7 @@
 package backend.controladores;
 
 import backend.database.ConexionBD;
+import backend.enums.TipoCuentaHabiente;
 import backend.pojos.CuentaHabiente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,19 +26,20 @@ public class ControladorCuentaHabiente {
     private PreparedStatement prepState;
     private ResultSet res;
     //Consultas
-    private static final String INGRESO_DE_CUENTA_HABIENTE ="INSERT INTO CUENTA_HABIENTE VALUES(?,?,?,?,?,?,?,?)";
-    private static final String BUSQUEDA_DE_CUENTA_HABIENTES="SELECT * FROM CUENTA_HABIENTE";
+    private static final String INGRESO_DE_CUENTA_HABIENTE = "INSERT INTO CUENTA_HABIENTE VALUES(?,?,?,?,?,?,?,?,?)";
+    private static final String BUSQUEDA_DE_CUENTA_HABIENTES = "SELECT * FROM CUENTA_HABIENTE";
 
     public ControladorCuentaHabiente() {
         connection = ConexionBD.getInstance();
     }
-    
+
     /**
      * Registra un cuenta habiente, devuelve false si no se ha podido crear
+     *
      * @param cuentaHabiente
-     * @return 
+     * @return
      */
-    public boolean registroCuentaHabiente(CuentaHabiente cuentaHabiente){
+    public boolean registroCuentaHabiente(CuentaHabiente cuentaHabiente) {
         try {
             prepState = connection.prepareStatement(INGRESO_DE_CUENTA_HABIENTE);
             prepState.setString(1, cuentaHabiente.getDpiCliente());
@@ -48,6 +50,7 @@ public class ControladorCuentaHabiente {
             prepState.setString(6, cuentaHabiente.getTelefono());
             prepState.setString(7, cuentaHabiente.getCelular());
             prepState.setString(8, cuentaHabiente.getEmail());
+            prepState.setString(9, TipoCuentaHabiente.NUEVO.toString());
             prepState.executeUpdate();
             prepState.close();
         } catch (SQLException ex) {
@@ -56,15 +59,21 @@ public class ControladorCuentaHabiente {
         }
         return true;
     }
-    
-    
-    public ArrayList<CuentaHabiente> busquedaDeCunetaHabientes(){
+/**
+ * Devuelve todos los cuenta Habientes del sistema
+ * @return 
+ */
+    public ArrayList<CuentaHabiente> busquedaDeCunetaHabientes() {
         ArrayList<CuentaHabiente> cuentas = new ArrayList<>();
+        TipoCuentaHabiente tipo = TipoCuentaHabiente.NUEVO;
         try {
             prepState = connection.prepareStatement(BUSQUEDA_DE_CUENTA_HABIENTES);
             res = prepState.executeQuery();
-            while(res.next()){
-                cuentas.add(new CuentaHabiente(res.getString(1), res.getString(2), res.getString(3), res.getDate(4), res.getString(5), res.getString(6), res.getString(7), res.getString(8)));
+            while (res.next()) {
+                if (res.getString(9).equalsIgnoreCase(TipoCuentaHabiente.NUEVO.toString())) {
+                    tipo = TipoCuentaHabiente.NUEVO;
+                }
+                cuentas.add(new CuentaHabiente(res.getString(1), res.getString(2), res.getString(3), res.getDate(4), res.getString(5), res.getString(6), res.getString(7), res.getString(8), tipo));
             }
             prepState.close();
             res.close();

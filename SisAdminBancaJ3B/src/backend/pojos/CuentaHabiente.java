@@ -5,6 +5,7 @@
  */
 package backend.pojos;
 
+import backend.enums.TipoCuentaHabiente;
 import java.sql.Date;
 
 /**
@@ -21,7 +22,7 @@ public class CuentaHabiente {
     private String telefono;
     private String celular;
     private String email;
-
+    private TipoCuentaHabiente tipo;
     
     /**
      * Para creacion y recuperacion
@@ -35,7 +36,7 @@ public class CuentaHabiente {
      * @param email 
      */
     
-    public CuentaHabiente(String dpiCliente, String nombres, String apellidos, Date fecha_nacimiento, String direccion, String telefono, String celular, String email) {
+    public CuentaHabiente(String dpiCliente, String nombres, String apellidos, Date fecha_nacimiento, String direccion, String telefono, String celular, String email,TipoCuentaHabiente tipo) {
         this.dpiCliente = dpiCliente;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -44,6 +45,7 @@ public class CuentaHabiente {
         this.telefono = telefono;
         this.celular = celular;
         this.email = email;
+        this.tipo=tipo;
     }
     
     public String getDpiCliente() {
@@ -108,6 +110,14 @@ public class CuentaHabiente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public TipoCuentaHabiente getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoCuentaHabiente tipo) {
+        this.tipo = tipo;
     }
     
     
