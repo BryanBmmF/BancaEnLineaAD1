@@ -3,6 +3,7 @@
  */
 package sisadminbancaj3b;
 
+import backend.manejadores.Md5;
 import frontend.vistas.Login.Login;
 
 /**

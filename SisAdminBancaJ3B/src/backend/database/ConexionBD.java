@@ -34,7 +34,6 @@ public class ConexionBD {
                     JOptionPane.showMessageDialog(null,"NO SE PUDO CONECTAR A LA BASE DE DATOS");
                     return null;
                 }
-            
         }else{
             return connection;
         }
