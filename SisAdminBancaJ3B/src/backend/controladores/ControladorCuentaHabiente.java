@@ -30,7 +30,7 @@ public class ControladorCuentaHabiente {
     //Consultas
     private static final String INGRESO_DE_CUENTA_HABIENTE = "INSERT INTO CUENTA_HABIENTE VALUES(?,?,?,?,?,?,?,?,?)";
     private static final String BUSQUEDA_DE_CUENTA_HABIENTES = "SELECT * FROM CUENTA_HABIENTE";
-    private static final String MODIFICAR_CUENTA_HABIENTE = "UPDATE CUENTA_HABIENTE SET nombres=?,apellidos=?,fecha_nacimiento=?,direccion=?,telefono=?,celuar=?,email=?,estado=? WHERE dpi_cliente=?";
+    private static final String MODIFICAR_CUENTA_HABIENTE = "UPDATE CUENTA_HABIENTE SET nombres=?,apellidos=?,fecha_nacimiento=?,direccion=?,telefono=?,celular=?,email=?,estado=? WHERE dpi_cliente=?";
 
     public ControladorCuentaHabiente() {
         connection = ConexionBD.getInstance();
