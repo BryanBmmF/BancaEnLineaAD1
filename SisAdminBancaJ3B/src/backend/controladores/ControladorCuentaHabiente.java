@@ -6,7 +6,6 @@
 package backend.controladores;
 
 import backend.database.ConexionBD;
-import backend.enums.TipoCuentaHabiente;
 import backend.pojos.CuentaHabiente;
 import java.sql.Connection;
 import java.sql.Date;
@@ -28,12 +27,31 @@ public class ControladorCuentaHabiente {
     private PreparedStatement prepState;
     private ResultSet res;
     //Consultas
-    private static final String INGRESO_DE_CUENTA_HABIENTE = "INSERT INTO CUENTA_HABIENTE VALUES(?,?,?,?,?,?,?,?,?)";
+    private static final String INGRESO_DE_CUENTA_HABIENTE = "INSERT INTO CUENTA_HABIENTE VALUES(?,?,?,?,?,?,?,?)";
     private static final String BUSQUEDA_DE_CUENTA_HABIENTES = "SELECT * FROM CUENTA_HABIENTE";
-    private static final String MODIFICAR_CUENTA_HABIENTE = "UPDATE CUENTA_HABIENTE SET nombres=?,apellidos=?,fecha_nacimiento=?,direccion=?,telefono=?,celular=?,email=?,estado=? WHERE dpi_cliente=?";
+    private static final String MODIFICAR_CUENTA_HABIENTE = "UPDATE CUENTA_HABIENTE SET nombres=?,apellidos=?,fecha_nacimiento=?,direccion=?,telefono=?,celular=?,email=? WHERE dpi_cliente=?";
+    private static final String ELIMINAR_CUENTA_HABIENTE = "DELETE FROM CUENTA_HABIENTE WHERE dpi_cliente=?";
 
     public ControladorCuentaHabiente() {
         connection = ConexionBD.getInstance();
+    }
+
+    /**
+     * Se elimina la cuenta de un CUnetaHabiente, solo si es completamente nuevo(no posee relacion con otras tablas)
+     * @param dpi
+     * @return 
+     */
+    public boolean eliminarCuentaHabiente(String dpi) {
+        try {
+            prepState = connection.prepareStatement(ELIMINAR_CUENTA_HABIENTE);
+            prepState.setString(1, dpi);
+            prepState.executeUpdate();
+            prepState.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -53,7 +71,6 @@ public class ControladorCuentaHabiente {
             prepState.setString(6, cuentaHabiente.getTelefono());
             prepState.setString(7, cuentaHabiente.getCelular());
             prepState.setString(8, cuentaHabiente.getEmail());
-            prepState.setString(9, TipoCuentaHabiente.NUEVO.toString());
             prepState.executeUpdate();
             prepState.close();
         } catch (SQLException ex) {
@@ -71,15 +88,11 @@ public class ControladorCuentaHabiente {
      */
     public ArrayList<CuentaHabiente> busquedaDeCunetaHabientes() {
         ArrayList<CuentaHabiente> cuentas = new ArrayList<>();
-        TipoCuentaHabiente tipo = TipoCuentaHabiente.NUEVO;
         try {
             prepState = connection.prepareStatement(BUSQUEDA_DE_CUENTA_HABIENTES);
             res = prepState.executeQuery();
             while (res.next()) {
-                if (res.getString(9).equalsIgnoreCase(TipoCuentaHabiente.NUEVO.toString())) {
-                    tipo = TipoCuentaHabiente.NUEVO;
-                }
-                cuentas.add(new CuentaHabiente(res.getString(1), res.getString(2), res.getString(3), res.getDate(4), res.getString(5), res.getString(6), res.getString(7), res.getString(8), tipo));
+                cuentas.add(new CuentaHabiente(res.getString(1), res.getString(2), res.getString(3), res.getDate(4), res.getString(5), res.getString(6), res.getString(7), res.getString(8)));
             }
             prepState.close();
             res.close();
@@ -100,8 +113,7 @@ public class ControladorCuentaHabiente {
             prepState.setString(5, cuentaHabiente.getTelefono());
             prepState.setString(6, cuentaHabiente.getCelular());
             prepState.setString(7, cuentaHabiente.getEmail());
-            prepState.setString(8, cuentaHabiente.getTipo().toString());
-            prepState.setString(9, cuentaHabiente.getDpiCliente());
+            prepState.setString(8, cuentaHabiente.getDpiCliente());
             System.out.println(prepState.toString());
             prepState.executeUpdate();
             prepState.close();
@@ -178,7 +190,7 @@ public class ControladorCuentaHabiente {
             return null;
 
         }
-        return new CuentaHabiente(dpi, nombres, apellidos, fechaNacimeitno, direccion, telefono, celular, email, TipoCuentaHabiente.NUEVO);
+        return new CuentaHabiente(dpi, nombres, apellidos, fechaNacimeitno, direccion, telefono, celular, email);
 
     }
 }

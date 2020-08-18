@@ -9,7 +9,7 @@ package backend.enums;
  *
  * @author jesfrin
  */
-public enum TipoCuentaHabiente {
+public enum EstadoUsuarioCliente {
     
-    NUEVO
+    NUEVO,ACTIVADO,BLOQUEADO
 }
