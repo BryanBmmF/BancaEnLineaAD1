@@ -1,0 +1,1 @@
+Copiar la carpeta "j3b" directamente en la carpeta del servidor Apache.
