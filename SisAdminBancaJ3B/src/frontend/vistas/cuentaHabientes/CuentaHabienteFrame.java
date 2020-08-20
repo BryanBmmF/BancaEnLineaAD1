@@ -33,13 +33,13 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
      * Creates new form CuentaHabienteFrame
      */
     public CuentaHabienteFrame() {
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         controladorCuentaHabiente = new ControladorCuentaHabiente();
         this.listaCuentaHabientes = new LinkedList<>();
         this.listaObservableCuentaHabientes = ObservableCollections.observableList(listaCuentaHabientes);
         actualizarLista(controladorCuentaHabiente.busquedaDeCunetaHabientes());
         controladorUsuarioCLiente = new ControladorUsuarioCliente();
         initComponents();
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -333,8 +333,8 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
                 if (controladorUsuarioCLiente.insertarUsuarioCliente(user)) {
                     JOptionPane.showMessageDialog(this, "Se ha creado la cuenta Habiente. Usuario:\n"
                             + user.toString());
-                    this.logUusuariosjTextArea.setText(this.logUusuariosjTextArea.getText()+"-----------------------------\n"
-                    +user.toString()+"\n-----------------------------\n");
+                    this.logUusuariosjTextArea.setText(this.logUusuariosjTextArea.getText() + "-----------------------------\n"
+                            + user.toString() + "\n-----------------------------\n");
                 } else {
                     controladorCuentaHabiente.eliminarCuentaHabiente(this.dpijTextField1.getText());
                     JOptionPane.showMessageDialog(null, "No se pudo crear el usuario. Se elimino CuentaHabiente", "Error", JOptionPane.ERROR_MESSAGE);
