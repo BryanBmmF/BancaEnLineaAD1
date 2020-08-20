@@ -28,7 +28,7 @@ public class ControladorCuentaHabiente {
     private PreparedStatement prepState;
     private ResultSet res;
     //Consultas
-    private static final String INGRESO_DE_CUENTA_HABIENTE = "INSERT INTO CUENTA_HABIENTE VALUES(?,?,?,?,?,?,?,?,?)";
+    private static final String INGRESO_DE_CUENTA_HABIENTE = "INSERT INTO CUENTA_HABIENTE VALUES(?,?,?,?,?,?,?,?)";
     private static final String BUSQUEDA_DE_CUENTA_HABIENTES = "SELECT * FROM CUENTA_HABIENTE";
     private static final String MODIFICAR_CUENTA_HABIENTE = "UPDATE CUENTA_HABIENTE SET nombres=?,apellidos=?,fecha_nacimiento=?,direccion=?,telefono=?,celular=?,email=?,estado=? WHERE dpi_cliente=?";
 
@@ -53,7 +53,7 @@ public class ControladorCuentaHabiente {
             prepState.setString(6, cuentaHabiente.getTelefono());
             prepState.setString(7, cuentaHabiente.getCelular());
             prepState.setString(8, cuentaHabiente.getEmail());
-            prepState.setString(9, TipoCuentaHabiente.NUEVO.toString());
+            
             prepState.executeUpdate();
             prepState.close();
         } catch (SQLException ex) {
