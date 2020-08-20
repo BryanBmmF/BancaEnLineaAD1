@@ -120,7 +120,17 @@ public class UsuarioCliente {
         this.intentoDeIngresos = intentoDeIngresos;
     }
 
-    private String generarUsuario() {
+    public String getContrasenaCopia() {
+        return contrasenaCopia;
+    }
+
+    public void setContrasenaCopia(String contrasenaCopia) {
+        this.contrasenaCopia = contrasenaCopia;
+    }
+    
+    
+
+    public String generarUsuario() {
         Integer numero;
         do {
             numero = (int) (100000000 * Math.random());;
@@ -128,14 +138,14 @@ public class UsuarioCliente {
         return String.valueOf(numero);
     }
 
-    private Date generarFechaDeCaducidad() {
+    public Date generarFechaDeCaducidad() {
         LocalDate fecha = LocalDate.now();
         long meses = 3L;
         fecha = fecha.plusMonths(meses);
         return Date.valueOf(fecha);
     }
 
-    private String generarContrasena() {
+    public String generarContrasena() {
         SecureRandom random = new SecureRandom();
         String text = new BigInteger(130, random).toString(32);
         this.contrasenaCopia = text.substring(1, 9);
