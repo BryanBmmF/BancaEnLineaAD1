@@ -152,9 +152,7 @@ public class ActualizacionCredenciales extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 String consultaSQLUpdate = null;
                 try {
-                    System.out.println("Lo que se almacenara: ---------->" + nuevaContraseña);
-                    System.out.println("Lo que se almacenara en MD5: ---------->" + manejadorLogin.generarMD5(nuevaContraseña));
-                    consultaSQLUpdate = "UPDATE usuario_cliente SET contrasena = '" + manejadorLogin.generarMD5(nuevaContraseña) + "', fecha_ultimo_cambio='" + manejadorLogin.calcularFechaActual() + "', fecha_caducidad = '" + manejadorLogin.calcularFechaCaducidad() + "', contrasena1 = '" + usuarioRecibido.getContraseñaActual() + "', contrasena2 = '" + usuarioRecibido.getContraseña1() + "', estado='ACTIVADO' WHERE usuario_cliente = '" + usuarioCliente + "'";
+                    consultaSQLUpdate = "UPDATE USUARIO_CLIENTE SET contrasena = '" + manejadorLogin.generarMD5(nuevaContraseña) + "', fecha_ultimo_cambio='" + manejadorLogin.calcularFechaActual() + "', fecha_caducidad = '" + manejadorLogin.calcularFechaCaducidad() + "', contrasena1 = '" + usuarioRecibido.getContraseñaActual() + "', contrasena2 = '" + usuarioRecibido.getContraseña1() + "', estado='ACTIVADO' WHERE usuario_cliente = '" + usuarioCliente + "'";
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }

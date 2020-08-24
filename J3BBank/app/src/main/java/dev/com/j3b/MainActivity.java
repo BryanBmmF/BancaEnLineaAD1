@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     cada una de las caracteristicas de este usuario.
      */
     private void buscarUsuario(String usuarioIngresado, final String contraseñaIngresada) throws NoSuchAlgorithmException {
-        String consultaSQL = ServidorSQL.SERVIDORSQL_CONRETORNO+"SELECT * FROM usuario_cliente WHERE usuario_cliente='"+usuarioIngresado+"'";
+        String consultaSQL = ServidorSQL.SERVIDORSQL_CONRETORNO+"SELECT * FROM USUARIO_CLIENTE WHERE usuario_cliente='"+usuarioIngresado+"'";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL, new Response.Listener<JSONArray>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -133,8 +133,6 @@ public class MainActivity extends AppCompatActivity {
         //Verificamos que el usuario no haya pasado el limite de intentos de ingreso
         if (usuario.getIntentoIngresos() < 5){
             //Verificamos si se ha ingresado la contraseña correcta
-            System.out.println("Pass actual --- >"+usuario.getContraseñaActual());
-            System.out.println("Pass ingresada --- >"+contraseñaIngresada);
             if (usuario.getContraseñaActual().equals(contraseñaIngresada)){
                 //Si las credenciales del usuario con correctas, reseteamos los intentos fallidos en caso el usuario los hubiera cometido
                 resetearIntentosDeIngreso(usuario.getUsuarioCliente());
@@ -210,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }){ @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                String consultaSQLUpdate = "UPDATE usuario_cliente SET intento_de_ingresos = '0' WHERE usuario_cliente = '"+usuarioCliente+"'";
+                String consultaSQLUpdate = "UPDATE USUARIO_CLIENTE SET intento_de_ingresos = '0' WHERE usuario_cliente = '"+usuarioCliente+"'";
                 System.out.println(consultaSQLUpdate);
                 Map<String, String> parametros = new HashMap<String, String>();
                 parametros.put("consultaSQL", consultaSQLUpdate);
@@ -240,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                String consultaSQLUpdate = "UPDATE usuario_cliente SET intento_de_ingresos = intento_de_ingresos + 1 WHERE usuario_cliente = '"+usuarioCliente+"'";
+                String consultaSQLUpdate = "UPDATE USUARIO_CLIENTE SET intento_de_ingresos = intento_de_ingresos + 1 WHERE usuario_cliente = '"+usuarioCliente+"'";
                 Map<String, String> parametros = new HashMap<String, String>();
                 parametros.put("consultaSQL", consultaSQLUpdate);
                 return parametros;
@@ -265,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                String consultaSQLUpdate = "UPDATE usuario_cliente SET estado = 'BLOQUEADO' WHERE usuario_cliente = '"+usuarioCliente+"'";
+                String consultaSQLUpdate = "UPDATE USUARIO_CLIENTE SET estado = 'BLOQUEADO' WHERE usuario_cliente = '"+usuarioCliente+"'";
                 System.out.println(consultaSQLUpdate);
                 Map<String, String> parametros = new HashMap<String, String>();
                 parametros.put("consultaSQL", consultaSQLUpdate);
