@@ -1,17 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Clase CuentaHabiente como Modelo
  */
 package backend.pojos;
 
+import static backend.pojos.Cuenta.PROP_NUM_CUENTA;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  *
  * @author jesfrin
  */
-public class CuentaHabiente {
+public class CuentaHabiente implements Serializable{
     
     private String dpiCliente;
     private String nombres;
@@ -45,12 +47,29 @@ public class CuentaHabiente {
         this.email = email;
     }
     
+    public static final String PROP_DPI_CLIENTE = "dpiCliente";
+    public static final String PROP_NOMBRES = "nombres";
+    public static final String PROP_APELLIDOS = "apellidos";
+    public static final String PROP_FECHA_NAC = "fecha_nacimiento";
+    public static final String PROP_DIRECCION = "direccion";
+    public static final String PROP_TELEFONO = "telefono";
+    public static final String PROP_CELULAR = "celular";
+    public static final String PROP_EMAIL = "email";
+    //agregamos soporte para lanzar eventos al momento que se cambie valor de un miembro
+    private PropertyChangeSupport propertySupport = new PropertyChangeSupport(this);
+
+    public CuentaHabiente() {
+    }
+    
+    
     public String getDpiCliente() {
         return dpiCliente;
     }
 
     public void setDpiCliente(String dpiCliente) {
-        this.dpiCliente = dpiCliente;
+        String anterior = this.dpiCliente;
+	this.dpiCliente = dpiCliente;
+	propertySupport.firePropertyChange(PROP_DPI_CLIENTE, anterior, dpiCliente);
     }
 
     public String getNombres() {
@@ -58,7 +77,9 @@ public class CuentaHabiente {
     }
 
     public void setNombres(String nombres) {
-        this.nombres = nombres;
+        String anterior = this.nombres;
+	this.nombres = nombres;
+	propertySupport.firePropertyChange(PROP_NOMBRES, anterior, nombres);
     }
 
     public String getApellidos() {
@@ -66,7 +87,10 @@ public class CuentaHabiente {
     }
 
     public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+        String anterior = this.apellidos;
+	this.apellidos = apellidos;
+	propertySupport.firePropertyChange(PROP_APELLIDOS, anterior, apellidos);
+        
     }
 
     public Date getFecha_nacimiento() {
@@ -74,7 +98,9 @@ public class CuentaHabiente {
     }
 
     public void setFecha_nacimiento(Date fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+        Date anterior = this.fecha_nacimiento;
+	this.fecha_nacimiento = fecha_nacimiento;
+	propertySupport.firePropertyChange(PROP_FECHA_NAC, anterior, fecha_nacimiento);
     }
 
     public String getDireccion() {
@@ -82,7 +108,9 @@ public class CuentaHabiente {
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        String anterior = this.direccion;
+	this.direccion = direccion;
+	propertySupport.firePropertyChange(PROP_DIRECCION, anterior, direccion);
     }
 
     public String getTelefono() {
@@ -90,7 +118,9 @@ public class CuentaHabiente {
     }
 
     public void setTelefono(String telefono) {
-        this.telefono = telefono;
+        String anterior = this.telefono;
+	this.telefono = telefono;
+	propertySupport.firePropertyChange(PROP_TELEFONO, anterior, telefono);
     }
 
     public String getCelular() {
@@ -98,7 +128,9 @@ public class CuentaHabiente {
     }
 
     public void setCelular(String celular) {
-        this.celular = celular;
+        String anterior = this.celular;
+	this.celular = celular;
+	propertySupport.firePropertyChange(PROP_CELULAR, anterior, celular);
     }
 
     public String getEmail() {
@@ -106,6 +138,30 @@ public class CuentaHabiente {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        String anterior = this.email;
+	this.email = email;
+	propertySupport.firePropertyChange(PROP_EMAIL, anterior, email);
+    }
+    @Override//Puede ser cualquier otro metodo que copie los valores de los miembros a un nuevo objeto Empleado
+    public CuentaHabiente clone() {
+            return new CuentaHabiente(this.dpiCliente, this.nombres, this.apellidos, this.fecha_nacimiento, this.direccion, this.telefono, this.celular, this.email);
+    }
+    
+    /**
+     * Metodo especifico para agregar un escucha de cambios
+     *
+     * @param listener
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+            propertySupport.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * Metodo especifico para quitar un escucha de cambios
+     *
+     * @param listener
+     */
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+            propertySupport.removePropertyChangeListener(listener);
     }
 }

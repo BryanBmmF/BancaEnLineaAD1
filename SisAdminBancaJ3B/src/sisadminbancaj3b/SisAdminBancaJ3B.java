@@ -18,6 +18,8 @@ public class SisAdminBancaJ3B {
     public static void main(String[] args) {
         Login login = new Login();
         login.setVisible(true);
+        
+        /*por alguna razon el cuentahabiente solo puede tener un cuenta, si no deberia ser asi hay que canbiar el campo unique de dpi en Cuenta*/
     }
     
 }
