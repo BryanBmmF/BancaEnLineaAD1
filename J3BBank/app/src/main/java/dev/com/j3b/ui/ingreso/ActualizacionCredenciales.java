@@ -1,5 +1,6 @@
 package dev.com.j3b.ui.ingreso;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -22,12 +24,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.safetynet.SafetyNet;
+import com.google.android.gms.safetynet.SafetyNetApi;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import org.json.JSONObject;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -49,12 +60,19 @@ public class ActualizacionCredenciales extends AppCompatActivity {
     private EditText nuevaContraseñaEditText, actualContraseñaEditText, confirmarContraseñaEditText;
     private Button guardarCambiosButton;
     private Boolean contraseñaNuevaSegura = false;
+    //Variables para verificar clave
+    String TAG = MainActivity.class.getSimpleName();
+    String SITE_KEY="6Ld3qsMZAAAAAItneAEQoC5fttfLs8Bd2Mj63IKa";
+    String SECRET_KEY="6Ld3qsMZAAAAADUOHvnoTFbERpbHOpuiLNbV4SyS";
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actualizacion_credenciales);
         recibirDatos();
+        //Iniciamos la variable
+        queue = Volley.newRequestQueue(getApplicationContext());
         seguridadProgressBar = findViewById(R.id.nivelSeguridadProgressBar);
         nivelSeguridadTextView = findViewById(R.id.seguridadTextView);
         nuevaContraseñaEditText = findViewById(R.id.editNuevaTextPassword);
@@ -78,16 +96,44 @@ public class ActualizacionCredenciales extends AppCompatActivity {
         });
 
         guardarCambiosButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    iniciarValidaciones();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
+            public void onClick(View v) {
+                SafetyNet.getClient(ActualizacionCredenciales.this).verifyWithRecaptcha(SITE_KEY)
+                        .addOnSuccessListener( ActualizacionCredenciales.this,
+                                new OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>() {
+                                    @Override
+                                    public void onSuccess(SafetyNetApi.RecaptchaTokenResponse response) {
+                                        // Indicates communication with reCAPTCHA service was
+                                        // successful.
+                                        String userResponseToken = response.getTokenResult();
+                                        if (!userResponseToken.isEmpty()) {
+                                            // Validate the user response token using the
+                                            // reCAPTCHA siteverify API.
+                                            handleSiteVerify(userResponseToken);
+                                        }
+                                    }
+                                })
+                        .addOnFailureListener( ActualizacionCredenciales.this, new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                if (e instanceof ApiException) {
+                                    // An error occurred when communicating with the
+                                    // reCAPTCHA service. Refer to the status code to
+                                    // handle the error appropriately.
+                                    ApiException apiException = (ApiException) e;
+                                    int statusCode = apiException.getStatusCode();
+                                    Log.d(TAG, " O ACA->Error: " + CommonStatusCodes
+                                            .getStatusCodeString(statusCode));
+                                } else {
+                                    // A different, unknown type of error occurred.
+                                    Log.d(TAG, "AQUI->Error: " + e.getMessage());
+                                }
+                            }
+                        });
             }
+
         });
     }
+
 
     private void iniciarValidaciones() throws NoSuchAlgorithmException {
         //Primero verificamos que todos los campos posean informacion ingresada
@@ -246,4 +292,58 @@ public class ActualizacionCredenciales extends AppCompatActivity {
         nuevaContraseñaEditText.setText("");
         confirmarContraseñaEditText.setText("");
     }
+
+    /**
+     * Metodo para la verificacion de recaptcha, usando la verificacion de google
+     * y el token generado localmente
+     * @param responseToken
+     */
+    protected  void handleSiteVerify(final String responseToken){
+        //it is google recaptcha siteverify server
+        //you can place your server url
+        String url = "https://www.google.com/recaptcha/api/siteverify";
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if(jsonObject.getBoolean("success")){
+                                //code logic when captcha returns true Toast.makeText(getApplicationContext(),String.valueOf(jsonObject.getBoolean("success")),Toast.LENGTH_LONG).show();
+                                try {
+                                    iniciarValidaciones();
+                                } catch (NoSuchAlgorithmException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),String.valueOf(jsonObject.getString("error-codes")),Toast.LENGTH_LONG).show();
+                            }
+                        } catch (Exception ex) {
+                            Log.d(TAG, "JSON exception: " + ex.getMessage());
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "Error message: " + error.getMessage());
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("secret", SECRET_KEY);
+                params.put("response", responseToken);
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                50000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+    }
+
 }
