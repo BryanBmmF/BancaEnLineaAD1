@@ -10,8 +10,13 @@ import backend.enums.PeriodoInteres;
 import backend.enums.TipoCuenta;
 import backend.pojos.Cuenta;
 import backend.pojos.CuentaHabiente;
+import backend.pojos.UsuarioCliente;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import static java.lang.Math.random;
 import static java.lang.StrictMath.random;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -134,4 +139,29 @@ public class ControladorCuenta {
     
     }
     
+    /**
+     * Verifica el registro correcto de una cuenta verificando los campos necesarios
+     *
+     * @param cuenta
+     * @param depInicial
+     * @return true or false
+     */
+    public boolean verificarRegistroCuenta(Cuenta cuenta, String depInicial){
+        try {
+            double depositoInicial = Double.parseDouble(depInicial);
+            cuenta.setSaldo(depositoInicial);
+            if (cuenta.getSaldo()<200) {
+                JOptionPane.showMessageDialog(null, "La cantidad minima a depositar es de Q.200.00 porfavor verifica.", "error", JOptionPane.WARNING_MESSAGE);
+                return false;
+            } else {
+                return registroCuenta(cuenta);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "La cantidad inicial a depositar no es valida", "error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    
+
 }

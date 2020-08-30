@@ -302,25 +302,19 @@ public class PanelGestionCuentas extends javax.swing.JDialog {
 
     private void btnGenerarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarCuentaActionPerformed
         // TODO add your handling code here:
-        if (cuentaHabienteSeleccionado!=null ) {
-            try {
-                double depositoInicial = Double.parseDouble(txtDepositoInicial.getText());
-                if (depositoInicial<200) {
-                    JOptionPane.showMessageDialog(this, "La cantidad minima a depositar es de Q.200.00 porfavor verifica.", "error", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    String numCuenta = controladorCuenta.generarCuenta();
-                    if (controladorCuenta.registroCuenta(new Cuenta(numCuenta, cuentaHabienteSeleccionado.getDpiCliente(),
-                            Enum.valueOf(TipoCuenta.class, comboTipoCuenta.getSelectedItem().toString()), 0, PeriodoInteres.ANUAL, EstadoCuenta.activa, depositoInicial))) {
-                            JOptionPane.showMessageDialog(this, "Cuenta No." + numCuenta + " creada satisfactoriamente", "Info", JOptionPane.INFORMATION_MESSAGE);
-                            actualizarListaCuentas(controladorCuenta.busquedaDeCunetasCliente(this.cuentaHabienteSeleccionado.getDpiCliente(),"activa")); //se actualiza la lista de cuentas
-                    }
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "La cantidad inicial a depositar no es valida", "error", JOptionPane.ERROR_MESSAGE);
+        if (cuentaHabienteSeleccionado!=null) {
+            String numCuenta = controladorCuenta.generarCuenta(); //Generando Cuenta automaticamente
+            Cuenta cuenta = new Cuenta(numCuenta, cuentaHabienteSeleccionado.getDpiCliente(),
+                    Enum.valueOf(TipoCuenta.class, comboTipoCuenta.getSelectedItem().toString()), 0, PeriodoInteres.ANUAL, EstadoCuenta.activa, 0);
+            if (controladorCuenta.verificarRegistroCuenta(cuenta, txtDepositoInicial.getText())) {
+                //notificar correo
+                JOptionPane.showMessageDialog(this, "Cuenta No." + numCuenta + " creada satisfactoriamente", "Info", JOptionPane.INFORMATION_MESSAGE);
+                controladorCuentaHabiente.notificarCorreoCuentaHabiente(cuenta, null, cuentaHabienteSeleccionado.getEmail());
+                actualizarListaCuentas(controladorCuenta.busquedaDeCunetasCliente(this.cuentaHabienteSeleccionado.getDpiCliente(),"activa")); //se actualiza la lista de cuentas
             }
         }
         btnGenerarCuenta.setEnabled(false);
-        //limpiarCampos();
+        limpiarCampos();
     }//GEN-LAST:event_btnGenerarCuentaActionPerformed
 
     private void btnCancelarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCuentaActionPerformed

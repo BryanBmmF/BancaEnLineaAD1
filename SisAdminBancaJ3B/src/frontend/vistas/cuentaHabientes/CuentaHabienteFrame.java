@@ -5,8 +5,14 @@
  */
 package frontend.vistas.cuentaHabientes;
 
+import backend.controladores.ControladorCuenta;
 import backend.controladores.ControladorCuentaHabiente;
+import backend.controladores.ControladorPeticionesHttp;
 import backend.controladores.ControladorUsuarioCliente;
+import backend.enums.EstadoCuenta;
+import backend.enums.PeriodoInteres;
+import backend.enums.TipoCuenta;
+import backend.pojos.Cuenta;
 import backend.pojos.CuentaHabiente;
 import backend.pojos.UsuarioCliente;
 import java.sql.Date;
@@ -24,6 +30,7 @@ import org.jdesktop.observablecollections.ObservableList;
 public class CuentaHabienteFrame extends javax.swing.JFrame {
 
     private ControladorCuentaHabiente controladorCuentaHabiente;
+    private ControladorCuenta controladorCuenta;
     private CuentaHabiente cuentaHabiente = null;
     public List<CuentaHabiente> listaCuentaHabientes = null;
     public ObservableList<CuentaHabiente> listaObservableCuentaHabientes = null;
@@ -34,6 +41,7 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
      */
     public CuentaHabienteFrame() {
         controladorCuentaHabiente = new ControladorCuentaHabiente();
+        this.controladorCuenta = new ControladorCuenta();
         this.listaCuentaHabientes = new LinkedList<>();
         this.listaObservableCuentaHabientes = ObservableCollections.observableList(listaCuentaHabientes);
         actualizarLista(controladorCuentaHabiente.busquedaDeCunetaHabientes());
@@ -73,6 +81,10 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
         crearCuentaHabientejButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         logUusuariosjTextArea = new javax.swing.JTextArea();
+        jLabel10 = new javax.swing.JLabel();
+        comboTipoCuenta = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        txtDepositoInicial = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         modificarjButton2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
@@ -123,6 +135,12 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
         logUusuariosjTextArea.setRows(5);
         jScrollPane1.setViewportView(logUusuariosjTextArea);
 
+        jLabel10.setText("Tipo de Cuenta*");
+
+        comboTipoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MONETARIA", "AHORRO" }));
+
+        jLabel11.setText("Deposito Inicial*");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -130,18 +148,11 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(351, 351, 351)
-                        .addComponent(crearCuentaHabientejButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(nombresjTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dpijTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(emailjTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,9 +178,22 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
                                         .addComponent(direccionjTextField4)
                                         .addComponent(fechajDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(apellidosjTextField3)
-                                        .addComponent(celularjTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(celularjTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel8)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jLabel11))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(emailjTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                                        .addComponent(comboTipoCuenta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtDepositoInicial, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)))))
                         .addGap(73, 73, 73)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(347, 347, 347)
+                        .addComponent(crearCuentaHabientejButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -210,9 +234,17 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
                             .addComponent(emailjTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(comboTipoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(txtDepositoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
                 .addComponent(crearCuentaHabientejButton1)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Creacion de cuenta Habientes", jPanel2);
@@ -284,7 +316,7 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(modificarjButton2)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Listado de cuenta Habientes", jPanel1);
@@ -317,7 +349,7 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -330,11 +362,16 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
         if (cuentaHabiente != null) {
             if (controladorCuentaHabiente.registroCuentaHabiente(cuentaHabiente)) {
                 UsuarioCliente user = new UsuarioCliente(this.dpijTextField1.getText());
-                if (controladorUsuarioCLiente.insertarUsuarioCliente(user)) {
+                String numCuenta = controladorCuenta.generarCuenta(); //Generando Cuenta automaticamente
+                Cuenta cuenta = new Cuenta(numCuenta, user.getDpiCliente(),
+                            Enum.valueOf(TipoCuenta.class, comboTipoCuenta.getSelectedItem().toString()), 0, PeriodoInteres.ANUAL, EstadoCuenta.activa, 0);
+                if (controladorUsuarioCLiente.insertarUsuarioCliente(user) && controladorCuenta.verificarRegistroCuenta(cuenta, txtDepositoInicial.getText())) {
                     JOptionPane.showMessageDialog(this, "Se ha creado la cuenta Habiente. Usuario:\n"
-                            + user.toString());
+                            + user.toString()+cuenta.toString());
                     this.logUusuariosjTextArea.setText(this.logUusuariosjTextArea.getText() + "-----------------------------\n"
-                            + user.toString() + "\n-----------------------------\n");
+                            + user.toString() +cuenta.toString() + "\n-----------------------------\n");
+                    //notificar correo
+                    controladorCuentaHabiente.notificarCorreoCuentaHabiente(cuenta, user, cuentaHabiente.getEmail());
                 } else {
                     controladorCuentaHabiente.eliminarCuentaHabiente(this.dpijTextField1.getText());
                     JOptionPane.showMessageDialog(null, "No se pudo crear el usuario. Se elimino CuentaHabiente", "Error", JOptionPane.ERROR_MESSAGE);
@@ -343,7 +380,7 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
             limpiarCambios();
         }
     }//GEN-LAST:event_crearCuentaHabientejButton1ActionPerformed
-
+    
     private void telefonojTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefonojTextField5KeyTyped
         char c = evt.getKeyChar();
         if (c < 48 || c > 57) {
@@ -395,12 +432,15 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField apellidosjTextField3;
     private javax.swing.JTextField celularjTextField6;
+    private javax.swing.JComboBox<String> comboTipoCuenta;
     private javax.swing.JButton crearCuentaHabientejButton1;
     private javax.swing.JTextField direccionjTextField4;
     private javax.swing.JTextField dpijTextField1;
     private javax.swing.JTextField emailjTextField7;
     private com.toedter.calendar.JDateChooser fechajDateChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -422,6 +462,7 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
     private javax.swing.JButton modificarjButton2;
     private javax.swing.JTextField nombresjTextField2;
     private javax.swing.JTextField telefonojTextField5;
+    private javax.swing.JTextField txtDepositoInicial;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 

@@ -46,6 +46,12 @@ public class Cuenta implements Serializable{
         this.estado = estado;
         this.saldo = saldo;
     }
+    
+    @Override
+    public String toString() {
+        return "\nNo. Cuenta:" + this.numCuenta + "\nTipo:" + this.tipo.toString()
+                + "\nSaldo:" + this.saldo;
+    }
 
     public String getNumCuenta() {
         return numCuenta;

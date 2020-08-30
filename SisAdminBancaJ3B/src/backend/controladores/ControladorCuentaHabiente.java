@@ -6,7 +6,9 @@
 package backend.controladores;
 
 import backend.database.ConexionBD;
+import backend.pojos.Cuenta;
 import backend.pojos.CuentaHabiente;
+import backend.pojos.UsuarioCliente;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -193,4 +195,46 @@ public class ControladorCuentaHabiente {
         return new CuentaHabiente(dpi, nombres, apellidos, fechaNacimeitno, direccion, telefono, celular, email);
 
     }
+    
+    /**
+     * Notifica por correo al Usuario registrado sus credenciales de acceso obtenidas por el banco 
+     *
+     * @param cuenta
+     * @param cliente
+     * @param correo
+     */
+    public void notificarCorreoCuentaHabiente(Cuenta cuenta, UsuarioCliente cliente, String correo){
+        ControladorPeticionesHttp controlador = new ControladorPeticionesHttp();
+        String numCuenta = cuenta.getNumCuenta();
+        String tipo = cuenta.getTipo().toString();
+        String saldo = "Q."+cuenta.getSaldo()+"0";
+        String usuario = "";
+        String pass = "";
+        String fechaCaducidad = "";
+        if (cliente!=null) {
+            /*Registro por primera vez*/
+            usuario = cliente.getUsuarioCliente();
+            pass = cliente.getContrasenaCopia();
+            fechaCaducidad = cliente.getFechaCaducidad().toString();
+        } else {
+            /*ya possee un usuario*/
+            usuario = "Confirmado";
+            pass = "Confirmado";
+            fechaCaducidad = "Confirmada";
+        }
+        String params= "?Usuario="+usuario+"&Pass="+pass+"&FechaCaducidad="+fechaCaducidad+"&NumCuenta="+numCuenta+"&Tipo="+tipo+"&Saldo="+saldo+"&Email="+correo;
+        //String url = "http://192.168.20.5/Pruebas/switfMailer/envioDeCorreo.php"+params;
+        String url = "http://192.168.20.5/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
+        
+		String respuesta = "";
+		try {
+			respuesta = controlador.peticionHttpGetEnvioCorreo(url);
+			System.out.println("La respuesta es:\n" + respuesta);
+		} catch (Exception e) {
+			// Manejar excepción
+			e.printStackTrace();
+		}
+        
+    }
+    
 }
