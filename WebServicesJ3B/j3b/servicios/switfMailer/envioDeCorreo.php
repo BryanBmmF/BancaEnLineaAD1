@@ -15,7 +15,7 @@ try {
    // Create the SMTP Transport
    $transport = (new Swift_SmtpTransport('smtp.gmail.com',465,'ssl'))
        ->setUsername('bryan.bmmf@gmail.com')//Correo propio
-       ->setPassword('bryan1234');//Contrasena de correo Propio
+       ->setPassword('********');//Contrasena de correo Propio
    // Create the Mailer using your created Transport
    $mailer = new Swift_Mailer($transport);
    // Create a message
