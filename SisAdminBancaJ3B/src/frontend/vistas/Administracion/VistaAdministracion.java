@@ -4,15 +4,18 @@ package frontend.vistas.Administracion;
 import backend.pojos.UsuarioAdministrador;
 import frontend.vistas.Login.Login;
 import frontend.vistas.cuentaHabientes.CuentaHabienteFrame;
+import frontend.vistas.cuentas.PanelGestionCuentas;
 
 public class VistaAdministracion extends javax.swing.JFrame {
 
     private UsuarioAdministrador usuario;
+    private PanelGestionCuentas gestionCuentas;
 
     public VistaAdministracion(UsuarioAdministrador usuario) {
         initComponents();
         this.usuario = usuario;
         this.textoUsuarioEnSesion.setText(usuario.getUsuario());
+        
     }
     
     public void cerrarSesion(){
@@ -37,21 +40,23 @@ public class VistaAdministracion extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel1.setText("Vista Administracion");
         desktopPane.add(jLabel1);
-        jLabel1.setBounds(230, 50, 270, 28);
+        jLabel1.setBounds(10, 10, 270, 28);
 
         jLabel2.setText("Usuario en Sesion:");
         desktopPane.add(jLabel2);
-        jLabel2.setBounds(480, 10, 140, 16);
+        jLabel2.setBounds(480, 10, 140, 15);
 
         textoUsuarioEnSesion.setText("Aqui va el usuario");
         desktopPane.add(textoUsuarioEnSesion);
-        textoUsuarioEnSesion.setBounds(620, 10, 120, 16);
+        textoUsuarioEnSesion.setBounds(620, 10, 120, 15);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Cerrar Sesion");
@@ -93,6 +98,18 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
         menuBar.add(jMenu2);
 
+        jMenu3.setText("Cuentas Bancarias");
+
+        jMenuItem3.setText("Gestionar Cuentas");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
+        menuBar.add(jMenu3);
+
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -124,6 +141,13 @@ public class VistaAdministracion extends javax.swing.JFrame {
         cuentaHabiente.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        this.gestionCuentas = new PanelGestionCuentas(true);
+        this.gestionCuentas.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
@@ -131,8 +155,10 @@ public class VistaAdministracion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JLabel textoUsuarioEnSesion;
