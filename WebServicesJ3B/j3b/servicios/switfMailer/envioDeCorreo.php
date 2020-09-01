@@ -14,8 +14,8 @@ $Correo = $_GET["Email"];
 try {
    // Create the SMTP Transport
    $transport = (new Swift_SmtpTransport('smtp.gmail.com',465,'ssl'))
-       ->setUsername('bryan.bmmf@gmail.com')//Correo propio
-       ->setPassword('********');//Contrasena de correo Propio
+       ->setUsername('j3b.bank@gmail.com')//Correo propio
+       ->setPassword('J3Bbank@2020');//Contrasena de correo Propio
    // Create the Mailer using your created Transport
    $mailer = new Swift_Mailer($transport);
    // Create a message
@@ -23,7 +23,7 @@ try {
    // Set a "subject"
    $message->setSubject('J3Bank-Notifications.');
    // Set the "From address"
-   $message->setFrom(['bryan.bmmf@gmail.com' => 'J3Bank-Admin']);
+   $message->setFrom(['j3b.bank@gmail.com' => 'J3Bank-Admin']);
    // Set the "To address" [Use setTo method for multiple recipients, argument should be array]
    $message->addTo($Correo,'texto ');
    // Add "CC" address [Use setCc method for multiple recipients, argument should be array]
@@ -37,7 +37,7 @@ try {
    $message->addPart('Bienvenido a J3Bank tus Credenciales son las siguientes:<br>
         <br>  Usuario: '.$Usuario.'
         <br>  Contraseña: '.$Pass.'
-        <br>  Fecha de Caducidad: '.$FechaCaducidad.'
+        <br>  Fecha de Caducidad de la Contraseña: '.$FechaCaducidad.'
         <br>  No. Cuenta: '.$NumCuenta.'
         <br>  Tipo: '.$Tipo.'
         <br>  Saldo Inicial: '.$Saldo.'<br>
