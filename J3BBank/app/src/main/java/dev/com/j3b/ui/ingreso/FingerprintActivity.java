@@ -104,30 +104,26 @@ public class FingerprintActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Tu dispositivo no tiene un lector de huella digital, No se podria aplicar", Toast.LENGTH_SHORT).show();
 
             //*************************
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            redirigirVentanaPrincipal();
 
         }else {
             // Checks whether fingerprint permission is set on manifest
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getApplicationContext(), "La autenticacion por huella digital no esta habilitada", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                redirigirVentanaPrincipal();
 
             }else{
                 // Check whether at least one fingerprint is registered
                 if (!fingerprintManager.hasEnrolledFingerprints()) {
                     Toast.makeText(getApplicationContext(), "Para la autenticacion por huella digital debes de tener minimo una huella registrada en el dispositivo", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
+                    redirigirVentanaPrincipal();
 
 
                 }else{
                     // Checks whether lock screen security is enabled or not
                     if (!keyguardManager.isKeyguardSecure()) {
                         Toast.makeText(getApplicationContext(), "La seguridad de la pantalla de bloqueo no está habilitada en Configuración", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(this, MainActivity.class);
-                        startActivity(intent);
+                        redirigirVentanaPrincipal();
 
                     }else{
                         generateKey();
@@ -146,6 +142,12 @@ public class FingerprintActivity extends AppCompatActivity {
         }
     }
 
+    public void redirigirVentanaPrincipal(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void leerArchivoHuella(FingerprintManager fingerprintManager){
         try{//data/data/MiProyecto/files/archivo.txt
             File file = new File("/data/data/dev.com.j3b/files/config.j3b");
@@ -155,13 +157,11 @@ public class FingerprintActivity extends AppCompatActivity {
                 String texto = aux.readLine();
                 if(texto.equals("1")){//Si quiere tener el paso de la huella
                     activarBotonesInicioNormal();
-
                     FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
                     FingerprintHandler helper = new FingerprintHandler(this);
                     helper.startAuth(fingerprintManager, cryptoObject);
                 }else{//texto = 0, no quiere tener el paso de la huella
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
+                    redirigirVentanaPrincipal();
                 }
             }else{
                  //  /config.j3b
@@ -190,7 +190,9 @@ public class FingerprintActivity extends AppCompatActivity {
         this.textoIntroHuella.setText("Ingresa tu huella por favor");
         findViewById(R.id.btnNo).setVisibility(View.INVISIBLE);
         findViewById(R.id.btnSi).setVisibility(View.INVISIBLE);
-        findViewById(R.id.textoInicialApp).setVisibility(View.INVISIBLE);
+        findViewById(R.id.textoInicialApp).setVisibility(View.VISIBLE);
+        TextView a = (TextView) findViewById(R.id.textoInicialApp);
+        a.setText("");
     }
 
     public void crearArchivo(String resultado){
@@ -199,8 +201,7 @@ public class FingerprintActivity extends AppCompatActivity {
             aux.write(resultado);
             aux.close();
             Toast.makeText(getApplicationContext(), "Se guardaron los datos correctamente, se utilizaran en el proximo inicio de aplicacion", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            redirigirVentanaPrincipal();
 
         }catch(Exception e){
             Toast.makeText(getApplicationContext(), "Existieron problemas al crear el archivo de configuracion", Toast.LENGTH_SHORT).show();

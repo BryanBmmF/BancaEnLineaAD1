@@ -37,6 +37,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
 
     public void startAuth(FingerprintManager manager, FingerprintManager.CryptoObject cryptoObject) {
+        
         CancellationSignal cancellationSignal = new CancellationSignal();
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -96,6 +97,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
             Toast.makeText(context, e, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, MainActivity.class);
             context.startActivity(intent);
+            ((Activity) context).finish();
             //textView.setTextColor(ContextCompat.getColor(context, R.color.successText));
         }
     }
