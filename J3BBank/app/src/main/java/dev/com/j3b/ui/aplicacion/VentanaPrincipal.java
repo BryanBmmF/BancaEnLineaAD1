@@ -84,7 +84,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                         cuentaHabienteLogueado.setFechaNacimiento(jsonObjectDatosUsuario.getString("fecha_nacimiento"));
                         cuentaHabienteLogueado.setDireccion(jsonObjectDatosUsuario.getString("direccion"));
                         cuentaHabienteLogueado.setTelefono(jsonObjectDatosUsuario.getString("telefono"));
-                        cuentaHabienteLogueado.setCelular(jsonObjectDatosUsuario.getString("celuar"));
+                        cuentaHabienteLogueado.setCelular(jsonObjectDatosUsuario.getString("celular"));
                         cuentaHabienteLogueado.setEmail(jsonObjectDatosUsuario.getString("email"));
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), "Hay problemas de conexión al servidor.", Toast.LENGTH_SHORT).show();

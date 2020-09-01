@@ -157,7 +157,7 @@ public class ActualizacionCredenciales extends AppCompatActivity {
                             actualizarUsuario(usuarioRecibido.getUsuarioCliente(), nuevaContraseñaEditText.getText().toString());
                             Intent nuevaVentanaPrincipal = new Intent(this, VentanaPrincipal.class);
                             Bundle nuevoBundle = new Bundle();
-                            nuevoBundle.putString("usuario", usuarioRecibido.getUsuarioCliente());
+                            nuevoBundle.putSerializable("usuario", usuarioRecibido);
                             nuevaVentanaPrincipal.putExtras(nuevoBundle);
                             startActivity(nuevaVentanaPrincipal);
                             limpiarCampos();
