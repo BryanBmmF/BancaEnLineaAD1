@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ingreso.FingerprintActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textoIntroHuella"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Introduce tu huella por favor"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/errorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textoInicialApp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="Quieres activar la huella digital como forma de iniciar la aplicacion?"
+                android:textSize="14sp"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnSi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="crearArchivo"
+                android:text="Si, quiero usar la huella para iniciar la aplicacion"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No, prefiero no usar la huella digital"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
