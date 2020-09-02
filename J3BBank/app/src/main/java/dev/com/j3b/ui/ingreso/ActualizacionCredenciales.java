@@ -97,38 +97,11 @@ public class ActualizacionCredenciales extends AppCompatActivity {
 
         guardarCambiosButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SafetyNet.getClient(ActualizacionCredenciales.this).verifyWithRecaptcha(SITE_KEY)
-                        .addOnSuccessListener( ActualizacionCredenciales.this,
-                                new OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>() {
-                                    @Override
-                                    public void onSuccess(SafetyNetApi.RecaptchaTokenResponse response) {
-                                        // Indicates communication with reCAPTCHA service was
-                                        // successful.
-                                        String userResponseToken = response.getTokenResult();
-                                        if (!userResponseToken.isEmpty()) {
-                                            // Validate the user response token using the
-                                            // reCAPTCHA siteverify API.
-                                            handleSiteVerify(userResponseToken);
-                                        }
-                                    }
-                                })
-                        .addOnFailureListener( ActualizacionCredenciales.this, new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                if (e instanceof ApiException) {
-                                    // An error occurred when communicating with the
-                                    // reCAPTCHA service. Refer to the status code to
-                                    // handle the error appropriately.
-                                    ApiException apiException = (ApiException) e;
-                                    int statusCode = apiException.getStatusCode();
-                                    Log.d(TAG, " O ACA->Error: " + CommonStatusCodes
-                                            .getStatusCodeString(statusCode));
-                                } else {
-                                    // A different, unknown type of error occurred.
-                                    Log.d(TAG, "AQUI->Error: " + e.getMessage());
-                                }
-                            }
-                        });
+                try {
+                    iniciarValidaciones();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
             }
 
         });
@@ -154,14 +127,8 @@ public class ActualizacionCredenciales extends AppCompatActivity {
                         //si no exiten coincidencia, procedemos a verificar que la contraseña actual coincida con la ingresada
                         if (usuarioRecibido.getContraseñaActual().equals(manejadorLogin.generarMD5(actualContraseñaEditText.getText().toString()))) {
                             //si la contraseña ingresada es la correcta entonces procedemos a realizar la actualizacion de credenciales
-                            actualizarUsuario(usuarioRecibido.getUsuarioCliente(), nuevaContraseñaEditText.getText().toString());
-                            Intent nuevaVentanaPrincipal = new Intent(this, VentanaPrincipal.class);
-                            Bundle nuevoBundle = new Bundle();
-                            nuevoBundle.putSerializable("usuario", usuarioRecibido);
-                            nuevaVentanaPrincipal.putExtras(nuevoBundle);
-                            startActivity(nuevaVentanaPrincipal);
-                            limpiarCampos();
-                            finish();
+                            verificacionInicialCaptcha();
+
                         } else {
                             //Notificamos al usuario que la contraseña actual no coinicide con la ingresada
                             Toast.makeText(ActualizacionCredenciales.this, "Tu contraseña actual es incorrecta", Toast.LENGTH_SHORT).show();
@@ -293,6 +260,43 @@ public class ActualizacionCredenciales extends AppCompatActivity {
         confirmarContraseñaEditText.setText("");
     }
 
+
+
+    protected void verificacionInicialCaptcha(){
+        SafetyNet.getClient(ActualizacionCredenciales.this).verifyWithRecaptcha(SITE_KEY)
+                .addOnSuccessListener( ActualizacionCredenciales.this,
+                        new OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>() {
+                            @Override
+                            public void onSuccess(SafetyNetApi.RecaptchaTokenResponse response) {
+                                // Indicates communication with reCAPTCHA service was
+                                // successful.
+                                String userResponseToken = response.getTokenResult();
+                                if (!userResponseToken.isEmpty()) {
+                                    // Validate the user response token using the
+                                    // reCAPTCHA siteverify API.
+                                    handleSiteVerify(userResponseToken);
+                                }
+                            }
+                        })
+                .addOnFailureListener( ActualizacionCredenciales.this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (e instanceof ApiException) {
+                            // An error occurred when communicating with the
+                            // reCAPTCHA service. Refer to the status code to
+                            // handle the error appropriately.
+                            ApiException apiException = (ApiException) e;
+                            int statusCode = apiException.getStatusCode();
+                            Log.d(TAG, " O ACA->Error: " + CommonStatusCodes
+                                    .getStatusCodeString(statusCode));
+                        } else {
+                            // A different, unknown type of error occurred.
+                            Log.d(TAG, "AQUI->Error: " + e.getMessage());
+                        }
+                    }
+                });
+    }
+
     /**
      * Metodo para la verificacion de recaptcha, usando la verificacion de google
      * y el token generado localmente
@@ -310,11 +314,15 @@ public class ActualizacionCredenciales extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             if(jsonObject.getBoolean("success")){
                                 //code logic when captcha returns true Toast.makeText(getApplicationContext(),String.valueOf(jsonObject.getBoolean("success")),Toast.LENGTH_LONG).show();
-                                try {
-                                    iniciarValidaciones();
-                                } catch (NoSuchAlgorithmException e) {
-                                    e.printStackTrace();
-                                }
+                                //Si pasa el captcha se procede a actualizar la base de datos
+                                Intent nuevaVentanaPrincipal = new Intent(ActualizacionCredenciales.this,VentanaPrincipal.class);
+                                actualizarUsuario(usuarioRecibido.getUsuarioCliente(), nuevaContraseñaEditText.getText().toString());
+                                Bundle nuevoBundle = new Bundle();
+                                nuevoBundle.putSerializable("usuario", usuarioRecibido);
+                                nuevaVentanaPrincipal.putExtras(nuevoBundle);
+                                startActivity(nuevaVentanaPrincipal);
+                                limpiarCampos();
+                                finish();
                             }
                             else{
                                 Toast.makeText(getApplicationContext(),String.valueOf(jsonObject.getString("error-codes")),Toast.LENGTH_LONG).show();
