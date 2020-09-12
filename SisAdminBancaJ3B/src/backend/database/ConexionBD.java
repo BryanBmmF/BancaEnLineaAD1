@@ -23,6 +23,7 @@ public class ConexionBD {
             try {
 			String user = "ad1sysdba";
 			String password = "Ad1sysdba$";
+                        //String password = "1234";
 			// La url incluye el esquema a usar, en este caso 'mysql'
 			String urlConnection ="jdbc:mysql://localhost:3306/db_j3bank";
 			//abrimos una coneccion a la DB usando una url, el usuario y password (SUSTITUIR PASSWORD)

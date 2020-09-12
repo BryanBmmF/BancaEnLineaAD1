@@ -3,6 +3,8 @@
     package="dev.com.j3b">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:allowBackup="true"
@@ -12,16 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.aplicacion.VentanaPrincipal"></activity>
-        <activity android:name=".ui.ingreso.AvisoBloqueo" />
-        <activity android:name=".ui.ingreso.ActualizacionCredenciales" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.ingreso.RedireccionInicialActivity"></activity>
+        <activity
+            android:name=".ui.ingreso.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/NoActionBar" />
+        <activity android:name=".ui.ingreso.FingerprintActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.aplicacion.VentanaPrincipal" />
+        <activity android:name=".ui.ingreso.AvisoBloqueo" />
+        <activity android:name=".ui.ingreso.ActualizacionCredenciales" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

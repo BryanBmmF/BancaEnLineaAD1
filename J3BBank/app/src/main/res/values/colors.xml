@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimaryDark">#192c37</color>
     <color name="colorAccent">#03DAC5</color>
 
     <color name="security20">#c72121</color>
@@ -9,5 +9,9 @@
     <color name="security60">#ff7800</color>
     <color name="security80">#ffc600</color>
     <color name="security100">#5ce512</color>
+    <color name="textPrimary">#f5f5f5</color>
+    <color name="textPrimaryDark">#95aab4</color>
+    <color name="errorText">#ff7878</color>
+    <color name="successText">#aaFF00</color>
 
 </resources>

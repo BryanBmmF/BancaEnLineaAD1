@@ -141,4 +141,14 @@ public class UsuarioCliente {
         this.contrasenaCopia = text.substring(1, 9);
         return this.contrasenaCopia;
     }
+
+    public String getContrasenaCopia() {
+        return contrasenaCopia;
+    }
+
+    public void setContrasenaCopia(String contrasenaCopia) {
+        this.contrasenaCopia = contrasenaCopia;
+    }
+    
+    
 }
