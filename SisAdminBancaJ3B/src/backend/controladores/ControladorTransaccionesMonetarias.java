@@ -139,7 +139,8 @@ public class ControladorTransaccionesMonetarias {
         String params = "?idMovimiento=" + idMovimiento + "&noCuenta=" + numCuenta + "&monto=" + monto + "&fecha=" + fecha + "&tipo=" + tipoTransaccion + "&tipoCuenta=" + tipoCuenta + "&Email=" + cuenta.getCorreoElectronico();
         //String url = "http://192.168.20.5/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
         //String url = "http://192.168.0.200/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
-        String url = "http://192.168.1.18/j3b/servicios/switfMailer/envioDeTransaccionesCorreo.php" + params;
+        String url = "http://192.168.0.200/j3b/servicios/switfMailer/envioDeTransaccionesCorreo.php" + params;
+        //String url = "http://192.168.1.18/j3b/servicios/switfMailer/envioDeTransaccionesCorreo.php" + params;
 
         String respuesta = "";
         try {
