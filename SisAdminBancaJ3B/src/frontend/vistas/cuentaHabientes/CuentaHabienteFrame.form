@@ -445,37 +445,6 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
-                  <BindingProperties>
-                    <BindingProperty name="elements" source="Form" sourcePath="${listaObservableCuentaHabientes}" target="jTable1" targetPath="elements" updateStrategy="0" immediately="true">
-                      <Subbinding sourcePath="${dpiCliente}">
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${nombres}">
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${apellidos}">
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${celular}">
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${direccion}">
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${email}">
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${fecha_nacimiento}">
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.sql.Date.class"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${telefono}">
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                      </Subbinding>
-                    </BindingProperty>
-                    <BindingProperty name="selectedElement" source="Form" sourcePath="${cuentaHabiente}" target="jTable1" targetPath="selectedElement" updateStrategy="0" immediately="false">
-                      <BindingParameter name="IGNORE_ADJUSTING" value="N"/>
-                    </BindingProperty>
-                  </BindingProperties>
                 </Component>
               </SubComponents>
             </Container>
