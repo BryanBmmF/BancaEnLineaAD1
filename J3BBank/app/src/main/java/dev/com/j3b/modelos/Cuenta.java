@@ -19,10 +19,10 @@ public class Cuenta {
 
     }
 
-    /*public Cuenta(String noCuentaBancaria, double saldo){
+    public Cuenta(String noCuentaBancaria, double saldo){
         this.noCuentaBancaria=noCuentaBancaria;
         this.saldo=saldo;
-    }*/
+    }
 
     public String getNoCuentaBancaria() {
         return noCuentaBancaria;

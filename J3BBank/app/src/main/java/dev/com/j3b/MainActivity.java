@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Por favor, verifica los datos ingresados", Toast.LENGTH_SHORT).show();
             }
         });
-       // RequestQueue requestQueue = Volley.newRequestQueue(this);
-        //requestQueue.add(jsonArrayRequest);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

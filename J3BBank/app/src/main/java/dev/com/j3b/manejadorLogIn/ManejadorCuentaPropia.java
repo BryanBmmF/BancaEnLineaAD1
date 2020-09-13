@@ -4,6 +4,7 @@ import android.os.Build;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,7 +24,7 @@ import dev.com.j3b.modelos.Cuenta;
 import dev.com.j3b.modelos.CuentaHabiente;
 import dev.com.j3b.modelos.ServidorSQL;
 
-public class ManejadorCuentaPropia {
+public class ManejadorCuentaPropia extends AppCompatActivity {
 
 
 
@@ -62,7 +63,8 @@ public class ManejadorCuentaPropia {
                                 Toast.makeText(null, "Sin cuentas", Toast.LENGTH_SHORT).show();
                         }
                 });
-
+                RequestQueue requestQueue = Volley.newRequestQueue(ManejadorCuentaPropia.this);
+                requestQueue.add(jsonArrayRequest);
                 return cuentasDeUsuario;
 
         }
