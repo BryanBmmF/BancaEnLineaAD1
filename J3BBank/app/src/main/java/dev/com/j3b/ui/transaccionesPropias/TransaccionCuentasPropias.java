@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -32,18 +35,36 @@ import dev.com.j3b.ui.aplicacion.VentanaPrincipal;
 
 public class TransaccionCuentasPropias extends AppCompatActivity {
 
-    private Button retroceder,btnConsultaCuentas;
+    //Isercion de cuenta
+    /**
+     * INSERT INTO CUENTA VALUES ('1234567890','0000000000002','MONETARIA','0','ANUAL','activa','800')
+    **/
+    private Button retroceder;
+    //Spinners contenedores de las cuentas
+    private Spinner spinnerCuentaOrigen;
+    private Spinner spinnerCuentaDestino;
+    //Manejadores y elementos de configuracion
     private ManejadorCuentaPropia manejadorCuentaPropia;
-    private ArrayList<Cuenta> listaDeCuentasOrigen;
+    private ArrayList<Cuenta> listaDeCuentas;
+    private int posicionDeCuentaDestino;
+    private int posicionDeCuentaOrigen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaccion_cuentas_propias);
-        listaDeCuentasOrigen = new ArrayList<>();
+        //Asignando el spinner
+        spinnerCuentaOrigen =(Spinner) findViewById(R.id.spinnerCuentaOrigen);
+        spinnerCuentaDestino=(Spinner) findViewById(R.id.spinnerCuentaDestino);
+        //Configuracion de listas y manejadores
+        listaDeCuentas = new ArrayList<>();
         manejadorCuentaPropia = new ManejadorCuentaPropia();
+        //Consultando las cuentas del cliente y llenando espinner
+        consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
+
+
+        //Evento del boton retroceder
         retroceder=(Button) findViewById(R.id.btnRetroceder);
-        btnConsultaCuentas =(Button) findViewById(R.id.btnConsultaCuentas);
         retroceder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,19 +74,41 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
             }
         });
 
-        btnConsultaCuentas.setOnClickListener(new View.OnClickListener() {
+        //Evento de Spinner para seleccionar cuenta origen
+        spinnerCuentaOrigen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(), EstadoDeCuenta.ACTIVA).size();
+            public void onItemSelected(AdapterView<?> lista, View view, int posicion, long l) {
+                if(lista!=null){
+                    String cuenta = (String) lista.getSelectedItem();
+                    System.out.println("CUENTA SELECCIONADA:"+cuenta+" Posicion:"+posicion);
+                    posicionDeCuentaOrigen=posicion;
+                }
 
-                System.out.println("TAMANO EN CLICK:"+listaDeCuentasOrigen.size());
-                /*for(Cuenta cuenta: cuentas){
-                    System.out.println("---------------------Cuenta-----------------");
-                    System.out.println("No:"+cuenta.getNoCuentaBancaria());
-                    System.out.println("Saldo"+cuenta.getSaldo());
-                }*/
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
+
+        //Evento de Spinner para selleccionar cuenta destino
+        spinnerCuentaDestino.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> lista, View view, int posicion, long l) {
+                if(lista!=null){
+                    String cuenta = (String) lista.getSelectedItem();
+                    System.out.println("CUENTA SELECCIONADA:"+cuenta+" Posicion:"+posicion);
+                    posicionDeCuentaDestino=posicion;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     public void volverAPaginaPrincipal(){
@@ -94,14 +137,14 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
                                 jsonObjectDatosCuenta = response.getJSONObject(i);
                                 cuenta.setNoCuentaBancaria(jsonObjectDatosCuenta.getString("no_cuenta_bancaria"));
                                 cuenta.setSaldo(jsonObjectDatosCuenta.getDouble("saldo"));
-                                listaDeCuentasOrigen.add(new Cuenta(jsonObjectDatosCuenta.getString("no_cuenta_bancaria"),jsonObjectDatosCuenta.getDouble("saldo")));
-                                System.out.println("Tamano de lista:"+listaDeCuentasOrigen.size());
+                                listaDeCuentas.add(new Cuenta(jsonObjectDatosCuenta.getString("no_cuenta_bancaria"),jsonObjectDatosCuenta.getDouble("saldo")));
+                                System.out.println("Tamano de lista:"+ listaDeCuentas.size());
                             }catch (JSONException e){
                                 Toast.makeText(null, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
-                        System.out.println("Saliendo del for:"+listaDeCuentasOrigen.size());
-                        escribirCuentas();
+                        System.out.println("Saliendo del for:"+ listaDeCuentas.size());
+                        escribirCuentasEnSpinner();
 
                     }
                 }, new Response.ErrorListener() {
@@ -118,11 +161,18 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
 
     }
 
-    public void escribirCuentas(){
-        for(Cuenta cuenta: listaDeCuentasOrigen){
-                    System.out.println("---------------------Cuenta-----------------");
-                    System.out.println("No:"+cuenta.getNoCuentaBancaria());
-                    System.out.println("Saldo"+cuenta.getSaldo());
-                }
+    public void escribirCuentasEnSpinner(){
+        String[] arrayCuentas = new String[listaDeCuentas.size()];
+        for (int i = 0; i < listaDeCuentas.size(); i++) {
+            arrayCuentas[i]="No.Cuenta:"+listaDeCuentas.get(i).getNoCuentaBancaria();
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arrayCuentas);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Llenando el spinner de Cuentas ORIGEN
+        spinnerCuentaOrigen.setAdapter(adapter);
+        //Llenando el spinner de Cuentas DESTINO
+        spinnerCuentaDestino.setAdapter(adapter);
+
     }
 }
