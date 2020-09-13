@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,25 +8,24 @@
     tools:context=".ui.aplicacion.VentanaPrincipal">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_marginTop="32dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="20dp">
 
             <TextView
                 android:id="@+id/textoBienvenida"
-                android:text="Bienvenido"
-                android:textSize="20sp"
-                android:textColor="#FFFFFF"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </TextView>
+                android:layout_height="wrap_content"
+                android:text="Bienvenido"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"></TextView>
 
             <TextView
                 android:id="@+id/textoNombreUsuario"
@@ -37,6 +35,7 @@
                 android:text="Nombre de usuario"
                 android:textColor="#D4D4D4"
                 android:textSize="15sp"></TextView>
+
             <TextView
                 android:id="@+id/textoEmailUsuario"
                 android:layout_width="wrap_content"
@@ -47,280 +46,288 @@
                 android:textSize="12sp"></TextView>
 
             <ImageView
-                android:layout_alignParentRight="true"
-                android:src="@drawable/menulogoj3b"
                 android:layout_width="80dp"
-                android:layout_height="80dp">
-            </ImageView>
+                android:layout_height="80dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/menulogoj3b"></ImageView>
 
         </RelativeLayout>
-        
+
         <GridLayout
-            android:columnCount="2"
-            android:rowCount="4"
-            android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:columnOrderPreserved="false"
+            android:rowCount="4">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cuentasMonetariasButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                android:layout_columnWeight="1"
                 android:layout_margin="12dp"
-                >
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:background="#FFFFFF"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/money5"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                        android:layout_height="80dp"
+                        android:src="@drawable/money5" />
+
                     <TextView
                         android:id="@+id/cuentaMonetariaText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:textColor="#272727"
-                        android:textSize="13sp"
                         android:text="Cuentas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_marginTop="0dp"
                         android:textColor="#272727"
-                        android:textSize="18sp"
-                        android:text="Monetarias"
+                        android:textSize="13sp" />
+
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="Monetarias"
+                        android:textColor="#272727"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
-                
+
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cuentasAhorroButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                android:layout_columnWeight="1"
                 android:layout_margin="12dp"
-                >
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:background="#FFFFFF"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/saving1"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                        android:layout_height="80dp"
+                        android:src="@drawable/saving1" />
+
                     <TextView
                         android:id="@+id/cuentaAhorroText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:textColor="#272727"
-                        android:textSize="13sp"
                         android:text="Cuentas de"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_marginTop="0dp"
                         android:textColor="#272727"
-                        android:textSize="18sp"
-                        android:text="Ahorro"
+                        android:textSize="13sp" />
+
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="Ahorro"
+                        android:textColor="#272727"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/tarjetasCreditoButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                android:layout_columnWeight="1"
                 android:layout_margin="12dp"
-                >
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:background="#FFFFFF"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/card1"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                        android:layout_height="80dp"
+                        android:src="@drawable/card1" />
+
                     <TextView
                         android:id="@+id/creditCardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:textColor="#272727"
-                        android:textSize="13sp"
                         android:text="Tarjetas de"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_marginTop="0dp"
                         android:textColor="#272727"
-                        android:textSize="18sp"
-                        android:text="Cédito"
+                        android:textSize="13sp" />
+
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="Cédito"
+                        android:textColor="#272727"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/transaccionesButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                android:layout_columnWeight="1"
                 android:layout_margin="12dp"
-                >
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:background="#FFFFFF"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/send_money1"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                        android:layout_height="80dp"
+                        android:src="@drawable/send_money1" />
+
                     <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#272727"
-                        android:textSize="18sp"
-                        android:text="Transacciones"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Transacciones"
+                        android:textColor="#272727"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/segurosButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                android:layout_columnWeight="1"
                 android:layout_margin="12dp"
-                >
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:background="#FFFFFF"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/security_ok"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                        android:layout_height="80dp"
+                        android:src="@drawable/security_ok" />
+
                     <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#272727"
-                        android:textSize="18sp"
-                        android:text="Seguros"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Seguros"
+                        android:textColor="#272727"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/gestionesButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                android:layout_columnWeight="1"
                 android:layout_margin="12dp"
-                >
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:background="#FFFFFF"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/gestiones1"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                        android:layout_height="80dp"
+                        android:src="@drawable/gestiones1" />
+
                     <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#272727"
-                        android:textSize="18sp"
-                        android:text="Gestiones"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Gestiones"
+                        android:textColor="#272727"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/creditosButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                android:layout_columnWeight="1"
                 android:layout_margin="12dp"
-                >
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:background="#FFFFFF"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/money8"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                        android:layout_height="80dp"
+                        android:src="@drawable/money8" />
+
                     <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#272727"
-                        android:textSize="18sp"
-                        android:text="Créditos"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Créditos"
+                        android:textColor="#272727"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -330,38 +337,36 @@
                 android:id="@+id/salirButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="12dp"
+                android:layout_columnWeight="1"
                 android:layout_margin="12dp"
                 android:clickable="true"
-                >
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:background="#FFFFFF"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/salir"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                        android:layout_height="80dp"
+                        android:src="@drawable/salir" />
+
                     <TextView
-                        android:layout_marginTop="12dp"
-                        android:textColor="#272727"
-                        android:textSize="18sp"
-                        android:text="Salir"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Salir"
+                        android:textColor="#272727"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
-
 
 
         </GridLayout>

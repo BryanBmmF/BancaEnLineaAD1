@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ManejadorLogin manejadorLogin = new ManejadorLogin();
     private EditText editUsuarioText, editContraseñaText;
-    private Usuario usuarioLogueado = new Usuario();
+    public static Usuario usuarioLogueado = new Usuario();
     private Button ingresarButton;
 
     @Override
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener() {
+        },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //En caso de que la consulta SQL no encuentre ningún dato, el codigo ingresa en esta sección.
@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Por favor, verifica los datos ingresados", Toast.LENGTH_SHORT).show();
             }
         });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonArrayRequest);
+       // RequestQueue requestQueue = Volley.newRequestQueue(this);
+        //requestQueue.add(jsonArrayRequest);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
