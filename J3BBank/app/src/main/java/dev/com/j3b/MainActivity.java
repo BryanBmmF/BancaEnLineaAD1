@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void buscarUsuario(String usuarioIngresado, final String contraseñaIngresada) throws NoSuchAlgorithmException {
         String consultaSQL = ServidorSQL.SERVIDORSQL_CONRETORNO+"SELECT * FROM USUARIO_CLIENTE WHERE usuario_cliente='"+usuarioIngresado+"'";
+        System.out.println(consultaSQL);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL, new Response.Listener<JSONArray>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override

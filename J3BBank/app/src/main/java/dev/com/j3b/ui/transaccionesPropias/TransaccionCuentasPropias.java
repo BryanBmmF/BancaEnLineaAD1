@@ -23,11 +23,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import dev.com.j3b.MainActivity;
 import dev.com.j3b.R;
 import dev.com.j3b.enums.EstadoDeCuenta;
+import dev.com.j3b.enums.TipoDeMovimientoMonetario;
 import dev.com.j3b.manejadorLogIn.ManejadorCuentaPropia;
 import dev.com.j3b.modelos.Cuenta;
 import dev.com.j3b.modelos.ServidorSQL;
@@ -40,6 +42,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
      * INSERT INTO CUENTA VALUES ('1234567890','0000000000002','MONETARIA','0','ANUAL','activa','800')
     **/
     private Button retroceder;
+    private Button btnRealizarTransferencia;
     //Spinners contenedores de las cuentas
     private Spinner spinnerCuentaOrigen;
     private Spinner spinnerCuentaDestino;
@@ -56,6 +59,8 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         //Asignando el spinner
         spinnerCuentaOrigen =(Spinner) findViewById(R.id.spinnerCuentaOrigen);
         spinnerCuentaDestino=(Spinner) findViewById(R.id.spinnerCuentaDestino);
+        retroceder=(Button) findViewById(R.id.btnRetroceder);
+        btnRealizarTransferencia=(Button) findViewById(R.id.btnRealizarTransferencia);
         //Configuracion de listas y manejadores
         listaDeCuentas = new ArrayList<>();
         manejadorCuentaPropia = new ManejadorCuentaPropia();
@@ -64,7 +69,6 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
 
 
         //Evento del boton retroceder
-        retroceder=(Button) findViewById(R.id.btnRetroceder);
         retroceder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +96,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
             }
         });
 
-        //Evento de Spinner para selleccionar cuenta destino
+        //Evento de Spinner para seleccionar cuenta destino
         spinnerCuentaDestino.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> lista, View view, int posicion, long l) {
@@ -109,6 +113,14 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
             }
         });
 
+        //Evento para realizar transferencia
+        btnRealizarTransferencia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mostrarCuentasEscogidas();
+            }
+        });
+
     }
 
     public void volverAPaginaPrincipal(){
@@ -116,7 +128,45 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public ArrayList<Cuenta> consultarCuentasDeUsuario(String dpiCliente, EstadoDeCuenta estadoDeCuenta){
+    public void insertarMovimientoMonetario(String numeroDeCuenta, double monto, TipoDeMovimientoMonetario tipo){
+        Timestamp fecha = new Timestamp(System.currentTimeMillis());
+        String consultaSQL = ServidorSQL.SERVIDORSQL_INSERCION_CON_RETORNO+
+                " INSERT INTO MOVIMIENTO_MONETARIO(no_cuenta,monto,fecha,tipo)" +
+                " VALUES('"+numeroDeCuenta+"',"+monto+",'"+fecha+"','"+tipo+"')";
+        System.out.println("\n\nConsulta MOVIMIENTO_MONETARIO:"+consultaSQL);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL,
+                new Response.Listener<JSONArray>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //System.out.println("Response:"+response.length());
+                        JSONObject jsonObjectDatosCuenta=null;
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                int idIngreso = jsonObjectDatosCuenta.getInt("id_mov_monetario");
+                                System.out.println("ID DE INGRESO:"+idIngreso);
+                            }catch(JSONException e){
+                                System.out.println("HOLAAAAAAAAAAAAAAAAAAAA");
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error);
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    /**
+     * Se consultan las cuentas Activas del usuario
+     * @param dpiCliente
+     * @param estadoDeCuenta
+     */
+    public void consultarCuentasDeUsuario(String dpiCliente, EstadoDeCuenta estadoDeCuenta){
         final ArrayList<Cuenta> cuentasDeUsuario = new ArrayList<>();
         String consultaSQL = ServidorSQL.SERVIDORSQL_CONRETORNO+"" +
                 "SELECT no_cuenta_bancaria,tipo_cuenta,saldo" +
@@ -157,8 +207,6 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
-        return cuentasDeUsuario;
-
     }
 
     public void escribirCuentasEnSpinner(){
@@ -174,5 +222,11 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         //Llenando el spinner de Cuentas DESTINO
         spinnerCuentaDestino.setAdapter(adapter);
 
+    }
+
+    public void mostrarCuentasEscogidas(){
+        System.out.println("CUENTA ORIGEN("+posicionDeCuentaOrigen+"):"+listaDeCuentas.get(posicionDeCuentaOrigen).toString());
+        System.out.println("CUENTA DESTINO("+posicionDeCuentaDestino+"):"+listaDeCuentas.get(posicionDeCuentaDestino).toString());
+        insertarMovimientoMonetario(listaDeCuentas.get(posicionDeCuentaOrigen).getNoCuentaBancaria(),124.23,TipoDeMovimientoMonetario.DEBITO);
     }
 }
