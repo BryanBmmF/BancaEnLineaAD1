@@ -37,7 +37,7 @@ public class ControladorTransaccionesMonetarias {
 
     public ControladorTransaccionesMonetarias() {
         conexion = ConexionBD.getInstance();
-        this.fechaTimestamp = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        this.fechaTimestamp = new SimpleDateFormat("yyyy-MM-dd/hh:mm:ss");
     }
 
     public CuentaTransaccionMonetaria validarCuenta(CuentaTransaccionMonetaria cuenta) {
@@ -136,6 +136,7 @@ public class ControladorTransaccionesMonetarias {
         String tipoTransaccion = movimiento.getTipo();
         String tipoCuenta = cuenta.getTipo();
 
+        //String params = "?idMovimiento=" + idMovimiento + "&noCuenta=" + numCuenta + "&monto=" + monto + "&fecha=" + fecha + "&tipo=" + tipoTransaccion + "&tipoCuenta=" + tipoCuenta + "&Email=" + cuenta.getCorreoElectronico();
         String params = "?idMovimiento=" + idMovimiento + "&noCuenta=" + numCuenta + "&monto=" + monto + "&fecha=" + fecha + "&tipo=" + tipoTransaccion + "&tipoCuenta=" + tipoCuenta + "&Email=" + cuenta.getCorreoElectronico();
         //String url = "http://192.168.20.5/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
         //String url = "http://192.168.0.200/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
