@@ -20,8 +20,10 @@ import javax.swing.JOptionPane;
 public class TransaccionesMonetarias extends javax.swing.JDialog {
 
     private ControladorTransaccionesMonetarias controladorTransacciones;
-    private String DEBITO = "DEBITO";
-    private String ABONO = "ABONO";
+    private final String DEBITO = "DEBITO";
+    private final String ABONO = "ABONO";
+    private final String RETIRO_EN_AGENCIA = "Retiro en Agencia";
+    private final String DEPOSITO_EN_AGENCIA = "Deposito en Agencia";
     private SimpleDateFormat fechaTimestamp;
     private CuentaTransaccionMonetaria cuentaActual;
 
@@ -212,13 +214,13 @@ public class TransaccionesMonetarias extends javax.swing.JDialog {
 
     public void retirarDinero() {
         String monto = this.textoMonto.getText();
-        String saldoActual = this.textoSaldoActual.getText();
+        String saldoActual = Double.toString(this.cuentaActual.getSaldo());
         if (!monto.equals("")) {
             double dinero = Double.parseDouble(monto);
             double saldo = Double.parseDouble(saldoActual);
             if (dinero <= saldo) {
                 if (dinero > 0) {
-                    MovimientoMonetario datos = new MovimientoMonetario(this.textoNoCuenta.getText(), Double.parseDouble(this.textoMonto.getText()), new java.util.Date(), this.DEBITO);
+                    MovimientoMonetario datos = new MovimientoMonetario(this.textoNoCuenta.getText(), Double.parseDouble(this.textoMonto.getText()), new java.util.Date(), this.DEBITO, this.RETIRO_EN_AGENCIA);
                     int respuesta = JOptionPane.showConfirmDialog(null, "Se realizara el retiro de dinero con los siguientes datos:\n"
                             + "No Cuenta: " + datos.getNoCuenta() + "\n"
                             + "Monto: " + datos.getMonto() + "\n"
@@ -261,7 +263,7 @@ public class TransaccionesMonetarias extends javax.swing.JDialog {
             double dinero = Double.parseDouble(monto);
             if (dinero <= 50000) {
                 if (dinero > 0) {
-                    MovimientoMonetario datos = new MovimientoMonetario(this.textoNoCuenta.getText(), Double.parseDouble(this.textoMonto.getText()), new java.util.Date(), this.ABONO);
+                    MovimientoMonetario datos = new MovimientoMonetario(this.textoNoCuenta.getText(), Double.parseDouble(this.textoMonto.getText()), new java.util.Date(), this.ABONO,this.DEPOSITO_EN_AGENCIA);
                     int respuesta = JOptionPane.showConfirmDialog(null, "Se realizara el deposito de dinero con los siguientes datos:\n"
                             + "No Cuenta: " + datos.getNoCuenta() + "\n"
                             + "Monto: " + datos.getMonto() + "\n"
@@ -305,6 +307,7 @@ public class TransaccionesMonetarias extends javax.swing.JDialog {
                     this.textoNoCuenta.setText(aux.getNumCuenta());
                     this.textoNombre.setText(aux.getNombre());
                     this.textoSaldoActual.setText(Double.toString(aux.getSaldo()));
+                    this.textoSaldoActual.setText("?????????");
                     this.textoTipoCuenta.setText(aux.getTipo());
                     this.textoEstadoActual.setText(aux.getEstado());
                     this.cuentaActual = aux;
@@ -313,6 +316,7 @@ public class TransaccionesMonetarias extends javax.swing.JDialog {
                     this.textoNoCuenta.setText(aux.getNumCuenta());
                     this.textoNombre.setText(aux.getNombre());
                     this.textoSaldoActual.setText(Double.toString(aux.getSaldo()));
+                    this.textoSaldoActual.setText("?????????");
                     this.textoTipoCuenta.setText(aux.getTipo());
                     this.textoEstadoActual.setText(aux.getEstado());
                     this.cuentaActual = aux;
@@ -324,6 +328,7 @@ public class TransaccionesMonetarias extends javax.swing.JDialog {
                     this.textoNoCuenta.setText(aux.getNumCuenta());
                     this.textoNombre.setText(aux.getNombre());
                     this.textoSaldoActual.setText(Double.toString(aux.getSaldo()));
+                    this.textoSaldoActual.setText("?????????");
                     this.textoTipoCuenta.setText(aux.getTipo());
                     this.textoEstadoActual.setText(aux.getEstado());
                     this.cuentaActual = aux;

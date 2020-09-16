@@ -30,7 +30,7 @@ public class ControladorTransaccionesMonetarias {
 
     private Connection conexion;
     private final String BUSCAR_CUENTA = "SELECT CUENTA.NO_CUENTA_BANCARIA,CUENTA.DPI_CLIENTE,CUENTA.TIPO_CUENTA,CUENTA.ESTADO, CUENTA.SALDO ,CUENTA_HABIENTE.NOMBRES, CUENTA_HABIENTE.APELLIDOS, CUENTA_HABIENTE.EMAIL    FROM CUENTA INNER JOIN CUENTA_HABIENTE WHERE CUENTA.DPI_CLIENTE=CUENTA_HABIENTE.DPI_CLIENTE AND CUENTA.NO_CUENTA_BANCARIA=?;";
-    private final String CREAR_MOVIMIENTO_MONETARIO = "INSERT INTO MOVIMIENTO_MONETARIO (NO_CUENTA,MONTO,FECHA,TIPO) VALUES(?,?,?,?); ";
+    private final String CREAR_MOVIMIENTO_MONETARIO = "INSERT INTO MOVIMIENTO_MONETARIO (NO_CUENTA,MONTO,FECHA,TIPO,DESCRIPCION) VALUES(?,?,?,?,?); ";
     private final String ACTUALIZAR_SALDO_CUENTA = "CALL actualizarSaldoCuenta(?,?,?)";
     private final String REGISTRAR_SALDO_INICIAL = "CALL crearMovimientoMonetarioInicialCuenta(?,?)";
     private SimpleDateFormat fechaTimestamp;
@@ -67,11 +67,13 @@ public class ControladorTransaccionesMonetarias {
             declaracion.setDouble(2, datos.getMonto());
             declaracion.setTimestamp(3, new Timestamp(datos.getFecha().getTime()));
             declaracion.setString(4, datos.getTipo());
+            declaracion.setString(5,datos.getDescripcion());
+            
             declaracion.executeUpdate();
             ResultSet resultado = declaracion.getGeneratedKeys();
             if (resultado.next()) {
                 int id = resultado.getInt(1);
-                mandar = new MovimientoMonetario(datos.getNoCuenta(), datos.getMonto(), datos.getFecha(), datos.getTipo());
+                mandar = new MovimientoMonetario(datos.getNoCuenta(), datos.getMonto(), datos.getFecha(), datos.getTipo(),datos.getDescripcion());
                 mandar.setId(Integer.toString(id));
             }
             this.conexion.commit();
