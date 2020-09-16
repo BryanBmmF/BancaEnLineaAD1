@@ -1,8 +1,10 @@
 package dev.com.j3b.ui.transaccionesPropias;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,7 +40,6 @@ import dev.com.j3b.MainActivity;
 import dev.com.j3b.R;
 import dev.com.j3b.enums.EstadoDeCuenta;
 import dev.com.j3b.enums.TipoDeMovimientoMonetario;
-import dev.com.j3b.manejadorLogIn.ManejadorCuentaPropia;
 import dev.com.j3b.modelos.Cuenta;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.ui.aplicacion.VentanaPrincipal;
@@ -49,14 +50,13 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
     /**
      * INSERT INTO CUENTA VALUES ('1234567890','0000000000002','MONETARIA','0','ANUAL','activa','800')
     **/
-    private Button retroceder;
     private Button btnRealizarTransferencia;
     private EditText cantidadDeTransferencia;
+    private EditText editTextDescripcion;
     //Spinners contenedores de las cuentas
     private Spinner spinnerCuentaOrigen;
     private Spinner spinnerCuentaDestino;
     //Manejadores y elementos de configuracion
-    private ManejadorCuentaPropia manejadorCuentaPropia;
     private ArrayList<Cuenta> listaDeCuentas;
     private int posicionDeCuentaDestino;
     private int posicionDeCuentaOrigen;
@@ -69,18 +69,17 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         //Asignando el spinner
         spinnerCuentaOrigen =(Spinner) findViewById(R.id.spinnerCuentaOrigen);
         spinnerCuentaDestino=(Spinner) findViewById(R.id.spinnerCuentaDestino);
-        retroceder=(Button) findViewById(R.id.btnRetroceder);
         btnRealizarTransferencia=(Button) findViewById(R.id.btnRealizarTransferencia);
         cantidadDeTransferencia = (EditText) findViewById(R.id.cantidadDeTransferencia);
+        editTextDescripcion = (EditText) findViewById(R.id.editTextDescripcion);
         //Configuracion de listas y manejadores
         listaDeCuentas = new ArrayList<>();
-        manejadorCuentaPropia = new ManejadorCuentaPropia();
         seRealizoRollback=false;
         //Consultando las cuentas del cliente y llenando espinner
         consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
 
 
-        //Evento del boton retroceder
+        /*//Evento del boton retroceder
         retroceder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +87,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
                 toast.show();
                 volverAPaginaPrincipal();
             }
-        });
+        });*/
 
         //Evento de Spinner para seleccionar cuenta origen
         spinnerCuentaOrigen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -143,7 +142,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
     /**
      * Permite inicar una transaccion con el comando START TRANSACTION;
      */
-    public void iniciarTransaccion(){
+ /*   public void iniciarTransaccion(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -167,11 +166,11 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-
+*/
     /**
      * Permite validar las operaciones realizadas en la transaccion con un COMMIT;
      */
-    public void ejecutarCommit(){
+   /* public void ejecutarCommit(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -194,11 +193,11 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-
+*/
     /**
      * Permite ejecutar un ROLLBACK en caso de que la transaccion falle
      */
-    public void ejecutarRollback(){
+  /*  public void ejecutarRollback(){
         seRealizoRollback =true;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
             @Override
@@ -221,27 +220,16 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-    }
+    }*/
 
-    /**
-     * Permite insertar una Transaccion_Cuenta luego de haber realizado los movimientos monetarios
-     * @param cuentaEmisora
-     * @param monto
-     * @param cuentaReceptora
-     * @param claveMovimientoOrigen
-     * @param claveMovimientoDestino
-     */
-    public void insertarTransaccionCuenta(final String cuentaEmisora,final double monto,final String cuentaReceptora,final String claveMovimientoOrigen,final String claveMovimientoDestino){
+
+
+ /*   public void insertarTransaccionCuenta(final String cuentaEmisora,final double monto,final String cuentaReceptora,final String claveMovimientoOrigen,final String claveMovimientoDestino){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                /*if(response.isEmpty()){//No se ejecuto la insercion en la base de datos
-                    ejecutarRollback();
-                }*/
                 System.out.println("RESPONSE TRANSACCION_CUENTA:"+response);
-                if(!response.equalsIgnoreCase("1")){
-                    ejecutarRollback();
-                }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -261,24 +249,40 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+*/
 
-    /***
-     * Permite la insercion de un movimiento monetario
-     * @param numeroDeCuenta
-     * @param monto
-     * @param tipo
-     */
-    public boolean insertarMovimientoMonetario(final String idMovMonetario,final String numeroDeCuenta,final double monto,final TipoDeMovimientoMonetario tipo){
+
+ /*   public void actualizarSaldoDeCuenta(final String numeroDeCuenta,final Double saldo){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                /*if(response.isEmpty()){//No se ejecuto la insercion en la base de datos
-                    ejecutarRollback();
-                }*/
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){@Override
+        protected Map<String, String> getParams() throws AuthFailureError {
+            String insertSQL = "UPDATE CUENTA SET saldo="+saldo+" WHERE no_cuenta_bancaria="+numeroDeCuenta;
+            Map<String, String> parametros = new HashMap<String, String>();
+            parametros.put("consultaSQL", insertSQL);
+            return parametros;
+        }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+    }
+*/
+
+
+   /* public void insertarMovimientoMonetario(final String idMovMonetario,final String numeroDeCuenta,final double monto,final TipoDeMovimientoMonetario tipo){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
                 System.out.println("RESPONSE Movimiento_Monetario:"+response);
-                if(!response.equalsIgnoreCase("1")){
-                    ejecutarRollback();
-                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -298,11 +302,33 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-        return true;
 
     }
 
+*/
 
+
+   public void crearMovimientosYTransacciones(final String cuentaOrigen,final String cuentaDestino,final double monto,String descripcion){
+        String consultaSQL= ServidorSQL.SERVIDORSQL_CONRETORNO+
+                "SELECT transferir_cuenta_propia('"+cuentaOrigen+"','"+cuentaDestino+"',"+monto+",'"+descripcion+"')";
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+       RequestQueue requestQueue = Volley.newRequestQueue(this);
+       requestQueue.add(jsonArrayRequest);
+
+
+   }
 
     /**
      * Se consultan las cuentas Activas del usuario
@@ -310,7 +336,6 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
      * @param estadoDeCuenta
      */
     public void consultarCuentasDeUsuario(String dpiCliente, EstadoDeCuenta estadoDeCuenta){
-        final ArrayList<Cuenta> cuentasDeUsuario = new ArrayList<>();
         String consultaSQL = ServidorSQL.SERVIDORSQL_CONRETORNO+"" +
                 "SELECT no_cuenta_bancaria,tipo_cuenta,saldo" +
                 " FROM CUENTA WHERE dpi_cliente='"+dpiCliente+"'" +
@@ -324,6 +349,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
 
                         JSONObject jsonObjectDatosCuenta=null;
                         System.out.println("ConsultaTamano:"+response.length());
+                        listaDeCuentas= new ArrayList<>();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 Cuenta cuenta = new Cuenta();
@@ -331,7 +357,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
                                 cuenta.setNoCuentaBancaria(jsonObjectDatosCuenta.getString("no_cuenta_bancaria"));
                                 cuenta.setSaldo(jsonObjectDatosCuenta.getDouble("saldo"));
                                 listaDeCuentas.add(new Cuenta(jsonObjectDatosCuenta.getString("no_cuenta_bancaria"),jsonObjectDatosCuenta.getDouble("saldo")));
-                                System.out.println("Tamano de lista:"+ listaDeCuentas.size());
+                                System.out.println("En lista:"+ listaDeCuentas.get(i).toString());
                             }catch (JSONException e){
                                 Toast.makeText(null, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -353,9 +379,10 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
     }
 
     public void escribirCuentasEnSpinner(){
+        System.out.println("---------->Tamano de Spinner:"+listaDeCuentas.size());
         String[] arrayCuentas = new String[listaDeCuentas.size()];
         for (int i = 0; i < listaDeCuentas.size(); i++) {
-            arrayCuentas[i]="No.Cuenta:"+listaDeCuentas.get(i).getNoCuentaBancaria();
+            arrayCuentas[i]="No.Cuenta:"+listaDeCuentas.get(i).getNoCuentaBancaria()+" Saldo:"+listaDeCuentas.get(i).getSaldo();
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arrayCuentas);
@@ -370,10 +397,10 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
     public void generarTransaccion(){
 //        System.out.println("CUENTA ORIGEN("+posicionDeCuentaOrigen+"):"+listaDeCuentas.get(posicionDeCuentaOrigen).toString());
 //        System.out.println("CUENTA DESTINO("+posicionDeCuentaDestino+"):"+listaDeCuentas.get(posicionDeCuentaDestino).toString());
-        Cuenta cuentaOrigen =listaDeCuentas.get(posicionDeCuentaOrigen);
-        Cuenta cuentaDestino = listaDeCuentas.get(posicionDeCuentaDestino);
-        String cadenaMonto = cantidadDeTransferencia.getText().toString();
-        double monto;
+        final Cuenta cuentaOrigen =listaDeCuentas.get(posicionDeCuentaOrigen);
+        final Cuenta cuentaDestino = listaDeCuentas.get(posicionDeCuentaDestino);
+        final String cadenaMonto = cantidadDeTransferencia.getText().toString();
+        final double monto;
         if(cadenaMonto.isEmpty()){
             Toast.makeText(getApplicationContext(), "El monto es obligatorio", Toast.LENGTH_LONG).show();
         }else{
@@ -386,21 +413,55 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
             }else if(monto>cuentaOrigen.getSaldo()){
                 Toast.makeText(getApplicationContext(), "Monto rechazado.\n No posees el monto descrito", Toast.LENGTH_LONG).show();
             }else{
-                //Preparacion de informacion
-                String claveMovOrigen= generarCodigoMovimientoMonetario();
-                String claveMovDestino = generarCodigoMovimientoMonetario();
-                //Inicia transaccion
-                iniciarTransaccion();
-                insertarMovimientoMonetario(claveMovOrigen,cuentaOrigen.getNoCuentaBancaria(),monto,TipoDeMovimientoMonetario.DEBITO);
-                System.out.println("->1.SE REALIZO ROLBBACK:"+seRealizoRollback);
-                if(!seRealizoRollback) insertarMovimientoMonetario(claveMovDestino,cuentaDestino.getNoCuentaBancaria(),monto,TipoDeMovimientoMonetario.ABONO);
-                System.out.println("->2.SE REALIZO ROLBBACK:"+seRealizoRollback);
-                if(!seRealizoRollback) insertarTransaccionCuenta(cuentaOrigen.getNoCuentaBancaria(),monto,cuentaDestino.getNoCuentaBancaria(),claveMovOrigen,claveMovDestino);
-                System.out.println("->3.SE REALIZO ROLBBACK:"+seRealizoRollback);
-                if(!seRealizoRollback) ejecutarCommit();
-                seRealizoRollback=false;
-                cantidadDeTransferencia.setText("");
-                Toast.makeText(getApplicationContext(), "Se realizo la transferencia", Toast.LENGTH_LONG).show();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Desea realizar la transaccion?");
+                builder.setTitle("Confirmacion");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Preparacion de informacion
+                        String claveMovOrigen= generarCodigoMovimientoMonetario();
+                        String claveMovDestino = generarCodigoMovimientoMonetario();
+                        double montoNuevoCuentaOrigen = cuentaOrigen.getSaldo()-monto;
+                        double montoNUevoCuentaDestino =cuentaDestino.getSaldo()+monto;
+                        System.out.println("Monto:"+monto+" DineroOrigen:"+cuentaOrigen.getSaldo()+" MontoFinal:"+montoNuevoCuentaOrigen);
+                        System.out.println("Monto:"+monto+" DineroDestino:"+cuentaDestino.getSaldo()+" MontoFinal:"+montoNUevoCuentaDestino);
+                        //Inicia transaccion
+                        /*iniciarTransaccion();
+                        insertarMovimientoMonetario(claveMovOrigen,cuentaOrigen.getNoCuentaBancaria(),monto,TipoDeMovimientoMonetario.DEBITO);
+                        if(!seRealizoRollback) insertarMovimientoMonetario(claveMovDestino,cuentaDestino.getNoCuentaBancaria(),monto,TipoDeMovimientoMonetario.ABONO);
+                        if(!seRealizoRollback) insertarTransaccionCuenta(cuentaOrigen.getNoCuentaBancaria(),monto,cuentaDestino.getNoCuentaBancaria(),claveMovOrigen,claveMovDestino);
+                        if(!seRealizoRollback) actualizarSaldoDeCuenta(cuentaOrigen.getNoCuentaBancaria(),montoNuevoCuentaOrigen);
+                        if(!seRealizoRollback) actualizarSaldoDeCuenta(cuentaDestino.getNoCuentaBancaria(),montoNUevoCuentaDestino);
+                        if(!seRealizoRollback) ejecutarCommit();
+                        seRealizoRollback=false;
+                        Toast.makeText(getApplicationContext(), "Se realizo la transferencia", Toast.LENGTH_LONG).show();
+                        */
+                        //Limpiar Spinner y Text
+                        crearMovimientosYTransacciones(cuentaOrigen.getNoCuentaBancaria(),cuentaDestino.getNoCuentaBancaria(),monto,editTextDescripcion.getText().toString());
+                        editTextDescripcion.setText("");
+                        cantidadDeTransferencia.setText("");
+                        //Llenarlo de nuevo
+                        try {
+                            Thread.sleep(100L);
+                            consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
+                            consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
+                        }catch(InterruptedException e){
+                        }
+                        Toast.makeText(getApplicationContext(), "Se realizo la transferencia", Toast.LENGTH_LONG).show();
+                        //consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "Transferencia cancelada", Toast.LENGTH_LONG).show();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
 
             }
 
