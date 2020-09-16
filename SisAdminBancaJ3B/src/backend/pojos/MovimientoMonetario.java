@@ -19,12 +19,14 @@ public class MovimientoMonetario {
     private double monto;
     private Date fecha;
     private String tipo;
+    private String descripcion;
 
-    public MovimientoMonetario(  String noCuenta, double monto, Date fecha, String tipo) {
+    public MovimientoMonetario(  String noCuenta, double monto, Date fecha, String tipo, String descripcion) {
         this.noCuenta = noCuenta;
         this.monto = monto;
         this.fecha = fecha;
         this.tipo = tipo;
+        this.descripcion = descripcion;
     } 
 
     public String getId() {
@@ -66,6 +68,15 @@ public class MovimientoMonetario {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
   
 }
 
