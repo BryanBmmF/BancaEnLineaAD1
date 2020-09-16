@@ -15,31 +15,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import dev.com.j3b.MainActivity;
 import dev.com.j3b.R;
 import dev.com.j3b.enums.EstadoDeCuenta;
-import dev.com.j3b.enums.TipoDeMovimientoMonetario;
 import dev.com.j3b.modelos.Cuenta;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.ui.aplicacion.VentanaPrincipal;
@@ -138,175 +125,6 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         Intent intent = new Intent(this,VentanaPrincipal.class);
         startActivity(intent);
     }
-
-    /**
-     * Permite inicar una transaccion con el comando START TRANSACTION;
-     */
- /*   public void iniciarTransaccion(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){@Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            final Timestamp fecha = new Timestamp(System.currentTimeMillis());
-            String insertSQL = "START TRANSACTION";
-            Map<String, String> parametros = new HashMap<String, String>();
-            parametros.put("consultaSQL", insertSQL);
-            return parametros;
-        }
-
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-*/
-    /**
-     * Permite validar las operaciones realizadas en la transaccion con un COMMIT;
-     */
-   /* public void ejecutarCommit(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){@Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            final Timestamp fecha = new Timestamp(System.currentTimeMillis());
-            String insertSQL = "COMMIT";
-            Map<String, String> parametros = new HashMap<String, String>();
-            parametros.put("consultaSQL", insertSQL);
-            return parametros;
-        }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-*/
-    /**
-     * Permite ejecutar un ROLLBACK en caso de que la transaccion falle
-     */
-  /*  public void ejecutarRollback(){
-        seRealizoRollback =true;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){@Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            String insertSQL = "ROLLBACK";
-            System.out.println("SE EJECUTO UN ROLLBACK");
-            Map<String, String> parametros = new HashMap<String, String>();
-            parametros.put("consultaSQL", insertSQL);
-            return parametros;
-        }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }*/
-
-
-
- /*   public void insertarTransaccionCuenta(final String cuentaEmisora,final double monto,final String cuentaReceptora,final String claveMovimientoOrigen,final String claveMovimientoDestino){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                System.out.println("RESPONSE TRANSACCION_CUENTA:"+response);
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {@Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-            final Timestamp fecha = new Timestamp(System.currentTimeMillis());
-            String insertSQL = "INSERT INTO TRANSACCION_CUENTA(no_cuenta_emisora,monto,no_cuenta_receptora,fecha,movimiento_origen,movimiento_destino)" +
-                    " VALUES ('"+cuentaEmisora+"',"+monto+",'"+cuentaReceptora+"','"+fecha+"','"+claveMovimientoOrigen+"','"+claveMovimientoDestino+"')";
-            Map<String, String> parametros = new HashMap<String, String>();
-            parametros.put("consultaSQL", insertSQL);
-            return parametros;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-*/
-
-
- /*   public void actualizarSaldoDeCuenta(final String numeroDeCuenta,final Double saldo){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){@Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            String insertSQL = "UPDATE CUENTA SET saldo="+saldo+" WHERE no_cuenta_bancaria="+numeroDeCuenta;
-            Map<String, String> parametros = new HashMap<String, String>();
-            parametros.put("consultaSQL", insertSQL);
-            return parametros;
-        }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
-    }
-*/
-
-
-   /* public void insertarMovimientoMonetario(final String idMovMonetario,final String numeroDeCuenta,final double monto,final TipoDeMovimientoMonetario tipo){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ServidorSQL.SERVIDORSQL_SINRETORNO, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                System.out.println("RESPONSE Movimiento_Monetario:"+response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){@Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            final Timestamp fecha = new Timestamp(System.currentTimeMillis());
-            String insertSQL = "INSERT INTO MOVIMIENTO_MONETARIO(id_mov_monetario,no_cuenta,monto,fecha,tipo)" +
-                    " VALUES('"+idMovMonetario+"','"+numeroDeCuenta+"',"+monto+",'"+fecha+"','"+tipo+"')";
-            Map<String, String> parametros = new HashMap<String, String>();
-            parametros.put("consultaSQL", insertSQL);
-            return parametros;
-        }
-
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
-    }
-
-*/
-
 
    public void crearMovimientosYTransacciones(final String cuentaOrigen,final String cuentaDestino,final double monto,String descripcion){
         String consultaSQL= ServidorSQL.SERVIDORSQL_CONRETORNO+
@@ -410,6 +228,8 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
             if(posicionDeCuentaOrigen==posicionDeCuentaDestino){
                 Toast.makeText(getApplicationContext(), "Las cuentas deben ser distintas", Toast.LENGTH_LONG).show();
             //Validacion de que sea un monto valido
+            }else if(monto==0){
+                Toast.makeText(getApplicationContext(), "El monto debe ser Mayor a 0", Toast.LENGTH_LONG).show();
             }else if(monto>cuentaOrigen.getSaldo()){
                 Toast.makeText(getApplicationContext(), "Monto rechazado.\n No posees el monto descrito", Toast.LENGTH_LONG).show();
             }else{
@@ -422,32 +242,19 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Preparacion de informacion
-                        String claveMovOrigen= generarCodigoMovimientoMonetario();
-                        String claveMovDestino = generarCodigoMovimientoMonetario();
                         double montoNuevoCuentaOrigen = cuentaOrigen.getSaldo()-monto;
                         double montoNUevoCuentaDestino =cuentaDestino.getSaldo()+monto;
                         System.out.println("Monto:"+monto+" DineroOrigen:"+cuentaOrigen.getSaldo()+" MontoFinal:"+montoNuevoCuentaOrigen);
                         System.out.println("Monto:"+monto+" DineroDestino:"+cuentaDestino.getSaldo()+" MontoFinal:"+montoNUevoCuentaDestino);
-                        //Inicia transaccion
-                        /*iniciarTransaccion();
-                        insertarMovimientoMonetario(claveMovOrigen,cuentaOrigen.getNoCuentaBancaria(),monto,TipoDeMovimientoMonetario.DEBITO);
-                        if(!seRealizoRollback) insertarMovimientoMonetario(claveMovDestino,cuentaDestino.getNoCuentaBancaria(),monto,TipoDeMovimientoMonetario.ABONO);
-                        if(!seRealizoRollback) insertarTransaccionCuenta(cuentaOrigen.getNoCuentaBancaria(),monto,cuentaDestino.getNoCuentaBancaria(),claveMovOrigen,claveMovDestino);
-                        if(!seRealizoRollback) actualizarSaldoDeCuenta(cuentaOrigen.getNoCuentaBancaria(),montoNuevoCuentaOrigen);
-                        if(!seRealizoRollback) actualizarSaldoDeCuenta(cuentaDestino.getNoCuentaBancaria(),montoNUevoCuentaDestino);
-                        if(!seRealizoRollback) ejecutarCommit();
-                        seRealizoRollback=false;
-                        Toast.makeText(getApplicationContext(), "Se realizo la transferencia", Toast.LENGTH_LONG).show();
-                        */
                         //Limpiar Spinner y Text
                         crearMovimientosYTransacciones(cuentaOrigen.getNoCuentaBancaria(),cuentaDestino.getNoCuentaBancaria(),monto,editTextDescripcion.getText().toString());
                         editTextDescripcion.setText("");
                         cantidadDeTransferencia.setText("");
                         //Llenarlo de nuevo
                         try {
-                            Thread.sleep(100L);
+                            Thread.sleep(1500L);
                             consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
-                            consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
+                            //consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
                         }catch(InterruptedException e){
                         }
                         Toast.makeText(getApplicationContext(), "Se realizo la transferencia", Toast.LENGTH_LONG).show();
@@ -464,24 +271,11 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
                 alertDialog.show();
 
             }
-
         }
 
-        //System.out.println("CLAVE DE MOVIMIENTO:"+generarCodigoMovimientoMonetario());
-        //Validacion de que cuenta ORIGEN != DESTINO  Y El monto sea correcto
-        //Inicia transaccion
-        //Inserta el movimiento monetario ORIGEN(Se ejecuta el trigger que disminuira el valor de cuenta ORIGEN)(Colocar Rollback)
-        //Inserta el movimiento monetario DESTINO(Seejecuta el trigger que aumentara el valor de la cuenta DESTINO)(Colocar Rollback)
-        //Insertar transaccion Cuenta(Colcar Rollback)
-        //Se ejecuta el commit
     }
 
 
-    private String generarCodigoMovimientoMonetario() {
-        SecureRandom random = new SecureRandom();
-        String text = new BigInteger(130, random).toString(32);
-        return  text.substring(1, 9);
 
-    }
 
 }
