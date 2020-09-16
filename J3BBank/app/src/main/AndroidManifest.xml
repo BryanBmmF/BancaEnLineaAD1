@@ -15,9 +15,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.transaccionesPropias.TransaccionCuentasPropias"></activity>
-        <activity
-            android:name=".ui.login.transaccionCuentaPropia"
-            android:label="@string/title_activity_transaccion_cuenta_propia" />
+        <activity android:name=".ui.transaccionesAjenas.TransaccionCuentasAjenas"></activity>
         <activity android:name=".ui.ingreso.RedireccionInicialActivity" />
         <activity
             android:name=".ui.ingreso.HomeActivity"
