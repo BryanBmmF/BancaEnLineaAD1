@@ -247,6 +247,10 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
      */
     private function establishSocketConnection()
     {
+        #Estas dos lineas son agregadas a la configuraciòn por defecto para solucionar un error con la configuracion de ssl
+        $options['ssl']['verify_peer'] = FALSE;
+        $options['ssl']['verify_peer_name'] = FALSE;
+
         $host = $this->params['host'];
         if (!empty($this->params['protocol'])) {
             $host = $this->params['protocol'].'://'.$host;
@@ -255,7 +259,8 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
         if (!empty($this->params['timeout'])) {
             $timeout = $this->params['timeout'];
         }
-        $options = [];
+        #linea comentada para configuracion ssl
+        #$options = [];
         if (!empty($this->params['sourceIp'])) {
             $options['socket']['bindto'] = $this->params['sourceIp'].':0';
         }
