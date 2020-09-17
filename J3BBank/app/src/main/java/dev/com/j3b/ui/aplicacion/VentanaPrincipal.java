@@ -32,13 +32,14 @@ import dev.com.j3b.R;
 import dev.com.j3b.modelos.CuentaHabiente;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.modelos.Usuario;
+import dev.com.j3b.ui.transaccionesAjenas.TransaccionCuentasAjenas;
 import dev.com.j3b.ui.transaccionesPropias.TransaccionCuentasPropias;
 
 public class VentanaPrincipal extends AppCompatActivity implements View.OnClickListener {
 
     private Usuario usuarioRecivido = new Usuario();
     private TextView displayNombre, displayEmail;
-    private CuentaHabiente cuentaHabienteLogueado = new CuentaHabiente();
+    public static CuentaHabiente cuentaHabienteLogueado = new CuentaHabiente();
     private CardView salirCardview, monetariasCardview, ahorrosCardview, tarjetasCardview, transaccionesCardview, segurosCardview, gestionesCardview, creditosCardview;
 
     @Override
@@ -145,7 +146,12 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.cuentasAhorroButton :
                 break;
+             /*Por el momento este boton funciona como transferencias a cuentas ajenas*/
             case R.id.tarjetasCreditoButton :
+                Toast toastTCC = Toast.makeText(getApplicationContext(), "Transferencias a cuentas de confianza", Toast.LENGTH_SHORT);
+                toastTCC.show();
+                Intent intentTCC = new Intent(this, TransaccionCuentasAjenas.class);
+                startActivity(intentTCC);
                 break;
             case R.id.transaccionesButton :
                 Toast toast = Toast.makeText(getApplicationContext(), "TRANSACCIONES", Toast.LENGTH_SHORT);
