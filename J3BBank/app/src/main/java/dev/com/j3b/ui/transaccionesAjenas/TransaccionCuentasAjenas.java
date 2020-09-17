@@ -19,19 +19,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
-
 import dev.com.j3b.MainActivity;
 import dev.com.j3b.R;
 import dev.com.j3b.enums.EstadoDeCuenta;
-import dev.com.j3b.enums.TipoDeMovimientoMonetario;
 import dev.com.j3b.manejadorLogIn.ManejadorCuentaAjena;
 import dev.com.j3b.manejadorLogIn.ManejadorCuentaPropia;
 import dev.com.j3b.modelos.Cuenta;
@@ -56,13 +50,17 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
     private ArrayList<Cuenta> listaDeCuentasAjenas;
     private int posicionDeCuentaDestino;
     private int posicionDeCuentaOrigen;
-    private RequestQueue requestQueue ;
 
+    public String cuentaOrigenSelec;
+    public String cuentaDestinoSelec;
+    private RequestQueue requestQueue ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaccion_cuentas_ajenas);
+        cuentaOrigenSelec = "";
+        cuentaDestinoSelec= "";
         //voley global
         requestQueue = Volley.newRequestQueue(this);
         //campos recibidos
@@ -73,6 +71,7 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
         spinnerCuentaDestino=(Spinner) findViewById(R.id.spinnerCuentaDestino);
         btnRetroceder=(Button) findViewById(R.id.btnRetroceder);
         btnRealizarTransferencia=(Button) findViewById(R.id.btnRealizarTransferencia);
+        btnRegistrarCuentaAjena=(Button) findViewById(R.id.btnRegistrarCuentaAjena);
         //Configuracion de listas y manejadores
         listaDeCuentas = new ArrayList<>();
         listaDeCuentasAjenas = new ArrayList<>();
@@ -86,8 +85,8 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
         btnRetroceder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "RETROCEDIENDO", Toast.LENGTH_SHORT);
-                toast.show();
+                //Toast toast = Toast.makeText(getApplicationContext(), "RETROCEDIENDO", Toast.LENGTH_SHORT);
+                //toast.show();
                 volverAPaginaPrincipal();
             }
         });
@@ -98,6 +97,7 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> lista, View view, int posicion, long l) {
                 if(lista!=null){
                     String cuenta = (String) lista.getSelectedItem();
+                    cuentaOrigenSelec = cuenta;
                     System.out.println("CUENTA SELECCIONADA:"+cuenta+" Posicion:"+posicion);
                     posicionDeCuentaOrigen=posicion;
                 }
@@ -116,6 +116,7 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> lista, View view, int posicion, long l) {
                 if(lista!=null){
                     String cuenta = (String) lista.getSelectedItem();
+                    cuentaDestinoSelec = cuenta;
                     System.out.println("CUENTA SELECCIONADA:"+cuenta+" Posicion:"+posicion);
                     posicionDeCuentaDestino=posicion;
                 }
@@ -132,6 +133,16 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registrarTransferenciaTerceros();
+
+            }
+        });
+
+        //Evento para registrar una nueva cuenta de confianza
+        btnRegistrarCuentaAjena.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirigirRegistroCuenta();
+
             }
         });
 
@@ -141,58 +152,47 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
         Intent intent = new Intent(this,VentanaPrincipal.class);
         startActivity(intent);
     }
+
+    public void redirigirEvaluadorCodigo(){
+        Intent intent = new Intent(this,EvaluadorCodigoTransferencia.class);
+
+        Bundle nuevoBundlePrincipal = new Bundle();
+
+        nuevoBundlePrincipal.putString("CuentaOrigen",listaDeCuentas.get(posicionDeCuentaOrigen).getNoCuentaBancaria());
+        nuevoBundlePrincipal.putString("CuentaDestino",listaDeCuentasAjenas.get(posicionDeCuentaDestino).getNoCuentaBancaria());
+        nuevoBundlePrincipal.putString("Monto",txtMonto.getText().toString());
+        nuevoBundlePrincipal.putString("Motivo",txtMotivo.getText().toString());
+        intent.putExtras(nuevoBundlePrincipal);
+
+        startActivity(intent);
+        //ULEMWQ
+    }
+    public void redirigirRegistroCuenta(){
+        Intent intent = new Intent(this,RegistroCuentaConfianza.class);
+        startActivity(intent);
+        //ULEMWQ
+    }
+
     /**
      * Metodo para registrar una trenasferencia a cuentas de terceros
      * */
     public void registrarTransferenciaTerceros(){
-
         if (txtMonto.getText().toString().isEmpty()){
             Toast.makeText(getApplicationContext(), "Se debe especificar un monto a transferir", Toast.LENGTH_SHORT).show();
         } else {
             try {
                 double monto = Double.parseDouble(txtMonto.getText().toString());
                 String motivo = txtMotivo.getText().toString();
+                //validar motivo tambien
                 if (manejadorCuentaAjena.validarMonto(monto)){
-                    final String montoEnviar = "Q."+monto+"0";
-                    String consultaSQL = ServidorSQL.SERVIDORSQL_INSERCION_TRANSFERENCIA_TERCEROS+
-                            "SELECT transferir_cuenta_ajena" +
-                            "('"+listaDeCuentas.get(posicionDeCuentaOrigen).getNoCuentaBancaria()+"','"+listaDeCuentasAjenas.get(posicionDeCuentaDestino).getNoCuentaBancaria()+"','"+monto+"','"+motivo+"')";
-                    //realizar peticion http ANTES DE ESTO ENVIAR TOKEN Y PONER CRONOMETRO
-                    JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL,
-                            new Response.Listener<JSONArray>() {
-                                @RequiresApi(api = Build.VERSION_CODES.O)
-                                @Override
-                                public void onResponse(JSONArray response) {
-                                    JSONObject jsonObjectDatosTrans=null;
-                                    for (int i = 0; i < response.length(); i++) {
-                                        try {
-                                            jsonObjectDatosTrans = response.getJSONObject(i);
-                                            String respuesta = jsonObjectDatosTrans.getString("respuesta");
-
-                                            if (respuesta.equalsIgnoreCase("valida")){
-                                                Toast.makeText(getApplicationContext(), "La transferencia se realizo correctamente", Toast.LENGTH_SHORT).show();
-                                                //notificarTransferenciaTerceros(montoEnviar);
-                                            } else {
-                                                String error = jsonObjectDatosTrans.getString("error");
-                                                //la transferencia no se pudo realizar debido a un error
-                                                Toast.makeText(getApplicationContext(), "Ocurrio el siguiente error: "+error, Toast.LENGTH_SHORT).show();
-                                            }
-                                        }catch (JSONException e){
-                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            //en caso de no recuperar nada
-                            System.out.println("ERROR AL GENERAR JSON");
-                            Toast.makeText(getApplicationContext(), "Es posible que tu cuenta personal no tenga fondos suficientes para hacer la transferencia. Porfavor verifica", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    RequestQueue requestQueue = Volley.newRequestQueue(this);
-                    requestQueue.add(jsonArrayRequest);
-
+                    //si todo va bien
+                    if (motivo.length()<50){
+                        Toast toast = Toast.makeText(getApplicationContext(), "Evaluar Codigo de transferencia", Toast.LENGTH_SHORT);
+                        toast.show();
+                        redirigirEvaluadorCodigo();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "El motivo de tu transferencia es mauy grande, porfavor reducelo", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "El monto a transferir no puede ser 0", Toast.LENGTH_SHORT).show();
                 }
@@ -200,48 +200,6 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "El monto a transferir no es valido", Toast.LENGTH_SHORT).show();
             }
         }
-
-    }
-
-    /**
-     * Metodo para enviar notificacion despues de registrar la transfrencia
-     *
-     * */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void notificarTransferenciaTerceros(String montoEnviar){
-        LocalDate fecha = LocalDate.now();
-        String consultaSQL = ServidorSQL.SERVIDORSQL_NOTIFICACION_TRANSFERENCIA_TERCEROS+
-                "Usuario='"+MainActivity.usuarioLogueado.getUsuarioCliente()+
-                "'?CuentaPersonal='"+listaDeCuentas.get(posicionDeCuentaOrigen).getNoCuentaBancaria()+
-                "'?CuentaDestino='"+listaDeCuentasAjenas.get(posicionDeCuentaDestino).getNoCuentaBancaria()+
-                "'?Monto='"+montoEnviar+
-                "'?Fecha='"+fecha.toString()+
-                "'?Email='"+VentanaPrincipal.cuentaHabienteLogueado.getEmail()+"'";
-        //realizar peticion http ANTES DE ESTO ENVIAR TOKEN Y PONER CRONOMETRO
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL,
-                new Response.Listener<JSONArray>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        JSONObject jsonObjectDatos=null;
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                jsonObjectDatos = response.getJSONObject(i);
-                                //respuesta
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(null, "ERROR HTTP REQUEST", Toast.LENGTH_SHORT).show();
-            }
-        });
-        //RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonArrayRequest);
 
     }
 
@@ -367,10 +325,4 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
 
     }
 
-
-    public void mostrarCuentasEscogidas(){
-        System.out.println("CUENTA ORIGEN("+posicionDeCuentaOrigen+"):"+listaDeCuentas.get(posicionDeCuentaOrigen).toString());
-        System.out.println("CUENTA DESTINO("+posicionDeCuentaDestino+"):"+listaDeCuentasAjenas.get(posicionDeCuentaDestino).toString());
-        //insertarMovimientoMonetario(listaDeCuentas.get(posicionDeCuentaOrigen).getNoCuentaBancaria(),124.23,TipoDeMovimientoMonetario.DEBITO);
-    }
 }

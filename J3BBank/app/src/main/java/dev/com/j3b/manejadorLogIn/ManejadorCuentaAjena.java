@@ -17,6 +17,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 import dev.com.j3b.enums.EstadoDeCuenta;
 import dev.com.j3b.modelos.Cuenta;
@@ -74,6 +77,29 @@ public class ManejadorCuentaAjena extends AppCompatActivity {
             return  true;
         }
         return false;
+
+    }
+
+
+    /**
+     * Función para generar un codigo numerico de 6 digitos
+     * */
+    public String generarCodigo() {
+        String numeroDev = "";
+        // Conjunto de números ya usados
+        Set<Integer> alreadyUsedNumbers = new HashSet<>();
+        Random random = new Random();
+        // Vamos a generar 6 números aleatorios sin repetición
+        while (alreadyUsedNumbers.size()<3) {
+            // Número aleatorio entre 0 y 40, excluido el 40.
+            int randomNumber = (int)Math.floor(Math.random()*(90-10+1)+10);
+            // Si no lo hemos usado ya, lo usamos y lo metemos en el conjunto de usados.
+            if (!alreadyUsedNumbers.contains(randomNumber)){
+                alreadyUsedNumbers.add(randomNumber);
+                numeroDev +=""+randomNumber;
+            }
+        }
+        return numeroDev;
 
     }
 

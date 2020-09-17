@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.transaccionesPropias.TransaccionCuentasPropias"></activity>
         <activity android:name=".ui.transaccionesAjenas.TransaccionCuentasAjenas"></activity>
+        <activity android:name=".ui.transaccionesAjenas.EvaluadorCodigoTransferencia"></activity>
+        <activity android:name=".ui.transaccionesAjenas.EvaluadorCodigoRegistroCuenta"></activity>
+        <activity android:name=".ui.transaccionesAjenas.RegistroCuentaConfianza"></activity>
         <activity android:name=".ui.ingreso.RedireccionInicialActivity" />
         <activity
             android:name=".ui.ingreso.HomeActivity"
