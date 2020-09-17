@@ -1,8 +1,10 @@
 package dev.com.j3b.ui.transaccionesPropias;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,27 +12,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.sql.Timestamp;
 import java.util.ArrayList;
-
 import dev.com.j3b.MainActivity;
 import dev.com.j3b.R;
 import dev.com.j3b.enums.EstadoDeCuenta;
-import dev.com.j3b.enums.TipoDeMovimientoMonetario;
-import dev.com.j3b.manejadorLogIn.ManejadorCuentaPropia;
 import dev.com.j3b.modelos.Cuenta;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.ui.aplicacion.VentanaPrincipal;
@@ -41,16 +37,17 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
     /**
      * INSERT INTO CUENTA VALUES ('1234567890','0000000000002','MONETARIA','0','ANUAL','activa','800')
     **/
-    private Button retroceder;
     private Button btnRealizarTransferencia;
+    private EditText cantidadDeTransferencia;
+    private EditText editTextDescripcion;
     //Spinners contenedores de las cuentas
     private Spinner spinnerCuentaOrigen;
     private Spinner spinnerCuentaDestino;
     //Manejadores y elementos de configuracion
-    private ManejadorCuentaPropia manejadorCuentaPropia;
     private ArrayList<Cuenta> listaDeCuentas;
     private int posicionDeCuentaDestino;
     private int posicionDeCuentaOrigen;
+    private boolean seRealizoRollback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +56,17 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         //Asignando el spinner
         spinnerCuentaOrigen =(Spinner) findViewById(R.id.spinnerCuentaOrigen);
         spinnerCuentaDestino=(Spinner) findViewById(R.id.spinnerCuentaDestino);
-        retroceder=(Button) findViewById(R.id.btnRetroceder);
         btnRealizarTransferencia=(Button) findViewById(R.id.btnRealizarTransferencia);
+        cantidadDeTransferencia = (EditText) findViewById(R.id.cantidadDeTransferencia);
+        editTextDescripcion = (EditText) findViewById(R.id.editTextDescripcion);
         //Configuracion de listas y manejadores
         listaDeCuentas = new ArrayList<>();
-        manejadorCuentaPropia = new ManejadorCuentaPropia();
+        seRealizoRollback=false;
         //Consultando las cuentas del cliente y llenando espinner
         consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
 
 
-        //Evento del boton retroceder
+        /*//Evento del boton retroceder
         retroceder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +74,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
                 toast.show();
                 volverAPaginaPrincipal();
             }
-        });
+        });*/
 
         //Evento de Spinner para seleccionar cuenta origen
         spinnerCuentaOrigen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -117,7 +115,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         btnRealizarTransferencia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mostrarCuentasEscogidas();
+                generarTransaccion();
             }
         });
 
@@ -128,38 +126,27 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void insertarMovimientoMonetario(String numeroDeCuenta, double monto, TipoDeMovimientoMonetario tipo){
-        Timestamp fecha = new Timestamp(System.currentTimeMillis());
-        String consultaSQL = ServidorSQL.SERVIDORSQL_INSERCION_CON_RETORNO+
-                " INSERT INTO MOVIMIENTO_MONETARIO(no_cuenta,monto,fecha,tipo)" +
-                " VALUES('"+numeroDeCuenta+"',"+monto+",'"+fecha+"','"+tipo+"')";
-        System.out.println("\n\nConsulta MOVIMIENTO_MONETARIO:"+consultaSQL);
+   public void crearMovimientosYTransacciones(final String cuentaOrigen,final String cuentaDestino,final double monto,String descripcion){
+        String consultaSQL= ServidorSQL.SERVIDORSQL_CONRETORNO+
+                "SELECT transferir_cuenta_propia('"+cuentaOrigen+"','"+cuentaDestino+"',"+monto+",'"+descripcion+"')";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL,
                 new Response.Listener<JSONArray>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onResponse(JSONArray response) {
-                        //System.out.println("Response:"+response.length());
-                        JSONObject jsonObjectDatosCuenta=null;
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                int idIngreso = jsonObjectDatosCuenta.getInt("id_mov_monetario");
-                                System.out.println("ID DE INGRESO:"+idIngreso);
-                            }catch(JSONException e){
-                                System.out.println("HOLAAAAAAAAAAAAAAAAAAAA");
-                                e.printStackTrace();
-                            }
-                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
+
             }
         });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonArrayRequest);
-    }
+
+       RequestQueue requestQueue = Volley.newRequestQueue(this);
+       requestQueue.add(jsonArrayRequest);
+
+
+   }
 
     /**
      * Se consultan las cuentas Activas del usuario
@@ -167,7 +154,6 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
      * @param estadoDeCuenta
      */
     public void consultarCuentasDeUsuario(String dpiCliente, EstadoDeCuenta estadoDeCuenta){
-        final ArrayList<Cuenta> cuentasDeUsuario = new ArrayList<>();
         String consultaSQL = ServidorSQL.SERVIDORSQL_CONRETORNO+"" +
                 "SELECT no_cuenta_bancaria,tipo_cuenta,saldo" +
                 " FROM CUENTA WHERE dpi_cliente='"+dpiCliente+"'" +
@@ -181,6 +167,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
 
                         JSONObject jsonObjectDatosCuenta=null;
                         System.out.println("ConsultaTamano:"+response.length());
+                        listaDeCuentas= new ArrayList<>();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 Cuenta cuenta = new Cuenta();
@@ -188,7 +175,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
                                 cuenta.setNoCuentaBancaria(jsonObjectDatosCuenta.getString("no_cuenta_bancaria"));
                                 cuenta.setSaldo(jsonObjectDatosCuenta.getDouble("saldo"));
                                 listaDeCuentas.add(new Cuenta(jsonObjectDatosCuenta.getString("no_cuenta_bancaria"),jsonObjectDatosCuenta.getDouble("saldo")));
-                                System.out.println("Tamano de lista:"+ listaDeCuentas.size());
+                                System.out.println("En lista:"+ listaDeCuentas.get(i).toString());
                             }catch (JSONException e){
                                 Toast.makeText(null, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -210,9 +197,10 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
     }
 
     public void escribirCuentasEnSpinner(){
+        System.out.println("---------->Tamano de Spinner:"+listaDeCuentas.size());
         String[] arrayCuentas = new String[listaDeCuentas.size()];
         for (int i = 0; i < listaDeCuentas.size(); i++) {
-            arrayCuentas[i]="No.Cuenta:"+listaDeCuentas.get(i).getNoCuentaBancaria();
+            arrayCuentas[i]="No.Cuenta:"+listaDeCuentas.get(i).getNoCuentaBancaria()+" Saldo:"+listaDeCuentas.get(i).getSaldo();
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arrayCuentas);
@@ -224,9 +212,70 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
 
     }
 
-    public void mostrarCuentasEscogidas(){
-        System.out.println("CUENTA ORIGEN("+posicionDeCuentaOrigen+"):"+listaDeCuentas.get(posicionDeCuentaOrigen).toString());
-        System.out.println("CUENTA DESTINO("+posicionDeCuentaDestino+"):"+listaDeCuentas.get(posicionDeCuentaDestino).toString());
-        insertarMovimientoMonetario(listaDeCuentas.get(posicionDeCuentaOrigen).getNoCuentaBancaria(),124.23,TipoDeMovimientoMonetario.DEBITO);
+    public void generarTransaccion(){
+//        System.out.println("CUENTA ORIGEN("+posicionDeCuentaOrigen+"):"+listaDeCuentas.get(posicionDeCuentaOrigen).toString());
+//        System.out.println("CUENTA DESTINO("+posicionDeCuentaDestino+"):"+listaDeCuentas.get(posicionDeCuentaDestino).toString());
+        final Cuenta cuentaOrigen =listaDeCuentas.get(posicionDeCuentaOrigen);
+        final Cuenta cuentaDestino = listaDeCuentas.get(posicionDeCuentaDestino);
+        final String cadenaMonto = cantidadDeTransferencia.getText().toString();
+        final double monto;
+        if(cadenaMonto.isEmpty()){
+            Toast.makeText(getApplicationContext(), "El monto es obligatorio", Toast.LENGTH_LONG).show();
+        }else{
+            monto=Double.valueOf(cadenaMonto);
+            System.out.println("MONTO:"+monto);
+            //Validacion de que cuenta ORIGEN != DESTINO
+            if(posicionDeCuentaOrigen==posicionDeCuentaDestino){
+                Toast.makeText(getApplicationContext(), "Las cuentas deben ser distintas", Toast.LENGTH_LONG).show();
+            //Validacion de que sea un monto valido
+            }else if(monto==0){
+                Toast.makeText(getApplicationContext(), "El monto debe ser Mayor a 0", Toast.LENGTH_LONG).show();
+            }else if(monto>cuentaOrigen.getSaldo()){
+                Toast.makeText(getApplicationContext(), "Monto rechazado.\n No posees el monto descrito", Toast.LENGTH_LONG).show();
+            }else{
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Desea realizar la transaccion?");
+                builder.setTitle("Confirmacion");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Preparacion de informacion
+                        double montoNuevoCuentaOrigen = cuentaOrigen.getSaldo()-monto;
+                        double montoNUevoCuentaDestino =cuentaDestino.getSaldo()+monto;
+                        System.out.println("Monto:"+monto+" DineroOrigen:"+cuentaOrigen.getSaldo()+" MontoFinal:"+montoNuevoCuentaOrigen);
+                        System.out.println("Monto:"+monto+" DineroDestino:"+cuentaDestino.getSaldo()+" MontoFinal:"+montoNUevoCuentaDestino);
+                        //Limpiar Spinner y Text
+                        crearMovimientosYTransacciones(cuentaOrigen.getNoCuentaBancaria(),cuentaDestino.getNoCuentaBancaria(),monto,editTextDescripcion.getText().toString());
+                        editTextDescripcion.setText("");
+                        cantidadDeTransferencia.setText("");
+                        //Llenarlo de nuevo
+                        try {
+                            Thread.sleep(1500L);
+                            consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
+                            //consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
+                        }catch(InterruptedException e){
+                        }
+                        Toast.makeText(getApplicationContext(), "Se realizo la transferencia", Toast.LENGTH_LONG).show();
+                        //consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "Transferencia cancelada", Toast.LENGTH_LONG).show();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+            }
+        }
+
     }
+
+
+
+
 }
