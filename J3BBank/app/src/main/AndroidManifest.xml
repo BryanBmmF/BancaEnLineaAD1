@@ -19,6 +19,7 @@
         <activity android:name=".ui.transaccionesAjenas.EvaluadorCodigoTransferencia"></activity>
         <activity android:name=".ui.transaccionesAjenas.EvaluadorCodigoRegistroCuenta"></activity>
         <activity android:name=".ui.transaccionesAjenas.RegistroCuentaConfianza"></activity>
+        <activity android:name=".ui.consultaCuentas.ConsultaCuentas"></activity>
         <activity android:name=".ui.ingreso.RedireccionInicialActivity" />
         <activity
             android:name=".ui.ingreso.HomeActivity"

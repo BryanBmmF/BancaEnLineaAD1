@@ -16,9 +16,9 @@ public class VistaAdministracion extends javax.swing.JFrame {
         initComponents();
         this.usuario = usuario;
         this.textoUsuarioEnSesion.setText(usuario.getUsuario());
-        
+
     }
-    
+
     public void cerrarSesion(){
     Login ventana = new Login();
     ventana.setVisible(true);
@@ -50,15 +50,15 @@ public class VistaAdministracion extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel1.setText("Vista Administracion");
         desktopPane.add(jLabel1);
-        jLabel1.setBounds(10, 10, 270, 29);
+        jLabel1.setBounds(10, 10, 270, 32);
 
         jLabel2.setText("Usuario en Sesion:");
         desktopPane.add(jLabel2);
-        jLabel2.setBounds(480, 10, 140, 18);
+        jLabel2.setBounds(480, 10, 140, 16);
 
         textoUsuarioEnSesion.setText("Aqui va el usuario");
         desktopPane.add(textoUsuarioEnSesion);
-        textoUsuarioEnSesion.setBounds(620, 10, 120, 18);
+        textoUsuarioEnSesion.setBounds(620, 10, 120, 16);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Cerrar Sesion");
@@ -139,7 +139,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
      cerrarSesion();
-     
+
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -156,14 +156,14 @@ public class VistaAdministracion extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.gestionCuentas = new PanelGestionCuentas(true);
         this.gestionCuentas.setVisible(true);
-        
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
        TransaccionesMonetarias menu = new TransaccionesMonetarias(this, true);
        menu.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;

@@ -32,8 +32,12 @@ import dev.com.j3b.R;
 import dev.com.j3b.modelos.CuentaHabiente;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.modelos.Usuario;
+
+import dev.com.j3b.ui.consultaCuentas.ConsultaCuentas;
+
 import dev.com.j3b.ui.transaccionesAjenas.TransaccionCuentasAjenas;
 import dev.com.j3b.ui.transaccionesPropias.TransaccionCuentasPropias;
+
 
 public class VentanaPrincipal extends AppCompatActivity implements View.OnClickListener {
 
@@ -93,9 +97,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(getApplicationContext(), "Hay problemas de conexión al servidor.", Toast.LENGTH_SHORT).show();
                     }
                 }
-
                 //Si el usuario ingresado es valido, podemos ejecutar las instrucciones con dicha informacion a continuacion de este comentario:
-
                 displayNombre.setText(cuentaHabienteLogueado.getNombres()+" "+cuentaHabienteLogueado.getApellidos());
                 displayEmail.setText(cuentaHabienteLogueado.getEmail());
             }
@@ -162,6 +164,11 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
             case R.id.segurosButton :
                 break;
             case R.id.gestionesButton :
+                Intent consultarCuentas = new Intent(getApplicationContext(), ConsultaCuentas.class);
+                Bundle nuevoBundleConsultaCuentas = new Bundle();
+                nuevoBundleConsultaCuentas.putString("dpiusuario", usuarioRecivido.getDpiCliente());
+                consultarCuentas.putExtras(nuevoBundleConsultaCuentas);
+                startActivity(consultarCuentas);
                 break;
             case R.id.creditosButton :
                 break;

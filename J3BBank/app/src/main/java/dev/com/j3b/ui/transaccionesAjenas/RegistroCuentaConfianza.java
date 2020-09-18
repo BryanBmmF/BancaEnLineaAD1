@@ -72,6 +72,7 @@ public class RegistroCuentaConfianza extends AppCompatActivity {
     public void volverAPaginaPrincipal(){
         Intent intent = new Intent(this, TransaccionCuentasAjenas.class);
         startActivity(intent);
+        finish();
     }
 
     public void redirigirEvaluadorCodigo(){
@@ -81,6 +82,7 @@ public class RegistroCuentaConfianza extends AppCompatActivity {
         nuevoBundlePrincipal.putString("Cuenta",txtCuenta.getText().toString());
         intent.putExtras(nuevoBundlePrincipal);
         startActivity(intent);
+        finish();
     }
     /**
      * Metodo para registrar una trenasferencia a cuentas de terceros
