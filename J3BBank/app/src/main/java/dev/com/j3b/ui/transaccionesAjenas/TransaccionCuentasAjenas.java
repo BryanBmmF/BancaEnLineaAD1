@@ -148,6 +148,7 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
     public void volverAPaginaPrincipal(){
         Intent intent = new Intent(this,VentanaPrincipal.class);
         startActivity(intent);
+        finish();
     }
 
     public void redirigirEvaluadorCodigo(){
@@ -162,11 +163,13 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
         intent.putExtras(nuevoBundlePrincipal);
 
         startActivity(intent);
+        finish();
         //ULEMWQ
     }
     public void redirigirRegistroCuenta(){
         Intent intent = new Intent(this,RegistroCuentaConfianza.class);
         startActivity(intent);
+        finish();
         //ULEMWQ
     }
 

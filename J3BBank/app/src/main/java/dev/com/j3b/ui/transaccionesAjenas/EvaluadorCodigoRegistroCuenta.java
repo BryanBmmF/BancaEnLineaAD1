@@ -125,6 +125,7 @@ public class EvaluadorCodigoRegistroCuenta extends AppCompatActivity {
     public void volverAPaginaAnterior(){
         Intent intent = new Intent(this,RegistroCuentaConfianza.class);
         startActivity(intent);
+        finish();
     }
 
     /**

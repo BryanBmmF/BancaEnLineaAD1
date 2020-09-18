@@ -177,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Tarjetas de"
+                        android:text="Transferencias a"
                         android:textColor="#272727"
                         android:textSize="13sp" />
 
@@ -185,7 +185,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0dp"
-                        android:text="Cédito"
+                        android:text="Cuentas Ajenas"
                         android:textColor="#272727"
                         android:textSize="18sp" />
 
@@ -217,10 +217,19 @@
                         android:src="@drawable/send_money1" />
 
                     <TextView
+                        android:id="@+id/creditCardText1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Transacciones"
+                        android:text="Transferencias a"
+                        android:textColor="#272727"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="Cuentas Propias"
                         android:textColor="#272727"
                         android:textSize="18sp" />
 
@@ -284,15 +293,15 @@
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/gestiones1" />
+                        android:src="@drawable/gestiones1"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Gestiones"
+                        android:text="Consultas"
                         android:textColor="#272727"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"/>
 
                 </LinearLayout>
 

@@ -136,6 +136,7 @@ public class EvaluadorCodigoTransferencia extends AppCompatActivity {
     public void volverAPaginaAnterior(){
         Intent intent = new Intent(this,TransaccionCuentasAjenas.class);
         startActivity(intent);
+        finish();
     }
 
     /**
