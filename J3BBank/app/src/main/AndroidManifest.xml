@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.ingreso.RedireccionInicialActivity"></activity>
+        <activity android:name=".ui.consultaCuentas.ConsultaCuentas"></activity>
+        <activity android:name=".ui.ingreso.RedireccionInicialActivity" />
         <activity
             android:name=".ui.ingreso.HomeActivity"
             android:label="@string/title_activity_home"
@@ -29,7 +30,7 @@
         <activity android:name=".ui.aplicacion.VentanaPrincipal" />
         <activity android:name=".ui.ingreso.AvisoBloqueo" />
         <activity android:name=".ui.ingreso.ActualizacionCredenciales" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

@@ -48,15 +48,15 @@ public class VistaAdministracion extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel1.setText("Vista Administracion");
         desktopPane.add(jLabel1);
-        jLabel1.setBounds(10, 10, 270, 28);
+        jLabel1.setBounds(10, 10, 270, 32);
 
         jLabel2.setText("Usuario en Sesion:");
         desktopPane.add(jLabel2);
-        jLabel2.setBounds(480, 10, 140, 15);
+        jLabel2.setBounds(480, 10, 140, 16);
 
         textoUsuarioEnSesion.setText("Aqui va el usuario");
         desktopPane.add(textoUsuarioEnSesion);
-        textoUsuarioEnSesion.setBounds(620, 10, 120, 15);
+        textoUsuarioEnSesion.setBounds(620, 10, 120, 16);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Cerrar Sesion");
