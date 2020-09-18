@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -32,11 +33,17 @@ import dev.com.j3b.modelos.CuentaHabiente;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.modelos.Usuario;
 
+import dev.com.j3b.ui.consultaCuentas.ConsultaCuentas;
+
+import dev.com.j3b.ui.transaccionesAjenas.TransaccionCuentasAjenas;
+import dev.com.j3b.ui.transaccionesPropias.TransaccionCuentasPropias;
+
+
 public class VentanaPrincipal extends AppCompatActivity implements View.OnClickListener {
 
     private Usuario usuarioRecivido = new Usuario();
     private TextView displayNombre, displayEmail;
-    private CuentaHabiente cuentaHabienteLogueado = new CuentaHabiente();
+    public static CuentaHabiente cuentaHabienteLogueado = new CuentaHabiente();
     private CardView salirCardview, monetariasCardview, ahorrosCardview, tarjetasCardview, transaccionesCardview, segurosCardview, gestionesCardview, creditosCardview;
 
     @Override
@@ -90,9 +97,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(getApplicationContext(), "Hay problemas de conexión al servidor.", Toast.LENGTH_SHORT).show();
                     }
                 }
-
                 //Si el usuario ingresado es valido, podemos ejecutar las instrucciones con dicha informacion a continuacion de este comentario:
-
                 displayNombre.setText(cuentaHabienteLogueado.getNombres()+" "+cuentaHabienteLogueado.getApellidos());
                 displayEmail.setText(cuentaHabienteLogueado.getEmail());
             }
@@ -143,13 +148,27 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.cuentasAhorroButton :
                 break;
+             /*Por el momento este boton funciona como transferencias a cuentas ajenas*/
             case R.id.tarjetasCreditoButton :
+                Toast toastTCC = Toast.makeText(getApplicationContext(), "Transferencias a cuentas de confianza", Toast.LENGTH_SHORT);
+                toastTCC.show();
+                Intent intentTCC = new Intent(this, TransaccionCuentasAjenas.class);
+                startActivity(intentTCC);
                 break;
             case R.id.transaccionesButton :
+                Toast toast = Toast.makeText(getApplicationContext(), "TRANSACCIONES", Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(this,TransaccionCuentasPropias.class);
+                startActivity(intent);
                 break;
             case R.id.segurosButton :
                 break;
             case R.id.gestionesButton :
+                Intent consultarCuentas = new Intent(getApplicationContext(), ConsultaCuentas.class);
+                Bundle nuevoBundleConsultaCuentas = new Bundle();
+                nuevoBundleConsultaCuentas.putString("dpiusuario", usuarioRecivido.getDpiCliente());
+                consultarCuentas.putExtras(nuevoBundleConsultaCuentas);
+                startActivity(consultarCuentas);
                 break;
             case R.id.creditosButton :
                 break;
@@ -164,4 +183,6 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
         }
         buscarUsuario(usuarioRecivido.getDpiCliente());
     }
+
+
 }
