@@ -8,6 +8,7 @@ package frontend.vistas.cuentaHabientes;
 import backend.controladores.ControladorCuenta;
 import backend.controladores.ControladorCuentaHabiente;
 import backend.controladores.ControladorPeticionesHttp;
+import backend.controladores.ControladorTransaccionesMonetarias;
 import backend.controladores.ControladorUsuarioCliente;
 import backend.enums.EstadoCuenta;
 import backend.enums.PeriodoInteres;
@@ -35,6 +36,7 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
     public List<CuentaHabiente> listaCuentaHabientes = null;
     public ObservableList<CuentaHabiente> listaObservableCuentaHabientes = null;
     private ControladorUsuarioCliente controladorUsuarioCLiente;
+    private ControladorTransaccionesMonetarias controladorTransacciones;
 
     /**
      * Creates new form CuentaHabienteFrame
@@ -42,6 +44,7 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
     public CuentaHabienteFrame() {
         controladorCuentaHabiente = new ControladorCuentaHabiente();
         this.controladorCuenta = new ControladorCuenta();
+        this.controladorTransacciones = new ControladorTransaccionesMonetarias();
         this.listaCuentaHabientes = new LinkedList<>();
         this.listaObservableCuentaHabientes = ObservableCollections.observableList(listaCuentaHabientes);
         actualizarLista(controladorCuentaHabiente.busquedaDeCunetaHabientes());
@@ -377,6 +380,12 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
                 if (controladorUsuarioCLiente.insertarUsuarioCliente(user) && controladorCuenta.verificarRegistroCuenta(cuenta, txtDepositoInicial.getText())) {
                     JOptionPane.showMessageDialog(this, "Se ha creado la cuenta Habiente. Usuario:\n"
                             + user.toString()+cuenta.toString());
+                    //Se agrega el movimiento monetario inicial de la cuenta
+                        boolean resultado = this.controladorTransacciones.crearRegistroSaldoInicial(cuenta);
+                        if(!resultado){
+                            JOptionPane.showMessageDialog(null, "No se pudo crear eL registro del movimiento monetario del pago inicial de la cuenta", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    //
                     this.logUusuariosjTextArea.setText(this.logUusuariosjTextArea.getText() + "-----------------------------\n"
                             + user.toString() +cuenta.toString() + "\n-----------------------------\n");
                     //notificar correo
