@@ -27,7 +27,6 @@ import dev.com.j3b.MainActivity;
 import dev.com.j3b.R;
 import dev.com.j3b.enums.EstadoDeCuenta;
 import dev.com.j3b.manejadorLogIn.ManejadorCuentaAjena;
-import dev.com.j3b.manejadorLogIn.ManejadorCuentaPropia;
 import dev.com.j3b.modelos.Cuenta;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.ui.aplicacion.VentanaPrincipal;
@@ -44,7 +43,6 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
     private Spinner spinnerCuentaOrigen;
     private Spinner spinnerCuentaDestino;
     //Manejadores y elementos de configuracion
-    private ManejadorCuentaPropia manejadorCuentaPropia;
     private ManejadorCuentaAjena manejadorCuentaAjena;
     private ArrayList<Cuenta> listaDeCuentas;
     private ArrayList<Cuenta> listaDeCuentasAjenas;
@@ -75,7 +73,6 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
         //Configuracion de listas y manejadores
         listaDeCuentas = new ArrayList<>();
         listaDeCuentasAjenas = new ArrayList<>();
-        manejadorCuentaPropia = new ManejadorCuentaPropia();
         manejadorCuentaAjena = new ManejadorCuentaAjena();
         //Consultando las cuentas del cliente y llenando espinner
         consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
