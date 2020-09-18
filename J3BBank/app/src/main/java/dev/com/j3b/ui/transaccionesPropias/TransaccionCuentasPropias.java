@@ -177,7 +177,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
                                 listaDeCuentas.add(new Cuenta(jsonObjectDatosCuenta.getString("no_cuenta_bancaria"),jsonObjectDatosCuenta.getDouble("saldo")));
                                 System.out.println("En lista:"+ listaDeCuentas.get(i).toString());
                             }catch (JSONException e){
-                                Toast.makeText(null, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                         System.out.println("Saliendo del for:"+ listaDeCuentas.size());
@@ -189,7 +189,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 //En caso de que la consulta SQL no encuentre ningún dato, el codigo ingresa en esta sección.
                 System.out.println("ERROR AL CONSULTAR CUENTAS");
-                Toast.makeText(null, "Sin cuentas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Sin cuentas", Toast.LENGTH_SHORT).show();
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
