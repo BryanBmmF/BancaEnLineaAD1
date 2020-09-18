@@ -290,7 +290,7 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 //En caso de que la consulta SQL no encuentre ningún dato, el codigo ingresa en esta sección.
                 System.out.println("ERROR AL CONSULTAR CUENTAS");
-                Toast.makeText(null, "Sin cuentas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Sin cuentas", Toast.LENGTH_SHORT).show();
             }
         });
         //RequestQueue requestQueue = Volley.newRequestQueue(this);
