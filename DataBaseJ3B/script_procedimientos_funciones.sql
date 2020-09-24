@@ -4,6 +4,7 @@ USE db_j3bank;
 
 /*Procedimiento almacenado para cancelaciòn de cuentas bancarias*/
 DELIMITER $$
+DROP PROCEDURE cancelar_cuenta;
 CREATE PROCEDURE cancelar_cuenta (IN num_cuenta VARCHAR(10), IN motiv VARCHAR(60), IN fech TIMESTAMP)
 BEGIN
 
@@ -83,6 +84,7 @@ DELIMITER ;
 
 
 DELIMITER $$
+ DROP FUNCTION transferir_cuenta_propia;
 CREATE FUNCTION transferir_cuenta_propia(cuenta_origen VARCHAR(10), cuenta_destino VARCHAR(10), monto_mov DOUBLE,descripcion VARCHAR(50)) RETURNS VARCHAR(15)
 
 BEGIN
@@ -163,8 +165,8 @@ DELIMITER ;
 DELIMITER $$
 DROP PROCEDURE IF EXISTS crearMovimientoMonetarioInicialCuenta;
 create procedure crearMovimientoMonetarioInicialCuenta(in noCuenta VARCHAR(10), in monto double)
-BEGIN
-INSERT INTO MOVIMIENTO_MONETARIO VALUES(null,noCuenta,monto,CURRENT_TIMESTAMP,'ABONO');
+BEGIN 
+INSERT INTO MOVIMIENTO_MONETARIO(id_mov_monetario,no_cuenta,monto,fecha,tipo,descripcion) VALUES(null,noCuenta,monto,CURRENT_TIMESTAMP,'ABONO','PAGO INICIAL');
 END;
 
 $$
