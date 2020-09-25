@@ -21,6 +21,7 @@
         <activity android:name=".ui.transaccionesAjenas.RegistroCuentaConfianza"></activity>
         <activity android:name=".ui.consultaCuentas.ConsultaCuentas"></activity>
         <activity android:name=".ui.ingreso.RedireccionInicialActivity" />
+        <activity android:name=".ui.cambios.ConsultaCambioMoneda" />
         <activity
             android:name=".ui.ingreso.HomeActivity"
             android:label="@string/title_activity_home"
