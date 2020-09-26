@@ -15,33 +15,31 @@ import java.sql.Timestamp;
  * @author jesfrin
  */
 public class SolicitudTarjeta {
-    
+
     private int id;
     private TipoDeTrabajoDeCliente tipoDeTrabajo;
     private String dpi;
     private String empresa;
-    private EstadoSolicitudDeTarjeta estado;
+    private EstadoSolicitudDeTarjeta estadoSolicitud;
     private double salarioMensual;
-    private TipoDeTarjeta tarjeta;
+    private TipoDeTarjeta tipoDeTarjeta;
     private String descripcion;
     private Timestamp fechaSolicitud;
     private Timestamp fechaVerificacion;
 
-    public SolicitudTarjeta(int id, TipoDeTrabajoDeCliente tipoDeTrabajo, String dpi, String empresa, EstadoSolicitudDeTarjeta estado, double salarioMensual, TipoDeTarjeta tarjeta, String descripcion, Timestamp fechaSolicitud, Timestamp fechaVerificacion) {
+    public SolicitudTarjeta(int id, String tipoDeTrabajo, String dpi, String empresa, String estado, double salarioMensual, String tarjeta, String descripcion, Timestamp fechaSolicitud, Timestamp fechaVerificacion) {
         this.id = id;
-        this.tipoDeTrabajo = tipoDeTrabajo;
+        convertirTipoDeTrabajo(tipoDeTrabajo);
         this.dpi = dpi;
         this.empresa = empresa;
-        this.estado = estado;
+        convertirEstado(estado);
         this.salarioMensual = salarioMensual;
-        this.tarjeta = tarjeta;
+        convertirTipoDeTarjeta(tarjeta);
         this.descripcion = descripcion;
         this.fechaSolicitud = fechaSolicitud;
         this.fechaVerificacion = fechaVerificacion;
     }
 
-    
-    
     public int getId() {
         return id;
     }
@@ -75,11 +73,11 @@ public class SolicitudTarjeta {
     }
 
     public EstadoSolicitudDeTarjeta getEstado() {
-        return estado;
+        return estadoSolicitud;
     }
 
     public void setEstado(EstadoSolicitudDeTarjeta estado) {
-        this.estado = estado;
+        this.estadoSolicitud = estado;
     }
 
     public double getSalarioMensual() {
@@ -91,11 +89,11 @@ public class SolicitudTarjeta {
     }
 
     public TipoDeTarjeta getTarjeta() {
-        return tarjeta;
+        return tipoDeTarjeta;
     }
 
     public void setTarjeta(TipoDeTarjeta tarjeta) {
-        this.tarjeta = tarjeta;
+        this.tipoDeTarjeta = tarjeta;
     }
 
     public String getDescripcion() {
@@ -121,8 +119,33 @@ public class SolicitudTarjeta {
     public void setFechaVerificacion(Timestamp fechaVerificacion) {
         this.fechaVerificacion = fechaVerificacion;
     }
-    
-    
-    
-    
+
+    private void convertirTipoDeTrabajo(String tipoDeTrabajo) {
+        if (tipoDeTrabajo.equalsIgnoreCase(TipoDeTrabajoDeCliente.INDEPENDIENTE.toString())) {
+            this.tipoDeTrabajo = TipoDeTrabajoDeCliente.INDEPENDIENTE;
+        } else {
+            this.tipoDeTrabajo = TipoDeTrabajoDeCliente.DEPENDIENTE;
+        }
+    }
+
+    private void convertirEstado(String estado) {
+        if (estado.equalsIgnoreCase(EstadoSolicitudDeTarjeta.APROBADO.toString())) {
+            this.estadoSolicitud = EstadoSolicitudDeTarjeta.APROBADO;
+        } else if (estado.equalsIgnoreCase(EstadoSolicitudDeTarjeta.EN_ESPERA.toString())) {
+            this.estadoSolicitud = EstadoSolicitudDeTarjeta.EN_ESPERA;
+        } else {
+            this.estadoSolicitud = EstadoSolicitudDeTarjeta.RECHAZADO;
+        }
+    }
+
+    private void convertirTipoDeTarjeta(String tarjeta) {
+        if (tarjeta.equalsIgnoreCase(TipoDeTarjeta.ORO.toString())) {
+            this.tipoDeTarjeta = TipoDeTarjeta.ORO;
+        } else if (tarjeta.equalsIgnoreCase(TipoDeTarjeta.PLATA.toString())) {
+            this.tipoDeTarjeta = TipoDeTarjeta.PLATA;
+        } else {
+            this.tipoDeTarjeta = TipoDeTarjeta.PLATA;
+        }
+    }
+
 }
