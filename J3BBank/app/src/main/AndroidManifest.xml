@@ -21,6 +21,7 @@
         <activity android:name=".ui.transaccionesAjenas.EvaluadorCodigoRegistroCuenta" />
         <activity android:name=".ui.transaccionesAjenas.RegistroCuentaConfianza" />
         <activity android:name=".ui.consultaCuentas.ConsultaCuentas" />
+        <activity android:name=".ui.tarjetaCredito.ConsultaTarjeta" />
         <activity android:name=".ui.ingreso.RedireccionInicialActivity" />
         <activity android:name=".ui.cambios.ConsultaCambioMoneda" />
         <activity

@@ -45,6 +45,14 @@ INSERT INTO CUENTA_DE_CONFIANZA VALUES(null,now(),"2544708083","1111111111111");
 /*prueba de funcion de transferencia de cuenta personal a cuenta ajena*/
 SELECT transferir_cuenta_ajena("4568128734","6046306966","1500","Transferencia a cuenta de juanito 2");
 
+-- consultar tarjetas asociadas a un cuentahabiente
+-- pueden ser activas e inactivas 
+SELECT * FROM TARJETA WHERE dpi_cuenta_habiente = "3333333333333" AND tipo = "CREDITO"; 
+
+-- consultar consumos y pagos realizados a una tarjeta
+SELECT * FROM TRANSACCION_TARJETA WHERE no_tarjeta = "111111111111111";
+SELECT * FROM PAGO_TARJETA WHERE no_tarjeta = "111111111111111"; 
+
 
 
 
