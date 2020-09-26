@@ -36,6 +36,7 @@ import dev.com.j3b.modelos.Usuario;
 import dev.com.j3b.ui.cambios.ConsultaCambioMoneda;
 import dev.com.j3b.ui.consultaCuentas.ConsultaCuentas;
 
+import dev.com.j3b.ui.tarjetaCredito.ConsultaTarjeta;
 import dev.com.j3b.ui.tarjetaCredito.SolicitudTarjetaCreditoActivity;
 import dev.com.j3b.ui.transaccionesAjenas.TransaccionCuentasAjenas;
 import dev.com.j3b.ui.transaccionesPropias.TransaccionCuentasPropias;
@@ -153,6 +154,11 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 startActivity(intentCCM);
                 break;
             case R.id.cuentasAhorroButton :
+                Intent consultarTarjetas = new Intent(getApplicationContext(), ConsultaTarjeta.class);
+                Bundle nuevoBundleConsultaTarjetas = new Bundle();
+                nuevoBundleConsultaTarjetas.putString("dpiusuario", usuarioRecivido.getDpiCliente());
+                consultarTarjetas.putExtras(nuevoBundleConsultaTarjetas);
+                startActivity(consultarTarjetas);
                 break;
              /*Por el momento este boton funciona como transferencias a cuentas ajenas*/
             case R.id.tarjetasCreditoButton :
