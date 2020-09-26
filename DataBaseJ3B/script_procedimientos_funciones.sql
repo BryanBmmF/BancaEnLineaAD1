@@ -82,9 +82,8 @@ DELIMITER ;
 /*************Funcion para transacciones entre cuentas propias
 ****************/
 
-
+DROP FUNCTION transferir_cuenta_propia;
 DELIMITER $$
- DROP FUNCTION transferir_cuenta_propia;
 CREATE FUNCTION transferir_cuenta_propia(cuenta_origen VARCHAR(10), cuenta_destino VARCHAR(10), monto_mov DOUBLE,descripcion VARCHAR(50)) RETURNS VARCHAR(15)
 
 BEGIN
@@ -171,3 +170,48 @@ END;
 
 $$
 DELIMITER ;
+
+
+
+
+DROP FUNCTION IF EXISTS registrarSolicitudTarjetaCredito;
+DELIMITER $$
+
+CREATE FUNCTION registrarSolicitudTarjetaCredito(tipo_de_trabajo VARCHAR(15),dpi_cliente VARCHAR(13),empresa VARCHAR(50),estado VARCHAR(15),salario_mensual DOUBLE,tarjeta  VARCHAR(8),descripcion VARCHAR(200) ) RETURNS INT
+
+BEGIN
+	-- declarando variables de apoyo para registrar la solicitud
+	DECLARE id_solicitud INT;
+	-- REGISTRANDO LA SOLICITUD
+	INSERT INTO SOLICITUD_TARJETA VALUES(null,tipo_de_trabajo,dpi_cliente,empresa,estado,salario_mensual,tarjeta,descripcion,now(),now());
+	-- OBTENIENDO EL ID DE LA SOLICITUD
+	SET id_solicitud = LAST_INSERT_ID();
+	-- RETORNANDO EL ID DE LA SOLICITUD
+	RETURN id_solicitud;
+END$$
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

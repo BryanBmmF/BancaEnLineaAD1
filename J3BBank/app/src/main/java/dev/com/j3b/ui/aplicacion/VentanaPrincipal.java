@@ -35,6 +35,7 @@ import dev.com.j3b.modelos.Usuario;
 
 import dev.com.j3b.ui.consultaCuentas.ConsultaCuentas;
 
+import dev.com.j3b.ui.tarjetaCredito.SolicitudTarjetaCreditoActivity;
 import dev.com.j3b.ui.transaccionesAjenas.TransaccionCuentasAjenas;
 import dev.com.j3b.ui.transaccionesPropias.TransaccionCuentasPropias;
 
@@ -162,6 +163,8 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.segurosButton :
+                Intent solicitudTarjeta = new Intent(getApplicationContext(), SolicitudTarjetaCreditoActivity.class);
+                startActivity(solicitudTarjeta);
                 break;
             case R.id.gestionesButton :
                 Intent consultarCuentas = new Intent(getApplicationContext(), ConsultaCuentas.class);
