@@ -33,6 +33,7 @@ import dev.com.j3b.modelos.CuentaHabiente;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.modelos.Usuario;
 
+import dev.com.j3b.ui.cambios.ConsultaCambioMoneda;
 import dev.com.j3b.ui.consultaCuentas.ConsultaCuentas;
 
 import dev.com.j3b.ui.tarjetaCredito.SolicitudTarjetaCreditoActivity;
@@ -146,6 +147,10 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
         Intent newIntent;
         switch (view.getId()){
             case R.id.cuentasMonetariasButton :
+                Toast toastCCM = Toast.makeText(getApplicationContext(), "Consultar Cambio de Momeda", Toast.LENGTH_SHORT);
+                toastCCM.show();
+                Intent intentCCM = new Intent(this, ConsultaCambioMoneda.class);
+                startActivity(intentCCM);
                 break;
             case R.id.cuentasAhorroButton :
                 break;
