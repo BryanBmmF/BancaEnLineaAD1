@@ -26,6 +26,10 @@ public class ControladorSolicitudDeTarjeta {
     private static final String CONSULTAR_SOLICITUDES = "SELECT "
             + "id_solicitud_tarjeta,tipo_de_trabajo,dpi_cliente,empresa,estado,salario_mensual,tarjeta,descripcion,fecha_solicitud,fecha_verificacion "
             + "FROM SOLICITUD_TARJETA WHERE estado=?";
+    private static final String FILTRAR_SOLICITUDES_POR_DPI = "SELECT "
+            + "id_solicitud_tarjeta,tipo_de_trabajo,dpi_cliente,empresa,estado,salario_mensual,tarjeta,descripcion,fecha_solicitud,fecha_verificacion "
+            + "FROM SOLICITUD_TARJETA WHERE estado=? AND dpi_cliente LIKE ?";
+
     private Connection conexion;
     private PreparedStatement prepared;
     private ResultSet result;
@@ -34,13 +38,30 @@ public class ControladorSolicitudDeTarjeta {
         conexion = ConexionBD.getInstance();
     }
 
+    public LinkedList<SolicitudTarjeta> filtrarSolicitudesPorDpi(EstadoSolicitudDeTarjeta estado, String numeroDpi) {
+        LinkedList<SolicitudTarjeta> listaSolicitudes = new LinkedList<>();
+        try {
+            prepared = conexion.prepareStatement(FILTRAR_SOLICITUDES_POR_DPI);
+            prepared.setString(1, estado.toString());
+            prepared.setString(2, "%" + numeroDpi + "%");
+            result = prepared.executeQuery();
+            while (result.next()) {
+                listaSolicitudes.add(new SolicitudTarjeta(result.getInt("id_solicitud_tarjeta"), result.getString("tipo_de_trabajo"), result.getString("dpi_cliente"), result.getString("empresa"), result.getString("estado"), result.getDouble("salario_mensual"), result.getString("tarjeta"), result.getString("descripcion"), result.getTimestamp("fecha_solicitud"), result.getTimestamp("fecha_verificacion")));
+            }
+            return listaSolicitudes;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listaSolicitudes;
+    }
+
     public LinkedList<SolicitudTarjeta> consultarSolicitudesDeTarjeta(EstadoSolicitudDeTarjeta estado) {
-        LinkedList<SolicitudTarjeta> listaSolicitudes= new LinkedList<>();
+        LinkedList<SolicitudTarjeta> listaSolicitudes = new LinkedList<>();
         try {
             prepared = conexion.prepareStatement(CONSULTAR_SOLICITUDES);
             prepared.setString(1, estado.toString());
             result = prepared.executeQuery();
-            while(result.next()){
+            while (result.next()) {
                 listaSolicitudes.add(new SolicitudTarjeta(result.getInt("id_solicitud_tarjeta"), result.getString("tipo_de_trabajo"), result.getString("dpi_cliente"), result.getString("empresa"), result.getString("estado"), result.getDouble("salario_mensual"), result.getString("tarjeta"), result.getString("descripcion"), result.getTimestamp("fecha_solicitud"), result.getTimestamp("fecha_verificacion")));
             }
             return listaSolicitudes;

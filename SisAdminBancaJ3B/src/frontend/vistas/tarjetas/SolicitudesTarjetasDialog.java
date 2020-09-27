@@ -34,7 +34,7 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         this.controladorSolicitudDeTarjeta = new ControladorSolicitudDeTarjeta();
         this.listaSolicitudTarjeta = new LinkedList<>();
         this.listaObservableSolicitudTarjeta = ObservableCollections.observableList(listaSolicitudTarjeta);
-        actulizarLista(controladorSolicitudDeTarjeta.consultarSolicitudesDeTarjeta(EstadoSolicitudDeTarjeta.EN_ESPERA));
+        actualizarLista(controladorSolicitudDeTarjeta.consultarSolicitudesDeTarjeta(EstadoSolicitudDeTarjeta.EN_ESPERA));
         initComponents();
     }
 
@@ -53,18 +53,18 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        filtradoCuentaHabientesjComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jEditorPane1 = new javax.swing.JEditorPane();
+        resumenCuentajEditorPane1 = new javax.swing.JEditorPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         aprobarSolicitudjButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        cambioTarjetajButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        tipoTarjetajComboBox = new javax.swing.JComboBox<>();
         denegarSolicitudjButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        comentarioDecisionjTextArea = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -111,16 +111,20 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
 
         jLabel1.setText("Solicitudes de tarjeta de Credito");
 
-        jTextField1.setText("jTextField1");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        filtradoCuentaHabientesjComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DPI" }));
 
-        jScrollPane2.setViewportView(jEditorPane1);
+        jScrollPane2.setViewportView(resumenCuentajEditorPane1);
 
         jLabel2.setText("Resumen");
 
@@ -128,17 +132,22 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
 
         aprobarSolicitudjButton.setText("Aprobar");
 
-        jButton2.setText("Aceptar");
+        cambioTarjetajButton.setText("Cambiar");
 
         jLabel4.setText("Cambiar tipo de tarjeta");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        tipoTarjetajComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         denegarSolicitudjButton.setText("Denegar");
+        denegarSolicitudjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                denegarSolicitudjButtonActionPerformed(evt);
+            }
+        });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        comentarioDecisionjTextArea.setColumns(20);
+        comentarioDecisionjTextArea.setRows(5);
+        jScrollPane3.setViewportView(comentarioDecisionjTextArea);
 
         jLabel5.setText("Comentario de decision:");
 
@@ -155,7 +164,7 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
                         .addGap(303, 303, 303)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(filtradoCuentaHabientesjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -181,9 +190,9 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tipoTarjetajComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))))
+                                .addComponent(cambioTarjetajButton, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(363, 363, 363)
@@ -198,7 +207,7 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(filtradoCuentaHabientesjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
@@ -212,8 +221,8 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))
+                            .addComponent(tipoTarjetajComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cambioTarjetajButton))
                         .addGap(21, 21, 21)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
@@ -247,6 +256,20 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        System.out.println("Hola mundo");
+        String dpi = jTextField1.getText();
+        if (dpi.isEmpty()) {
+            //Se busca todo
+            actualizarLista(controladorSolicitudDeTarjeta.consultarSolicitudesDeTarjeta(EstadoSolicitudDeTarjeta.EN_ESPERA));
+        } else {//Se busca por dpi
+            actualizarLista(controladorSolicitudDeTarjeta.filtrarSolicitudesPorDpi(EstadoSolicitudDeTarjeta.EN_ESPERA, dpi));
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void denegarSolicitudjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denegarSolicitudjButtonActionPerformed
+    }//GEN-LAST:event_denegarSolicitudjButtonActionPerformed
+
     public ObservableList<SolicitudTarjeta> getListaObservableSolicitudTarjeta() {
         return listaObservableSolicitudTarjeta;
     }
@@ -275,11 +298,10 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprobarSolicitudjButton;
+    private javax.swing.JButton cambioTarjetajButton;
+    private javax.swing.JTextArea comentarioDecisionjTextArea;
     private javax.swing.JButton denegarSolicitudjButton;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JEditorPane jEditorPane1;
+    private javax.swing.JComboBox<String> filtradoCuentaHabientesjComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -290,12 +312,13 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JEditorPane resumenCuentajEditorPane1;
+    private javax.swing.JComboBox<String> tipoTarjetajComboBox;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
-    private void actulizarLista(List<SolicitudTarjeta> listado) {
+    private void actualizarLista(List<SolicitudTarjeta> listado) {
         listaObservableSolicitudTarjeta.clear();
         listaObservableSolicitudTarjeta.addAll((List<SolicitudTarjeta>) (List<?>) listado);
     }
