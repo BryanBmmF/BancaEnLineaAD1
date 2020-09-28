@@ -122,7 +122,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
         menuBar.add(jMenu3);
 
-        jMenu4.setText("Tarjeatas de credito");
+        jMenu4.setText("Tarjetas de credito");
 
         jMenuItem5.setText("Solicitudes");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {

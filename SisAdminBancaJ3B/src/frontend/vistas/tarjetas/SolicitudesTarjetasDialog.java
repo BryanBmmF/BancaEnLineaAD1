@@ -7,10 +7,12 @@ package frontend.vistas.tarjetas;
 
 import backend.controladores.ControladorSolicitudDeTarjeta;
 import backend.enums.EstadoSolicitudDeTarjeta;
+import backend.enums.TipoDeTarjeta;
 import backend.pojos.SolicitudTarjeta;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 
@@ -36,6 +38,8 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         this.listaObservableSolicitudTarjeta = ObservableCollections.observableList(listaSolicitudTarjeta);
         actualizarLista(controladorSolicitudDeTarjeta.consultarSolicitudesDeTarjeta(EstadoSolicitudDeTarjeta.EN_ESPERA));
         initComponents();
+        this.resumenCuentajEditorPane1.setContentType("text/html");
+
     }
 
     /**
@@ -52,20 +56,21 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        busquedajTextField = new javax.swing.JTextField();
         filtradoCuentaHabientesjComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         resumenCuentajEditorPane1 = new javax.swing.JEditorPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        aprobarSolicitudjButton = new javax.swing.JButton();
+        denegarSolicitudjButtonn = new javax.swing.JButton();
         cambioTarjetajButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         tipoTarjetajComboBox = new javax.swing.JComboBox<>();
-        denegarSolicitudjButton = new javax.swing.JButton();
+        cancelarSolicitudjButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         comentarioDecisionjTextArea = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
+        aprobarSolicitudjButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -111,45 +116,68 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
 
         jLabel1.setText("Solicitudes de tarjeta de Credito");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        busquedajTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                busquedajTextFieldActionPerformed(evt);
             }
         });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField1KeyPressed(evt);
+        busquedajTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                busquedajTextFieldKeyReleased(evt);
             }
         });
 
         filtradoCuentaHabientesjComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DPI" }));
 
+        resumenCuentajEditorPane1.setEditable(false);
         jScrollPane2.setViewportView(resumenCuentajEditorPane1);
 
         jLabel2.setText("Resumen");
 
         jLabel3.setText("Opciones Administrador");
 
-        aprobarSolicitudjButton.setText("Aprobar");
+        denegarSolicitudjButtonn.setText("Denegar");
+        denegarSolicitudjButtonn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                denegarSolicitudjButtonnActionPerformed(evt);
+            }
+        });
 
         cambioTarjetajButton.setText("Cambiar");
+        cambioTarjetajButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambioTarjetajButtonActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Cambiar tipo de tarjeta");
 
-        tipoTarjetajComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        tipoTarjetajComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ORO", "PLATA", "BRONCE" }));
 
-        denegarSolicitudjButton.setText("Denegar");
-        denegarSolicitudjButton.addActionListener(new java.awt.event.ActionListener() {
+        cancelarSolicitudjButton.setText("Cancelar");
+        cancelarSolicitudjButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                denegarSolicitudjButtonActionPerformed(evt);
+                cancelarSolicitudjButtonActionPerformed(evt);
             }
         });
 
         comentarioDecisionjTextArea.setColumns(20);
         comentarioDecisionjTextArea.setRows(5);
+        comentarioDecisionjTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                comentarioDecisionjTextAreaKeyTyped(evt);
+            }
+        });
         jScrollPane3.setViewportView(comentarioDecisionjTextArea);
 
         jLabel5.setText("Comentario de decision:");
+
+        aprobarSolicitudjButton1.setText("Aprobar");
+        aprobarSolicitudjButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aprobarSolicitudjButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -162,15 +190,17 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
                         .addComponent(jScrollPane1))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(303, 303, 303)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(busquedajTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(filtradoCuentaHabientesjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(aprobarSolicitudjButton)
+                        .addComponent(aprobarSolicitudjButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(denegarSolicitudjButtonn)
                         .addGap(18, 18, 18)
-                        .addComponent(denegarSolicitudjButton))
+                        .addComponent(cancelarSolicitudjButton))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -206,7 +236,7 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(busquedajTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(filtradoCuentaHabientesjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,8 +259,9 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(aprobarSolicitudjButton)
-                    .addComponent(denegarSolicitudjButton))
+                    .addComponent(denegarSolicitudjButtonn)
+                    .addComponent(cancelarSolicitudjButton)
+                    .addComponent(aprobarSolicitudjButton1))
                 .addGap(22, 22, 22))
         );
 
@@ -252,23 +283,95 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void busquedajTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedajTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_busquedajTextFieldActionPerformed
 
-    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-        System.out.println("Hola mundo");
-        String dpi = jTextField1.getText();
+    private void cancelarSolicitudjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarSolicitudjButtonActionPerformed
+        limpiarYDesactivarOpciones();
+    }//GEN-LAST:event_cancelarSolicitudjButtonActionPerformed
+
+    private void busquedajTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_busquedajTextFieldKeyReleased
+        String dpi = busquedajTextField.getText();
         if (dpi.isEmpty()) {
             //Se busca todo
             actualizarLista(controladorSolicitudDeTarjeta.consultarSolicitudesDeTarjeta(EstadoSolicitudDeTarjeta.EN_ESPERA));
         } else {//Se busca por dpi
             actualizarLista(controladorSolicitudDeTarjeta.filtrarSolicitudesPorDpi(EstadoSolicitudDeTarjeta.EN_ESPERA, dpi));
         }
-    }//GEN-LAST:event_jTextField1KeyPressed
+    }//GEN-LAST:event_busquedajTextFieldKeyReleased
 
-    private void denegarSolicitudjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denegarSolicitudjButtonActionPerformed
-    }//GEN-LAST:event_denegarSolicitudjButtonActionPerformed
+    private void comentarioDecisionjTextAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comentarioDecisionjTextAreaKeyTyped
+        //System.out.println("TAMANO DE COMENTARIO:" + comentarioDecisionjTextArea.getText().length());
+        if (comentarioDecisionjTextArea.getText().length() > 199) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_comentarioDecisionjTextAreaKeyTyped
+
+    private void cambioTarjetajButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioTarjetajButtonActionPerformed
+        String tipoDeTarjeta = tipoTarjetajComboBox.getSelectedItem().toString();
+        if (tipoDeTarjeta.equalsIgnoreCase(TipoDeTarjeta.ORO.toString())) {
+            this.solicitudSeleccionada.setTarjeta(TipoDeTarjeta.ORO);
+        } else if (tipoDeTarjeta.equalsIgnoreCase(TipoDeTarjeta.PLATA.toString())) {
+            this.solicitudSeleccionada.setTarjeta(TipoDeTarjeta.PLATA);
+        } else {
+            this.solicitudSeleccionada.setTarjeta(TipoDeTarjeta.BRONCE);
+        }
+        mostrarInformacionDeSolicitud(solicitudSeleccionada);
+    }//GEN-LAST:event_cambioTarjetajButtonActionPerformed
+
+    private void denegarSolicitudjButtonnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denegarSolicitudjButtonnActionPerformed
+        if (!comentarioDecisionjTextArea.getText().isEmpty()) {
+            int opcion = JOptionPane.showConfirmDialog(this, "Esta seguro que desea rechazar la solicitud");
+            if (opcion == 0) {
+                boolean respuesta = this.controladorSolicitudDeTarjeta.rechazarSolicitud(EstadoSolicitudDeTarjeta.RECHAZADO, this.solicitudSeleccionada.getId());
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(this, "Se rechazo la solicitud", "Rechazo", JOptionPane.INFORMATION_MESSAGE);
+                    //ENVIAR MENSAJE POR CORREO DE POR QUE SE RECHAZO
+                    /**
+                     * **
+                     *
+                     *
+                     *
+                     *
+                     *
+                     */
+                    enviarCorreoRechazo();
+                    limpiarYDesactivarOpciones();
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe colocar una descripcion", "Atencion", JOptionPane.WARNING_MESSAGE);
+        }
+
+
+    }//GEN-LAST:event_denegarSolicitudjButtonnActionPerformed
+
+    private void aprobarSolicitudjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprobarSolicitudjButton1ActionPerformed
+        if (!comentarioDecisionjTextArea.getText().isEmpty()) {
+            int opcion = JOptionPane.showConfirmDialog(this, "Esta seguro que desea ACEPTAR la solicitud");
+            if (opcion == 0) {
+                boolean respuesta = this.controladorSolicitudDeTarjeta.aprobarSolicitud(EstadoSolicitudDeTarjeta.APROBADO, this.solicitudSeleccionada.getId(),this.solicitudSeleccionada.getTipoDeTarjeta());
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(this, "Se Acepto la solicitud", "Aceptacion", JOptionPane.INFORMATION_MESSAGE);
+                    //ENVIAR MENSAJE POR CORREO DE POR QUE SE RECHAZO
+                    /**Generara datos de tarjeta de credito
+                     * **
+                     *
+                     *
+                     *
+                     *
+                     *
+                     */
+                    enviarCorreoAceptacion();
+                    limpiarYDesactivarOpciones();
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe colocar una descripcion", "Atencion", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_aprobarSolicitudjButton1ActionPerformed
 
     public ObservableList<SolicitudTarjeta> getListaObservableSolicitudTarjeta() {
         return listaObservableSolicitudTarjeta;
@@ -284,23 +387,30 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
 
     public void setSolicitudSeleccionada(SolicitudTarjeta solicitudSeleccionada) {
         if (solicitudSeleccionada != null) {
-            this.aprobarSolicitudjButton.setEnabled(true);
-            this.denegarSolicitudjButton.setEnabled(true);
+            this.aprobarSolicitudjButton1.setEnabled(true);
+            this.denegarSolicitudjButtonn.setEnabled(true);
+            this.cancelarSolicitudjButton.setEnabled(true);
+            this.cambioTarjetajButton.setEnabled(true);
             this.solicitudSeleccionada = solicitudSeleccionada;
+            mostrarInformacionDeSolicitud(solicitudSeleccionada);
             //System.out.println("Cuenta habiente:" + this.cuentaHabiente.getDpiCliente());
         } else {
-            this.aprobarSolicitudjButton.setEnabled(false);
-            this.denegarSolicitudjButton.setEnabled(false);
+            this.aprobarSolicitudjButton1.setEnabled(false);
+            this.denegarSolicitudjButtonn.setEnabled(false);
+            this.cancelarSolicitudjButton.setEnabled(false);
+            this.cambioTarjetajButton.setEnabled(false);
             this.solicitudSeleccionada = null;
         }
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton aprobarSolicitudjButton;
+    private javax.swing.JButton aprobarSolicitudjButton1;
+    private javax.swing.JTextField busquedajTextField;
     private javax.swing.JButton cambioTarjetajButton;
+    private javax.swing.JButton cancelarSolicitudjButton;
     private javax.swing.JTextArea comentarioDecisionjTextArea;
-    private javax.swing.JButton denegarSolicitudjButton;
+    private javax.swing.JButton denegarSolicitudjButtonn;
     private javax.swing.JComboBox<String> filtradoCuentaHabientesjComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -312,7 +422,6 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JEditorPane resumenCuentajEditorPane1;
     private javax.swing.JComboBox<String> tipoTarjetajComboBox;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
@@ -321,5 +430,56 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
     private void actualizarLista(List<SolicitudTarjeta> listado) {
         listaObservableSolicitudTarjeta.clear();
         listaObservableSolicitudTarjeta.addAll((List<SolicitudTarjeta>) (List<?>) listado);
+    }
+
+    private void mostrarInformacionDeSolicitud(SolicitudTarjeta solicitud) {
+        actualizarTipoDeTarjeta(solicitud);
+        this.resumenCuentajEditorPane1.setText(
+                "<ul>\n"
+                + "  <li>DPI: " + solicitud.getDpi() + "</li>\n"
+                + "  <li>TIPO DE TARJETA: " + solicitud.getTarjeta().toString().toUpperCase() + "</li>\n"
+                + "  <li>SALARIO MENSUAL: " + solicitud.getSalarioMensual() + "</li>\n"
+                + "  <li>EMPRESA: " + solicitud.getEmpresa() + "</li>\n"
+                + "  <li>TIPO DE TRABAJO: " + solicitud.getTipoDeTrabajo() + "</li>\n"
+                + "  <li>FECHA SOLICITUD: " + solicitud.getFechaSolicitud() + "</li>\n"
+                + "  <li>DESCRIPCION: " + solicitud.getDescripcion() + "</li>\n"
+                + "  <li>ESTADO: " + solicitud.getEstado() + "</li>\n"
+                + "  <li>CORREO: " + solicitud.getEmail()+ "</li>\n"
+                + "</ul>"
+        );
+    }
+
+    private void actualizarTipoDeTarjeta(SolicitudTarjeta solicitud) {
+        switch (solicitud.getTarjeta()) {
+            case ORO:
+                this.tipoTarjetajComboBox.setSelectedIndex(0);
+                break;
+            case PLATA:
+                this.tipoTarjetajComboBox.setSelectedIndex(1);
+                break;
+            default:
+                this.tipoTarjetajComboBox.setSelectedIndex(2);
+                break;
+        }
+
+    }
+
+    private void limpiarYDesactivarOpciones() {
+        this.resumenCuentajEditorPane1.setText("");
+        this.comentarioDecisionjTextArea.setText("");
+        this.solicitudSeleccionada = null;
+        this.aprobarSolicitudjButton1.setEnabled(false);
+        this.denegarSolicitudjButtonn.setEnabled(false);
+        this.cancelarSolicitudjButton.setEnabled(false);
+        this.cambioTarjetajButton.setEnabled(false);
+        actualizarLista(controladorSolicitudDeTarjeta.consultarSolicitudesDeTarjeta(EstadoSolicitudDeTarjeta.EN_ESPERA));
+    }
+
+    private void enviarCorreoAceptacion() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void enviarCorreoRechazo() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

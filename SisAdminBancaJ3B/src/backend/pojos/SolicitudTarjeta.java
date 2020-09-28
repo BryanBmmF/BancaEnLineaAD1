@@ -26,8 +26,9 @@ public class SolicitudTarjeta {
     private String descripcion;
     private Timestamp fechaSolicitud;
     private Timestamp fechaVerificacion;
+    private String email;
 
-    public SolicitudTarjeta(int id, String tipoDeTrabajo, String dpi, String empresa, String estado, double salarioMensual, String tarjeta, String descripcion, Timestamp fechaSolicitud, Timestamp fechaVerificacion) {
+    public SolicitudTarjeta(int id, String tipoDeTrabajo, String dpi, String empresa, String estado, double salarioMensual, String tarjeta, String descripcion, Timestamp fechaSolicitud, Timestamp fechaVerificacion,String email) {
         this.id = id;
         convertirTipoDeTrabajo(tipoDeTrabajo);
         this.dpi = dpi;
@@ -38,6 +39,7 @@ public class SolicitudTarjeta {
         this.descripcion = descripcion;
         this.fechaSolicitud = fechaSolicitud;
         this.fechaVerificacion = fechaVerificacion;
+        this.email = email;
     }
 
     public int getId() {
@@ -144,8 +146,34 @@ public class SolicitudTarjeta {
         } else if (tarjeta.equalsIgnoreCase(TipoDeTarjeta.PLATA.toString())) {
             this.tipoDeTarjeta = TipoDeTarjeta.PLATA;
         } else {
-            this.tipoDeTarjeta = TipoDeTarjeta.PLATA;
+            this.tipoDeTarjeta = TipoDeTarjeta.BRONCE;
         }
     }
 
+    public EstadoSolicitudDeTarjeta getEstadoSolicitud() {
+        return estadoSolicitud;
+    }
+
+    public void setEstadoSolicitud(EstadoSolicitudDeTarjeta estadoSolicitud) {
+        this.estadoSolicitud = estadoSolicitud;
+    }
+
+    public TipoDeTarjeta getTipoDeTarjeta() {
+        return tipoDeTarjeta;
+    }
+
+    public void setTipoDeTarjeta(TipoDeTarjeta tipoDeTarjeta) {
+        this.tipoDeTarjeta = tipoDeTarjeta;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    
+    
 }

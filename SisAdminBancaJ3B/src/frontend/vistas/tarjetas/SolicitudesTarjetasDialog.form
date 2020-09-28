@@ -49,16 +49,18 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="303" max="-2" attributes="0"/>
-                          <Component id="jTextField1" min="-2" pref="316" max="-2" attributes="0"/>
+                          <Component id="busquedajTextField" min="-2" pref="316" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="filtradoCuentaHabientesjComboBox1" min="-2" pref="155" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="aprobarSolicitudjButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="aprobarSolicitudjButton1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="denegarSolicitudjButtonn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="denegarSolicitudjButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="cancelarSolicitudjButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -107,7 +109,7 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="busquedajTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="filtradoCuentaHabientesjComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -135,8 +137,9 @@
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="aprobarSolicitudjButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="denegarSolicitudjButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="denegarSolicitudjButtonn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cancelarSolicitudjButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="aprobarSolicitudjButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
@@ -256,10 +259,10 @@
             <Property name="text" type="java.lang.String" value="Solicitudes de tarjeta de Credito"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="busquedajTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField1KeyPressed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="busquedajTextFieldActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="busquedajTextFieldKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="filtradoCuentaHabientesjComboBox1">
@@ -282,6 +285,9 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
             <Component class="javax.swing.JEditorPane" name="resumenCuentajEditorPane1">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -295,15 +301,21 @@
             <Property name="text" type="java.lang.String" value="Opciones Administrador"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="aprobarSolicitudjButton">
+        <Component class="javax.swing.JButton" name="denegarSolicitudjButtonn">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Aprobar"/>
+            <Property name="text" type="java.lang.String" value="Denegar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="denegarSolicitudjButtonnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="cambioTarjetajButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cambiar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cambioTarjetajButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -313,11 +325,10 @@
         <Component class="javax.swing.JComboBox" name="tipoTarjetajComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="3">
+                <StringItem index="0" value="ORO"/>
+                <StringItem index="1" value="PLATA"/>
+                <StringItem index="2" value="BRONCE"/>
               </StringArray>
             </Property>
           </Properties>
@@ -325,12 +336,12 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="denegarSolicitudjButton">
+        <Component class="javax.swing.JButton" name="cancelarSolicitudjButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Denegar"/>
+            <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="denegarSolicitudjButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarSolicitudjButtonActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane3">
@@ -345,6 +356,9 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="comentarioDecisionjTextAreaKeyTyped"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -352,6 +366,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Comentario de decision:"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="aprobarSolicitudjButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Aprobar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aprobarSolicitudjButton1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
