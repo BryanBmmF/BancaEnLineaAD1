@@ -207,44 +207,28 @@
               <BindingProperties>
                 <BindingProperty name="elements" source="Form" sourcePath="${listaObservableSolicitudTarjeta}" target="jTable1" targetPath="elements" updateStrategy="0" immediately="true">
                   <Subbinding sourcePath="${dpi}">
-                    <BindingParameter name="NAME" value="Dpi"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
-                  <Subbinding sourcePath="${tarjeta}">
-                    <BindingParameter name="NAME" value="Tipo de tarjeta"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="backend.enums.TipoDeTarjeta.class"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                  <Subbinding sourcePath="${tipoDeTarjeta}">
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="backend.enums.TipoDeTarjetaSolicitud.class"/>
                   </Subbinding>
                   <Subbinding sourcePath="${salarioMensual}">
-                    <BindingParameter name="NAME" value="Salario mensual"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Double.class"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
                   <Subbinding sourcePath="${empresa}">
-                    <BindingParameter name="NAME" value="Empresa"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
                   <Subbinding sourcePath="${tipoDeTrabajo}">
-                    <BindingParameter name="NAME" value="Tipo de trabjao"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="backend.enums.TipoDeTrabajoDeCliente.class"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
                   <Subbinding sourcePath="${fechaSolicitud}">
-                    <BindingParameter name="NAME" value="Fecha Solicitud"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.sql.Timestamp.class"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
                   <Subbinding sourcePath="${descripcion}">
-                    <BindingParameter name="NAME" value="Descripcion"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
-                  <Subbinding sourcePath="${estado}">
-                    <BindingParameter name="NAME" value="Estado"/>
+                  <Subbinding sourcePath="${estadoSolicitud}">
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="backend.enums.EstadoSolicitudDeTarjeta.class"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
                 </BindingProperty>
                 <BindingProperty name="selectedElement" source="Form" sourcePath="${solicitudSeleccionada}" target="jTable1" targetPath="selectedElement" updateStrategy="0" immediately="false">

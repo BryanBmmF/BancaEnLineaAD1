@@ -7,8 +7,14 @@ package frontend.vistas.tarjetas;
 
 import backend.controladores.ControladorSolicitudDeTarjeta;
 import backend.enums.EstadoSolicitudDeTarjeta;
-import backend.enums.TipoDeTarjeta;
+import backend.enums.TipoDeTarjetaSolicitud;
 import backend.pojos.SolicitudTarjeta;
+import backend.pojos.Tarjeta;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -39,7 +45,7 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         actualizarLista(controladorSolicitudDeTarjeta.consultarSolicitudesDeTarjeta(EstadoSolicitudDeTarjeta.EN_ESPERA));
         initComponents();
         this.resumenCuentajEditorPane1.setContentType("text/html");
-
+        enviarCorreoAceptacion();
     }
 
     /**
@@ -79,35 +85,27 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dpi}"));
         columnBinding.setColumnName("Dpi");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tarjeta}"));
-        columnBinding.setColumnName("Tipo de tarjeta");
-        columnBinding.setColumnClass(backend.enums.TipoDeTarjeta.class);
-        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipoDeTarjeta}"));
+        columnBinding.setColumnName("Tipo De Tarjeta");
+        columnBinding.setColumnClass(backend.enums.TipoDeTarjetaSolicitud.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${salarioMensual}"));
-        columnBinding.setColumnName("Salario mensual");
+        columnBinding.setColumnName("Salario Mensual");
         columnBinding.setColumnClass(Double.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${empresa}"));
         columnBinding.setColumnName("Empresa");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipoDeTrabajo}"));
-        columnBinding.setColumnName("Tipo de trabjao");
+        columnBinding.setColumnName("Tipo De Trabajo");
         columnBinding.setColumnClass(backend.enums.TipoDeTrabajoDeCliente.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaSolicitud}"));
         columnBinding.setColumnName("Fecha Solicitud");
         columnBinding.setColumnClass(java.sql.Timestamp.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descripcion}"));
         columnBinding.setColumnName("Descripcion");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${estado}"));
-        columnBinding.setColumnName("Estado");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${estadoSolicitud}"));
+        columnBinding.setColumnName("Estado Solicitud");
         columnBinding.setColumnClass(backend.enums.EstadoSolicitudDeTarjeta.class);
-        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${solicitudSeleccionada}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
         bindingGroup.addBinding(binding);
@@ -310,14 +308,15 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
 
     private void cambioTarjetajButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioTarjetajButtonActionPerformed
         String tipoDeTarjeta = tipoTarjetajComboBox.getSelectedItem().toString();
-        if (tipoDeTarjeta.equalsIgnoreCase(TipoDeTarjeta.ORO.toString())) {
-            this.solicitudSeleccionada.setTarjeta(TipoDeTarjeta.ORO);
-        } else if (tipoDeTarjeta.equalsIgnoreCase(TipoDeTarjeta.PLATA.toString())) {
-            this.solicitudSeleccionada.setTarjeta(TipoDeTarjeta.PLATA);
+        if (tipoDeTarjeta.equalsIgnoreCase(TipoDeTarjetaSolicitud.ORO.toString())) {
+            this.solicitudSeleccionada.setTipoDeTarjeta(TipoDeTarjetaSolicitud.ORO);
+        } else if (tipoDeTarjeta.equalsIgnoreCase(TipoDeTarjetaSolicitud.PLATA.toString())) {
+            this.solicitudSeleccionada.setTipoDeTarjeta(TipoDeTarjetaSolicitud.PLATA);
         } else {
-            this.solicitudSeleccionada.setTarjeta(TipoDeTarjeta.BRONCE);
+            this.solicitudSeleccionada.setTipoDeTarjeta(TipoDeTarjetaSolicitud.BRONCE);
         }
         mostrarInformacionDeSolicitud(solicitudSeleccionada);
+        JOptionPane.showMessageDialog(this, "Se cambio el tipo de tarjeta","Aviso",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_cambioTarjetajButtonActionPerformed
 
     private void denegarSolicitudjButtonnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denegarSolicitudjButtonnActionPerformed
@@ -351,12 +350,13 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         if (!comentarioDecisionjTextArea.getText().isEmpty()) {
             int opcion = JOptionPane.showConfirmDialog(this, "Esta seguro que desea ACEPTAR la solicitud");
             if (opcion == 0) {
-                boolean respuesta = this.controladorSolicitudDeTarjeta.aprobarSolicitud(EstadoSolicitudDeTarjeta.APROBADO, this.solicitudSeleccionada.getId(),this.solicitudSeleccionada.getTipoDeTarjeta());
+                Tarjeta tarjeta = new Tarjeta(this.solicitudSeleccionada.getTipoDeTarjeta(), this.solicitudSeleccionada.getDpi());
+                boolean respuesta = this.controladorSolicitudDeTarjeta.aprobarSolicitud(EstadoSolicitudDeTarjeta.APROBADO, this.solicitudSeleccionada.getId(), this.solicitudSeleccionada.getTipoDeTarjeta(),tarjeta);
                 if (respuesta) {
                     JOptionPane.showMessageDialog(this, "Se Acepto la solicitud", "Aceptacion", JOptionPane.INFORMATION_MESSAGE);
                     //ENVIAR MENSAJE POR CORREO DE POR QUE SE RECHAZO
-                    /**Generara datos de tarjeta de credito
-                     * **
+                    /**
+                     * Generara datos de tarjeta de credito **
                      *
                      *
                      *
@@ -370,7 +370,7 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Debe colocar una descripcion", "Atencion", JOptionPane.WARNING_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_aprobarSolicitudjButton1ActionPerformed
 
     public ObservableList<SolicitudTarjeta> getListaObservableSolicitudTarjeta() {
@@ -437,20 +437,20 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         this.resumenCuentajEditorPane1.setText(
                 "<ul>\n"
                 + "  <li>DPI: " + solicitud.getDpi() + "</li>\n"
-                + "  <li>TIPO DE TARJETA: " + solicitud.getTarjeta().toString().toUpperCase() + "</li>\n"
+                + "  <li>TIPO DE TARJETA: " + solicitud.getTipoDeTarjeta().toString().toUpperCase() + "</li>\n"
                 + "  <li>SALARIO MENSUAL: " + solicitud.getSalarioMensual() + "</li>\n"
                 + "  <li>EMPRESA: " + solicitud.getEmpresa() + "</li>\n"
                 + "  <li>TIPO DE TRABAJO: " + solicitud.getTipoDeTrabajo() + "</li>\n"
                 + "  <li>FECHA SOLICITUD: " + solicitud.getFechaSolicitud() + "</li>\n"
                 + "  <li>DESCRIPCION: " + solicitud.getDescripcion() + "</li>\n"
-                + "  <li>ESTADO: " + solicitud.getEstado() + "</li>\n"
-                + "  <li>CORREO: " + solicitud.getEmail()+ "</li>\n"
+                + "  <li>ESTADO: " + solicitud.getEstadoSolicitud()+ "</li>\n"
+                + "  <li>CORREO: " + solicitud.getEmail() + "</li>\n"
                 + "</ul>"
         );
     }
 
     private void actualizarTipoDeTarjeta(SolicitudTarjeta solicitud) {
-        switch (solicitud.getTarjeta()) {
+        switch (solicitud.getTipoDeTarjeta()) {
             case ORO:
                 this.tipoTarjetajComboBox.setSelectedIndex(0);
                 break;
@@ -476,10 +476,12 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
     }
 
     private void enviarCorreoAceptacion() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     private void enviarCorreoRechazo() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
 }

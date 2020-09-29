@@ -7,10 +7,10 @@ package backend.enums;
 
 /**
  *
- * @author jesfrin
+ * @author jes
  */
-public enum TipoDeTarjeta {
-    ORO,
-    PLATA,
-    BRONCE
+public enum TipoTarjeta {
+    
+    DEBITO,
+    CREDITO
 }

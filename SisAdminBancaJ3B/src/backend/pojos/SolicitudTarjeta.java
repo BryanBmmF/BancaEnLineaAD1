@@ -6,7 +6,7 @@
 package backend.pojos;
 
 import backend.enums.EstadoSolicitudDeTarjeta;
-import backend.enums.TipoDeTarjeta;
+import backend.enums.TipoDeTarjetaSolicitud;
 import backend.enums.TipoDeTrabajoDeCliente;
 import java.sql.Timestamp;
 
@@ -22,7 +22,7 @@ public class SolicitudTarjeta {
     private String empresa;
     private EstadoSolicitudDeTarjeta estadoSolicitud;
     private double salarioMensual;
-    private TipoDeTarjeta tipoDeTarjeta;
+    private TipoDeTarjetaSolicitud tipoDeTarjeta;
     private String descripcion;
     private Timestamp fechaSolicitud;
     private Timestamp fechaVerificacion;
@@ -40,6 +40,35 @@ public class SolicitudTarjeta {
         this.fechaSolicitud = fechaSolicitud;
         this.fechaVerificacion = fechaVerificacion;
         this.email = email;
+    }
+
+
+    private void convertirTipoDeTrabajo(String tipoDeTrabajo) {
+        if (tipoDeTrabajo.equalsIgnoreCase(TipoDeTrabajoDeCliente.INDEPENDIENTE.toString())) {
+            this.tipoDeTrabajo = TipoDeTrabajoDeCliente.INDEPENDIENTE;
+        } else {
+            this.tipoDeTrabajo = TipoDeTrabajoDeCliente.DEPENDIENTE;
+        }
+    }
+
+    private void convertirEstado(String estado) {
+        if (estado.equalsIgnoreCase(EstadoSolicitudDeTarjeta.APROBADO.toString())) {
+            this.estadoSolicitud = EstadoSolicitudDeTarjeta.APROBADO;
+        } else if (estado.equalsIgnoreCase(EstadoSolicitudDeTarjeta.EN_ESPERA.toString())) {
+            this.estadoSolicitud = EstadoSolicitudDeTarjeta.EN_ESPERA;
+        } else {
+            this.estadoSolicitud = EstadoSolicitudDeTarjeta.RECHAZADO;
+        }
+    }
+
+    private void convertirTipoDeTarjeta(String tarjeta) {
+        if (tarjeta.equalsIgnoreCase(TipoDeTarjetaSolicitud.ORO.toString())) {
+            this.tipoDeTarjeta = TipoDeTarjetaSolicitud.ORO;
+        } else if (tarjeta.equalsIgnoreCase(TipoDeTarjetaSolicitud.PLATA.toString())) {
+            this.tipoDeTarjeta = TipoDeTarjetaSolicitud.PLATA;
+        } else {
+            this.tipoDeTarjeta = TipoDeTarjetaSolicitud.BRONCE;
+        }
     }
 
     public int getId() {
@@ -74,12 +103,12 @@ public class SolicitudTarjeta {
         this.empresa = empresa;
     }
 
-    public EstadoSolicitudDeTarjeta getEstado() {
+    public EstadoSolicitudDeTarjeta getEstadoSolicitud() {
         return estadoSolicitud;
     }
 
-    public void setEstado(EstadoSolicitudDeTarjeta estado) {
-        this.estadoSolicitud = estado;
+    public void setEstadoSolicitud(EstadoSolicitudDeTarjeta estadoSolicitud) {
+        this.estadoSolicitud = estadoSolicitud;
     }
 
     public double getSalarioMensual() {
@@ -90,12 +119,12 @@ public class SolicitudTarjeta {
         this.salarioMensual = salarioMensual;
     }
 
-    public TipoDeTarjeta getTarjeta() {
+    public TipoDeTarjetaSolicitud getTipoDeTarjeta() {
         return tipoDeTarjeta;
     }
 
-    public void setTarjeta(TipoDeTarjeta tarjeta) {
-        this.tipoDeTarjeta = tarjeta;
+    public void setTipoDeTarjeta(TipoDeTarjetaSolicitud tipoDeTarjeta) {
+        this.tipoDeTarjeta = tipoDeTarjeta;
     }
 
     public String getDescripcion() {
@@ -122,50 +151,6 @@ public class SolicitudTarjeta {
         this.fechaVerificacion = fechaVerificacion;
     }
 
-    private void convertirTipoDeTrabajo(String tipoDeTrabajo) {
-        if (tipoDeTrabajo.equalsIgnoreCase(TipoDeTrabajoDeCliente.INDEPENDIENTE.toString())) {
-            this.tipoDeTrabajo = TipoDeTrabajoDeCliente.INDEPENDIENTE;
-        } else {
-            this.tipoDeTrabajo = TipoDeTrabajoDeCliente.DEPENDIENTE;
-        }
-    }
-
-    private void convertirEstado(String estado) {
-        if (estado.equalsIgnoreCase(EstadoSolicitudDeTarjeta.APROBADO.toString())) {
-            this.estadoSolicitud = EstadoSolicitudDeTarjeta.APROBADO;
-        } else if (estado.equalsIgnoreCase(EstadoSolicitudDeTarjeta.EN_ESPERA.toString())) {
-            this.estadoSolicitud = EstadoSolicitudDeTarjeta.EN_ESPERA;
-        } else {
-            this.estadoSolicitud = EstadoSolicitudDeTarjeta.RECHAZADO;
-        }
-    }
-
-    private void convertirTipoDeTarjeta(String tarjeta) {
-        if (tarjeta.equalsIgnoreCase(TipoDeTarjeta.ORO.toString())) {
-            this.tipoDeTarjeta = TipoDeTarjeta.ORO;
-        } else if (tarjeta.equalsIgnoreCase(TipoDeTarjeta.PLATA.toString())) {
-            this.tipoDeTarjeta = TipoDeTarjeta.PLATA;
-        } else {
-            this.tipoDeTarjeta = TipoDeTarjeta.BRONCE;
-        }
-    }
-
-    public EstadoSolicitudDeTarjeta getEstadoSolicitud() {
-        return estadoSolicitud;
-    }
-
-    public void setEstadoSolicitud(EstadoSolicitudDeTarjeta estadoSolicitud) {
-        this.estadoSolicitud = estadoSolicitud;
-    }
-
-    public TipoDeTarjeta getTipoDeTarjeta() {
-        return tipoDeTarjeta;
-    }
-
-    public void setTipoDeTarjeta(TipoDeTarjeta tipoDeTarjeta) {
-        this.tipoDeTarjeta = tipoDeTarjeta;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -174,6 +159,5 @@ public class SolicitudTarjeta {
         this.email = email;
     }
 
-    
-    
+
 }
