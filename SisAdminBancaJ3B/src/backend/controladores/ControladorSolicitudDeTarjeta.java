@@ -12,6 +12,7 @@ import backend.pojos.SolicitudTarjeta;
 import backend.pojos.Tarjeta;
 import java.sql.ResultSet;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -90,7 +91,7 @@ public class ControladorSolicitudDeTarjeta {
         return listaSolicitudes;
     }
 
-    public boolean aprobarSolicitud(EstadoSolicitudDeTarjeta estado, int idSolicitud, TipoDeTarjetaSolicitud tipoDeTarjeta,Tarjeta tarjeta) {
+    public boolean aprobarSolicitud(EstadoSolicitudDeTarjeta estado, int idSolicitud, TipoDeTarjetaSolicitud tipoDeTarjeta, Tarjeta tarjeta) {
         try {
             this.conexion.setAutoCommit(false);
             prepared = conexion.prepareStatement(APROBAR_SOLICITUD);
@@ -144,6 +145,49 @@ public class ControladorSolicitudDeTarjeta {
             Logger.getLogger(ControladorSolicitudDeTarjeta.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    public void notificarAprobacionTarjeta(SolicitudTarjeta solicitud,Tarjeta tarjeta, String descripcion) {
+        ControladorPeticionesHttp controlador = new ControladorPeticionesHttp();
+        String numeroDeTarjeta = tarjeta.getNumeroDeTarjeta();
+        String codigoDeSeguridad = tarjeta.getCodigoCVC();
+        String tipoTarjeta = tarjeta.getTipoTarjeta().toString();
+        String limiteSaldo = tarjeta.getLimite();
+        String claseDeTarjeta=solicitud.getTipoDeTarjeta().toString();
+        String correo = solicitud.getEmail();
+        //String fechaVencimiento = String .valueOf(new Date(tarjeta.getFechaVencimiento().getTime()));
+        String params = "?numeroDeTarjeta=" + numeroDeTarjeta + "&codigoDeSeguridad=" + codigoDeSeguridad  + "&tipoTarjeta=" + tipoTarjeta + "&limiteSaldo=" + limiteSaldo +"&claseDeTarjeta="+claseDeTarjeta+"&Email=" + correo;
+        //String url = "http://192.168.20.3/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
+        String url = "http://192.168.0.200/j3b/servicios/switfMailer/respuetaSolicitudTarjeta.php"+params;
+        //String url = "http://192.168.1.18/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
+
+        String respuesta = "";
+        try {
+            respuesta = controlador.peticionHttpGetEnvioCorreo(url);
+            System.out.println("La respuesta es:\n" + respuesta);
+        } catch (Exception e) {
+            // Manejar excepción
+            e.printStackTrace();
+        }
+
+    }
+
+    public void notificarRechazoDeTarjeta(String descripcion, SolicitudTarjeta solicitud) {
+        ControladorPeticionesHttp controlador = new ControladorPeticionesHttp();
+        String params = "?Email=" + solicitud.getEmail();
+        //String url = "http://192.168.20.3/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
+        String url = "http://192.168.0.200/j3b/servicios/switfMailer/respuestaRechazoSolicitudTarjeta.php"+params;
+        //String url = "http://192.168.1.18/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
+
+        String respuesta = "";
+        try {
+            respuesta = controlador.peticionHttpGetEnvioCorreo(url);
+            System.out.println("La respuesta es:\n" + respuesta);
+        } catch (Exception e) {
+            // Manejar excepción
+            e.printStackTrace();
+        }
+
     }
 
 }
