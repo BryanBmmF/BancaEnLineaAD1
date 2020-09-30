@@ -1,6 +1,7 @@
 USE db_j3bank;
 
 /*Si no se guardan las funciones ejecutar----> SET GLOBAL log_bin_trust_function_creators = 1; */
+
 DROP PROCEDURE IF exists cancelar_cuenta;
 /*Procedimiento almacenado para cancelaciòn de cuentas bancarias*/
 DELIMITER $$
@@ -17,7 +18,6 @@ END$$
 DELIMITER ;
 
 
-
 /*funcion para registrar dos movimientos monetarios en una transaccion*/
 /*antes debe validarse que la cuenta emisora tenga fondos sino no se puede hacer la transferencia,
 tambien se debe validar que el saldo actual de la cuenta sea mayor al monto a transferir
@@ -26,6 +26,7 @@ tambien se debe validar que el monto a transferir no sea 0 , esto se puede hacer
 DROP FUNCTION IF EXISTS transferir_cuenta_ajena;
 /*funcion para registrar dos movimientos monetarios que se hacen en una transferencia con validacion de saldos*/
 DELIMITER $$
+DROP FUNCTION IF EXISTS transferir_cuenta_ajena;
 CREATE FUNCTION transferir_cuenta_ajena(cuenta_origen VARCHAR(10), cuenta_destino VARCHAR(10), monto_mov DOUBLE, motivo VARCHAR(50)) RETURNS VARCHAR(15)
 
 BEGIN
@@ -81,9 +82,7 @@ DELIMITER ;
 /*************Funcion para transacciones entre cuentas propias
 ****************/
 
-
  DROP FUNCTION IF EXISTS transferir_cuenta_propia;
-
 DELIMITER $$
 CREATE FUNCTION transferir_cuenta_propia(cuenta_origen VARCHAR(10), cuenta_destino VARCHAR(10), monto_mov DOUBLE,descripcion VARCHAR(50)) RETURNS VARCHAR(15)
 
@@ -172,3 +171,48 @@ END;
 
 $$
 DELIMITER ;
+
+
+
+
+DROP FUNCTION IF EXISTS registrarSolicitudTarjetaCredito;
+DELIMITER $$
+
+CREATE FUNCTION registrarSolicitudTarjetaCredito(tipo_de_trabajo VARCHAR(15),dpi_cliente VARCHAR(13),empresa VARCHAR(50),estado VARCHAR(15),salario_mensual DOUBLE,tarjeta  VARCHAR(8),descripcion VARCHAR(200) ) RETURNS INT
+
+BEGIN
+	-- declarando variables de apoyo para registrar la solicitud
+	DECLARE id_solicitud INT;
+	-- REGISTRANDO LA SOLICITUD
+	INSERT INTO SOLICITUD_TARJETA VALUES(null,tipo_de_trabajo,dpi_cliente,empresa,estado,salario_mensual,tarjeta,descripcion,now(),now());
+	-- OBTENIENDO EL ID DE LA SOLICITUD
+	SET id_solicitud = LAST_INSERT_ID();
+	-- RETORNANDO EL ID DE LA SOLICITUD
+	RETURN id_solicitud;
+END$$
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
