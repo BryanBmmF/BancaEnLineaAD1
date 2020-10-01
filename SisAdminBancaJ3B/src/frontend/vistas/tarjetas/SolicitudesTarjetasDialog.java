@@ -10,6 +10,7 @@ import backend.enums.EstadoSolicitudDeTarjeta;
 import backend.enums.TipoDeTarjetaSolicitud;
 import backend.pojos.SolicitudTarjeta;
 import backend.pojos.Tarjeta;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.sql.Date;
@@ -18,6 +19,8 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
@@ -106,6 +109,9 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${estadoSolicitud}"));
         columnBinding.setColumnName("Estado Solicitud");
         columnBinding.setColumnClass(backend.enums.EstadoSolicitudDeTarjeta.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${email}"));
+        columnBinding.setColumnName("Email");
+        columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${solicitudSeleccionada}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
         bindingGroup.addBinding(binding);
@@ -325,18 +331,13 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
             if (opcion == 0) {
                 boolean respuesta = this.controladorSolicitudDeTarjeta.rechazarSolicitud(EstadoSolicitudDeTarjeta.RECHAZADO, this.solicitudSeleccionada.getId());
                 if (respuesta) {
-                    JOptionPane.showMessageDialog(this, "Se rechazo la solicitud", "Rechazo", JOptionPane.INFORMATION_MESSAGE);
-                    //ENVIAR MENSAJE POR CORREO DE POR QUE SE RECHAZO
-                    /**
-                     * **
-                     *
-                     *
-                     *
-                     *
-                     *
-                     */
-                    enviarCorreoRechazo();
-                    limpiarYDesactivarOpciones();
+                    try {
+                        JOptionPane.showMessageDialog(this, "Se rechazo la solicitud", "Rechazo", JOptionPane.INFORMATION_MESSAGE);
+                        controladorSolicitudDeTarjeta.notificarRechazoDeTarjeta(this.comentarioDecisionjTextArea.getText(),solicitudSeleccionada);
+                        limpiarYDesactivarOpciones();
+                    } catch (IOException ex) {
+                        Logger.getLogger(SolicitudesTarjetasDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         } else {
@@ -353,18 +354,14 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
                 Tarjeta tarjeta = new Tarjeta(this.solicitudSeleccionada.getTipoDeTarjeta(), this.solicitudSeleccionada.getDpi());
                 boolean respuesta = this.controladorSolicitudDeTarjeta.aprobarSolicitud(EstadoSolicitudDeTarjeta.APROBADO, this.solicitudSeleccionada.getId(), this.solicitudSeleccionada.getTipoDeTarjeta(),tarjeta);
                 if (respuesta) {
-                    JOptionPane.showMessageDialog(this, "Se Acepto la solicitud", "Aceptacion", JOptionPane.INFORMATION_MESSAGE);
-                    //ENVIAR MENSAJE POR CORREO DE POR QUE SE RECHAZO
-                    /**
-                     * Generara datos de tarjeta de credito **
-                     *
-                     *
-                     *
-                     *
-                     *
-                     */
-                    enviarCorreoAceptacion();
-                    limpiarYDesactivarOpciones();
+                    try {
+                        JOptionPane.showMessageDialog(this, "Se Acepto la solicitud", "Aceptacion", JOptionPane.INFORMATION_MESSAGE);
+                        enviarCorreoAceptacion();
+                        controladorSolicitudDeTarjeta.notificarAprobacionTarjeta(solicitudSeleccionada, tarjeta, comentarioDecisionjTextArea.getText());
+                        limpiarYDesactivarOpciones();
+                    } catch (IOException ex) {
+                        Logger.getLogger(SolicitudesTarjetasDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         } else {
