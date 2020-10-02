@@ -127,6 +127,11 @@ public class EvaluadorCodigoRegistroCuenta extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    public void volverAPaginaInicial(){
+        Intent intent = new Intent(this,TransaccionCuentasAjenas.class);
+        startActivity(intent);
+        finish();
+    }
 
     /**
      * Metodo para recibir de la ventana anterior
@@ -158,7 +163,7 @@ public class EvaluadorCodigoRegistroCuenta extends AppCompatActivity {
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), "La cuenta se registro satisfactoriamente", Toast.LENGTH_SHORT).show();
                         notificarRegistroCuetaTerceros();
-                        volverAPaginaAnterior();
+                        volverAPaginaInicial();
                     }
                 }, new Response.ErrorListener() {
                     @Override
