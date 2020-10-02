@@ -170,7 +170,7 @@
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRealizarConversion" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonMandarSolicitud" />
 
     <TextView
         android:id="@+id/textView5"
@@ -185,7 +185,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textNombreEmpresa" />
 
     <Button
-        android:id="@+id/btnRealizarConversion"
+        android:id="@+id/buttonMandarSolicitud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -212,7 +212,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRealizarConversion" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonMandarSolicitud" />
 
     <TextView
         android:id="@+id/textView8"

@@ -33,6 +33,7 @@ import dev.com.j3b.enums.TipoDeTarjeta;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.modelos.SolicitudTarjeta;
 import dev.com.j3b.modelos.Usuario;
+import dev.com.j3b.ui.aplicacion.VentanaPrincipal;
 
 public class SolicitudPrestamo extends AppCompatActivity {
     private Spinner spinnerFormaTrabajo;
@@ -45,7 +46,7 @@ public class SolicitudPrestamo extends AppCompatActivity {
     private Usuario usuarioLogueado;
     private Button botonEnviarSolicitud;
     private int posicionTipoTrabajo;
-    private int posicionTarjeta;
+    private int posicionPrestamo;
     private ArrayList<String> formasDeTrabajo;
     private ArrayList<String>  tiposPrestamo;
     private final Integer ID_INICIAL_SOLICITUD = -1;
@@ -93,7 +94,7 @@ public class SolicitudPrestamo extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> lista, View view, int posicion, long l) {
                 if (lista != null) {
                     String cuenta = (String) lista.getSelectedItem();
-                    posicionTarjeta = posicion;
+                    posicionPrestamo = posicion;
                 }
             }
             @Override
@@ -162,114 +163,83 @@ public class SolicitudPrestamo extends AppCompatActivity {
 
 
     public void validarSolicitud() {
-        String ingresoMensual = this.textoIngresoMensual.getText().toString();
+        double ingresoMensual = Double.parseDouble(this.textoIngresoMensual.getText().toString());
         String empresa = this.textoNombreEmpresa.getText().toString();
         String formaTrabajo = this.spinnerFormaTrabajo.getSelectedItem().toString();
-        Integer tipoTarjetaDeseada = this.spinnerTipoPrestamo.getSelectedItemPosition();
+        String tipoPrestamoDeseado = this.spinnerTipoPrestamo.getSelectedItem().toString();
         String motivo = this.textoMotivoSolicitudTarjeta.getText().toString();
-        if (!ingresoMensual.equals("")) {
-            Double ingreso = Double.parseDouble(ingresoMensual);
-            if (ingreso > 0) {
-                if (ingreso >= 2500) {
-                    if(!empresa.equals("")){
-                        if(empresa.length()<=50){
-                            if(motivo.length()<=50){
-                                registrarSolicitud(ingreso,empresa,formaTrabajo,motivo,tipoTarjetaDeseada);
-                            }else{
-                                Toast.makeText(getApplicationContext(), "El campo de motivo no puede sobrepasar los 50 caracteres, actuales: "+motivo.length()+"\n", Toast.LENGTH_LONG).show();
-                            }
-                        }else{
-                            Toast.makeText(getApplicationContext(), "El campo de empresa no puede sobrepasar los 50 caracteres, actuales: "+empresa.length()+"\n", Toast.LENGTH_LONG).show();
-                        }
-                    }else{
-                        Toast.makeText(getApplicationContext(), "El campo de empresa no puede estar vacio \n", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Ingreso Mensual rechazado.\n No puedes realizar una solicitud si tus ingresos son menores a Q2500.00", Toast.LENGTH_LONG).show();
-                }
+        double montoPrestamo = Double.parseDouble(this.textoMontoPrestamo.getText().toString());
+        String direccionBienRaiz = this.textoDireccionBienRaiz.getText().toString();
+
+        try {
+            if(this.textoIngresoMensual.getText().toString().isEmpty() || this.textoNombreEmpresa.getText().toString().isEmpty() || this.textoMontoPrestamo.getText().toString().isEmpty()){
+                Toast.makeText(getApplicationContext(), "Todos los campos marcados con (*) son obligatorios porfavor revise.: "+motivo.length()+"\n", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(getApplicationContext(), "Ingreso Mensual rechazado.\n No se pueden poner ingresos negativos", Toast.LENGTH_LONG).show();
+                if (ingresoMensual == 0 || montoPrestamo ==0){
+                    Toast.makeText(getApplicationContext(), "Las cantidades solicitadas no pueden tener valor de 0, porfavor revise.: "+motivo.length()+"\n", Toast.LENGTH_LONG).show();
+                } else {
+                    if (empresa.length()>50 || direccionBienRaiz.length()>50 || motivo.length()>200){
+                        Toast.makeText(getApplicationContext(), "El nombre de la empresa o dirección de bien raiz son muy grandes, porfavor revise.: "+motivo.length()+"\n", Toast.LENGTH_LONG).show();
+                    } else {
+                        if (tipoPrestamoDeseado.equalsIgnoreCase("HIPOTECARIO") && direccionBienRaiz.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Si el prestamo es hipotecario se debe especificar la dirección del bien a hipotecar.: "+motivo.length()+"\n", Toast.LENGTH_LONG).show();
+                        } else {
+                            //realizar solicitud
+                            registrarSolicitud(ingresoMensual,empresa,formaTrabajo,motivo,tipoPrestamoDeseado,montoPrestamo,direccionBienRaiz);
+                        }
+
+                    }
+                }
+
             }
-        }else{
-            Toast.makeText(getApplicationContext(), "El campo de ingreso mensual no puede estar vacio \n", Toast.LENGTH_LONG).show();
+
         }
+        catch (NumberFormatException e){
+            Toast.makeText(getApplicationContext(), "Alguna de las cantidades ingresadas no es valida por favor revise.: "+motivo.length()+"\n", Toast.LENGTH_LONG).show();
+        }
+
     }
 
 
-    public void registrarSolicitud(Double ingresoMensual, String empresa, String formaTrabajo, String motivo, Integer tipoTarjetaDeseada){
+    public void registrarSolicitud(final Double ingresoMensual, final String empresa, final String formaTrabajo, final String motivo, final String tipoPrestamoDeseado, final Double montoPrestamo, final String bienraiz){
         String tipoTarjeta = "";
         String deseada = "";
-        boolean banderaSinErrores = true;
-        if (ingresoMensual < MINIMO_INGRESO) {
-            Toast.makeText(getApplicationContext(), "El ingreso minimo mensual debe de ser mayor a Q2500.00, no se puede generar una solicitud de tarjeta de credito con este ingreso mensual  \n", Toast.LENGTH_LONG).show();
-            banderaSinErrores = false;
-        } else if (ingresoMensual >= MINIMO_INGRESO && ingresoMensual <= LIMITE_BRONCE) {
-            tipoTarjeta = TipoDeTarjeta.BRONCE.toString();
-        } else if (ingresoMensual > LIMITE_BRONCE && ingresoMensual <= LIMITE_PLATA) {
-            tipoTarjeta = TipoDeTarjeta.PLATA.toString();
-        } else if (ingresoMensual > LIMITE_PLATA) {
-            tipoTarjeta = TipoDeTarjeta.ORO.toString();
-        }
+        //preguntando confirmacion para ejecutar la solicitud
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Desea realizar la solicitud de tarjeta de credito?\n Datos Ingresados:\n" +
+                "Ingreso Mensual: "+ingresoMensual+"\n" +
+                "Empresa: "+empresa+"\n" +
+                "Forma Trabajo: "+formaTrabajo+"\n" +
+                "Tipo Prestamo Solicitada: "+tipoPrestamoDeseado+"\n" +
+                "Monto de Prestamo Solicitado: "+montoPrestamo+"\n" +
+                "Descripcion: "+motivo+"\n");
+        builder.setTitle("Confirmacion");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Confirmar Solicitud", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
-        if(banderaSinErrores) {
-            if (tipoTarjetaDeseada == NUMERO_BRONCE) {
-                deseada = TipoDeTarjeta.BRONCE.toString();
-            } else if (tipoTarjetaDeseada == NUMERO_PLATA) {
-                deseada = TipoDeTarjeta.PLATA.toString();
-            } else if (tipoTarjetaDeseada == NUMERO_ORO) {
-                deseada = TipoDeTarjeta.ORO.toString();
+                //Limpiar  informacion
+                textoIngresoMensual.setText("");
+                textoMotivoSolicitudTarjeta.setText("");
+                textoNombreEmpresa.setText("");
+                crearSolicitudTransaccion(ingresoMensual,empresa,formaTrabajo,motivo,tipoPrestamoDeseado,montoPrestamo,bienraiz);
+
             }
-            //validando que coincidan la deseada con su tipo de tarjeta que le corresponderia
-            if (deseada.equals(TipoDeTarjeta.BRONCE.toString()) && (tipoTarjeta.equals(TipoDeTarjeta.BRONCE.toString()) || tipoTarjeta.equals(TipoDeTarjeta.PLATA.toString()) || tipoTarjeta.equals(TipoDeTarjeta.ORO.toString()))) {
-                // si pide una bronce y puede pedir bronce o superior esta bien y asi con el resto
-            } else if (deseada.equals(TipoDeTarjeta.PLATA.toString()) && (tipoTarjeta.equals(TipoDeTarjeta.PLATA.toString()) || tipoTarjeta.equals(TipoDeTarjeta.ORO.toString()))) {
-
-            } else if (deseada.equals(TipoDeTarjeta.ORO.toString()) && tipoTarjeta.equals(TipoDeTarjeta.ORO.toString())) {
-
-            } else {//si solicita una mayor a la que puede solicitar muestra el error
-                Toast.makeText(getApplicationContext(), "ERROR\n QUIERES APLICAR A: " + deseada + ", Y LA MAXIMA QUE PUEDES APLICAR ES: " + tipoTarjeta + " O INFERIOR\nMINIMO INGRESOS PARA APLICAR A TARJETAS:\n BRONCE: Q2500.00\n PLATA: Q10001.00\n ORO: Q20001.00", Toast.LENGTH_LONG).show();
-                banderaSinErrores = false;
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(), "Solicitud cancelada", Toast.LENGTH_LONG).show();
             }
-            if (banderaSinErrores) {
-                final SolicitudTarjeta solicitud = new SolicitudTarjeta(ID_INICIAL_SOLICITUD, formaTrabajo, this.usuarioLogueado.getDpiCliente(), empresa, EstadosSolicitudTarjeta.EN_ESPERA.toString(), ingresoMensual, deseada, motivo);
-                //preguntando confirmacion para ejecutar la solicitud
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Desea realizar la solicitud de tarjeta de credito?\n Datos Ingresados:\n" +
-                        "Ingreso Mensual: "+solicitud.getSalario()+"\n" +
-                        "Empresa: "+solicitud.getEmpresa()+"\n" +
-                        "Forma Trabajo: "+solicitud.getTipoTrabajo()+"\n" +
-                        "Tipo Tarjeta Solicitada: "+solicitud.getTarjeta()+"\n" +
-                        "Descripcion: "+solicitud.getDescripcion()+"\n");
-                builder.setTitle("Confirmacion");
-                builder.setCancelable(false);
-                builder.setPositiveButton("Confirmar Solicitud", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        //Limpiar  informacion
-                        textoIngresoMensual.setText("");
-                        textoMotivoSolicitudTarjeta.setText("");
-                        textoNombreEmpresa.setText("");
-                        crearSolicitudTransaccion(solicitud);
-
-
-                    }
-                });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getApplicationContext(), "Solicitud cancelada", Toast.LENGTH_LONG).show();
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-        }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
-    public void crearSolicitudTransaccion(final SolicitudTarjeta solicitud){
+    public void crearSolicitudTransaccion(Double ingresoMensual, String empresa, String formaTrabajo, String motivo, String tipoPrestamoDeseado, Double montoPrestamo, String bienraiz){
         String consultaSQL= ServidorSQL.SERVIDORSQL_CONRETORNO+
-                "SELECT registrarSolicitudTarjetaCredito('"+solicitud.getTipoTrabajo()+"','"+solicitud.getDpi_cliente()+"','"+solicitud.getEmpresa()+"','"+solicitud.getEstado()+"',"+solicitud.getSalario()+",'"+solicitud.getTarjeta()+"','"+solicitud.getDescripcion()+"') AS solicitud;";
+                "SELECT registrarSolicitudPrestamo('"+formaTrabajo+"','"+ VentanaPrincipal.cuentaHabienteLogueado.getDpiCliente() +"','"+empresa+"','"+"EN_ESPERA"+"',"+ingresoMensual+",'"+montoPrestamo+"','"+bienraiz+"','"+motivo+"') AS solicitud;";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL,
                 new Response.Listener<JSONArray>() {
                     JSONObject jsonObjectDatosUsuario = null;
@@ -278,8 +248,8 @@ public class SolicitudPrestamo extends AppCompatActivity {
                         try {
                             jsonObjectDatosUsuario = response.getJSONObject(0);
                             Integer idSolicitud = jsonObjectDatosUsuario.getInt("solicitud");
-                            solicitud.setId(idSolicitud);
-                            Toast.makeText(getApplicationContext(), "Se realizo la solicitud correctamente, el siguiente id te servira para rastrear tu solicitud en los bancos. ID: " + solicitud.getId(), Toast.LENGTH_LONG).show();
+
+                            Toast.makeText(getApplicationContext(), "Se realizo la solicitud correctamente, el siguiente id te servira para rastrear tu solicitud en los bancos. ID: " + idSolicitud, Toast.LENGTH_LONG).show();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -289,7 +259,7 @@ public class SolicitudPrestamo extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), "ERROR, MENSAJE: "+error.getMessage(), Toast.LENGTH_LONG).show();
-                solicitud.setId(null);
+
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
