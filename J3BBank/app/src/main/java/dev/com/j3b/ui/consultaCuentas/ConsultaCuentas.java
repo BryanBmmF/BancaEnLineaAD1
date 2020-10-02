@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -50,11 +51,13 @@ public class ConsultaCuentas extends AppCompatActivity implements View.OnClickLi
     private Button bDesde, bHasta,bBuscar;
     private EditText fechaFin, fechaIni;
     private int dia1, dia2, mes1, mes2, anio1, anio2;
+    private String textoFinalSaldo ="";
 
     private ListView listView;
     private ArrayList<String> arrayListMovimientos =  new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private EditText txtInput;
+    private TextView textViewSaldo;
 
     private ArrayList<String> listDatos = new ArrayList<>();
     private RecyclerView recycler;
@@ -67,6 +70,7 @@ public class ConsultaCuentas extends AppCompatActivity implements View.OnClickLi
         recycler.setLayoutManager(new LinearLayoutManager(this));
         //listView = (ListView)  findViewById(R.id.listv);
         //listView.setAdapter(adapter);
+        textViewSaldo = findViewById(R.id.textSaldo);
         spinner = findViewById(R.id.spinner);
         bDesde = findViewById(R.id.desdeBtn);
         bHasta = findViewById(R.id.hastaBtn);
@@ -82,6 +86,23 @@ public class ConsultaCuentas extends AppCompatActivity implements View.OnClickLi
         bHasta.setOnClickListener(this);
         bDesde.setOnClickListener(this);
         bBuscar.setOnClickListener(this);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String noCuentaSeleccionada = spinner.getSelectedItem().toString().substring(0,10);
+                //String noCuentaSeleccionada = parent.getItemAtPosition(position).toString();
+                try {
+                    buscarSaldoCuentaSeleccionada(noCuentaSeleccionada);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                //Toast.makeText(parent.getContext(), "Selected: " + tutorialsName,          Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView <?> parent) {
+            }
+        });
     }
 
     private void recibirDatos() throws NoSuchAlgorithmException {
@@ -177,6 +198,34 @@ public class ConsultaCuentas extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(getApplicationContext(), "Por favor, ingresa una fecha de inicio y fin para realizar la búsqueda.", Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), "Por favor, ingresa una fecha de inicio y fin para realizar la búsqueda.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void buscarSaldoCuentaSeleccionada(String noCuenta) throws NoSuchAlgorithmException {
+        String consultaSQL = ServidorSQL.SERVIDORSQL_CONRETORNO+"SELECT saldo FROM CUENTA WHERE no_cuenta_bancaria ='"+noCuenta+"'";
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL, new Response.Listener<JSONArray>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObjectDatosUsuario = null;
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        jsonObjectDatosUsuario = response.getJSONObject(i);
+                        String saldo = jsonObjectDatosUsuario.getString("saldo");
+                        textoFinalSaldo = "SALDO ACTUAL: Q "+saldo;
+                    } catch (JSONException e) {
+                        Toast.makeText(getApplicationContext(), "Hay problemas de conexión al servidor.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            textViewSaldo.setText(textoFinalSaldo);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //En este punto no tendría que haber errores.
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
     }
 
     @Override

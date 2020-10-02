@@ -33,8 +33,11 @@ import dev.com.j3b.modelos.CuentaHabiente;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.modelos.Usuario;
 
+import dev.com.j3b.ui.cambios.ConsultaCambioMoneda;
 import dev.com.j3b.ui.consultaCuentas.ConsultaCuentas;
 
+import dev.com.j3b.ui.tarjetaCredito.ConsultaTarjeta;
+import dev.com.j3b.ui.tarjetaCredito.SolicitudTarjetaCreditoActivity;
 import dev.com.j3b.ui.transaccionesAjenas.TransaccionCuentasAjenas;
 import dev.com.j3b.ui.transaccionesPropias.TransaccionCuentasPropias;
 
@@ -145,8 +148,17 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
         Intent newIntent;
         switch (view.getId()){
             case R.id.cuentasMonetariasButton :
+                Toast toastCCM = Toast.makeText(getApplicationContext(), "Consultar Cambio de Momeda", Toast.LENGTH_SHORT);
+                toastCCM.show();
+                Intent intentCCM = new Intent(this, ConsultaCambioMoneda.class);
+                startActivity(intentCCM);
                 break;
             case R.id.cuentasAhorroButton :
+                Intent consultarTarjetas = new Intent(getApplicationContext(), ConsultaTarjeta.class);
+                Bundle nuevoBundleConsultaTarjetas = new Bundle();
+                nuevoBundleConsultaTarjetas.putString("dpiusuario", usuarioRecivido.getDpiCliente());
+                consultarTarjetas.putExtras(nuevoBundleConsultaTarjetas);
+                startActivity(consultarTarjetas);
                 break;
              /*Por el momento este boton funciona como transferencias a cuentas ajenas*/
             case R.id.tarjetasCreditoButton :
@@ -162,6 +174,8 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.segurosButton :
+                Intent solicitudTarjeta = new Intent(getApplicationContext(), SolicitudTarjetaCreditoActivity.class);
+                startActivity(solicitudTarjeta);
                 break;
             case R.id.gestionesButton :
                 Intent consultarCuentas = new Intent(getApplicationContext(), ConsultaCuentas.class);

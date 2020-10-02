@@ -25,7 +25,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS crearMovimientoMonetarioInicialCuenta;
 create procedure crearMovimientoMonetarioInicialCuenta(in noCuenta VARCHAR(10), in monto double)
 BEGIN 
-INSERT INTO MOVIMIENTO_MONETARIO VALUES(null,noCuenta,monto,CURRENT_TIMESTAMP,'ABONO');
+INSERT INTO MOVIMIENTO_MONETARIO(id_mov_monetario,no_cuenta,monto,fecha,tipo,descripcion) VALUES(null,noCuenta,monto,CURRENT_TIMESTAMP,'ABONO','PAGO INICIAL');
 END;
 
 $$
