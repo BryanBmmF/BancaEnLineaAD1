@@ -44,7 +44,7 @@ public class Tarjeta {
         this.limite = establecerLimiteDeTarjeta(tipo);
         this.dpiCuentaHabiente = dpiCuentaHabiente;
         this.estadoTarjeta = EstadoTarjeta.ACTIVA;
-        this.deudaActual = Double.valueOf(establecerLimiteDeTarjeta(tipo));
+        this.deudaActual = 0;
         this.fechaVencimiento = generarFechaDeCaducidad();
         this.codigoCVC = generarCodigoDeSeguridad();
         this.tasaInteres=establecerTasaDeInteres(tipo);

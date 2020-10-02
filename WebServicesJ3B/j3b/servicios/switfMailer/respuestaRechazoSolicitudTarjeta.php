@@ -4,7 +4,6 @@ require_once './vendor/autoload.php';
 
 /* Recibiendo parametros con Get */
 $Correo = $_POST["Email"];
-$Correo="jess2298gnz@gmail.com";
 $descripcion = $_POST["descripcion"];
 
 try {
@@ -30,7 +29,7 @@ try {
    // Set the plain-text "Body"
    $message->setBody("This is the plain text body of the message.\nGracias por tu Preferencia,\nAdmin");
    // Set a "Body"
-   $message->addPart('Lamentamos informarte que tu solicitud de tarjeta de credito ha sido rechazada. 
+   $message->addPart('Lamentamos informarte que tu solicitud de tarjeta de credito ha sido rechazada.
         <br> Comentario Administrador: '.$descripcion.'
         <br>Gracias por tu Preferencia,<br>Admin', 'text/html');
 
