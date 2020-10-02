@@ -1,10 +1,10 @@
 USE db_j3bank;
 
 /*Si no se guardan las funciones ejecutar----> SET GLOBAL log_bin_trust_function_creators = 1; */
-SET GLOBAL log_bin_trust_function_creators = 1;
+
+DROP PROCEDURE IF exists cancelar_cuenta;
 /*Procedimiento almacenado para cancelaciòn de cuentas bancarias*/
 DELIMITER $$
-DROP PROCEDURE IF EXISTS cancelar_cuenta;
 CREATE PROCEDURE cancelar_cuenta (IN num_cuenta VARCHAR(10), IN motiv VARCHAR(60), IN fech TIMESTAMP)
 BEGIN
 
@@ -17,14 +17,13 @@ BEGIN
 END$$
 DELIMITER ;
 
- 
 
 /*funcion para registrar dos movimientos monetarios en una transaccion*/
 /*antes debe validarse que la cuenta emisora tenga fondos sino no se puede hacer la transferencia,
 tambien se debe validar que el saldo actual de la cuenta sea mayor al monto a transferir
 tambien se debe validar que el monto a transferir no sea 0 , esto se puede hacer desde backend
 */
-
+DROP FUNCTION IF EXISTS transferir_cuenta_ajena;
 /*funcion para registrar dos movimientos monetarios que se hacen en una transferencia con validacion de saldos*/
 DELIMITER $$
 DROP FUNCTION IF EXISTS transferir_cuenta_ajena;
@@ -142,8 +141,8 @@ DELIMITER ;
 
 /*PROCEDIMIENTO PARA CAMBIAR EL SALDO DE UNA CUENTA, CUANDO SE HA REALIZADO UN MOVIMIENTO BANCARIO*/
 
-DELIMITER $$
 DROP PROCEDURE IF EXISTS actualizarSaldoCuenta;
+DELIMITER $$
 create procedure actualizarSaldoCuenta(in tipo VARCHAR(10), in monto double , in noCuenta VARCHAR(10))
 BEGIN
 IF tipo='ABONO' THEN
@@ -162,8 +161,9 @@ DELIMITER ;
 /*PROCEDIMIENTO PARA REGISTRAR EL SALDO INICIAL DE UNA CUENTA AL MOMENTO DE CREARSE, Y QUEDE REGISTRADO EN MOVIMIENTO MONETARIO*/
 
 
+DROP PROCEDURE IF EXISTS actualizarSaldoCuenta;
+
 DELIMITER $$
-DROP PROCEDURE IF EXISTS crearMovimientoMonetarioInicialCuenta;
 create procedure crearMovimientoMonetarioInicialCuenta(in noCuenta VARCHAR(10), in monto double)
 BEGIN 
 INSERT INTO MOVIMIENTO_MONETARIO(id_mov_monetario,no_cuenta,monto,fecha,tipo,descripcion) VALUES(null,noCuenta,monto,CURRENT_TIMESTAMP,'ABONO','PAGO INICIAL');
