@@ -192,3 +192,21 @@ BEGIN
 	RETURN id_solicitud;
 END$$
 DELIMITER ;
+
+DROP FUNCTION IF EXISTS registrarSolicitudPrestamo;
+DELIMITER $$
+
+CREATE FUNCTION registrarSolicitudPrestamo(tipo_de_trabajo VARCHAR(15),dpi_cliente VARCHAR(13),empresa VARCHAR(50),estado VARCHAR(15),salario_mensual DOUBLE,monto_sol double,tipo VARCHAR(20),direccion_bien VARCHAR(200), descripcion VARCHAR(200) ) RETURNS INT
+
+BEGIN
+	-- declarando variables de apoyo para registrar la solicitud
+	DECLARE id_solicitud INT;
+	-- REGISTRANDO LA SOLICITUD
+	INSERT INTO SOLICITUD_PRESTAMO (id,tipo_de_trabajo,empresa,estado,salario_mensual,monto_solicitud,tipo,descripcion,direccion_bien_raiz,fecha_solicitud,dpi_cliente)
+		VALUES (null,tipo_de_trabajo,empresa,estado,salario_mensual,monto_sol,tipo,descripcion,direccion_bien,now(),dpi_cliente);
+	-- OBTENIENDO EL ID DE LA SOLICITUD
+	SET id_solicitud = LAST_INSERT_ID();
+	-- RETORNANDO EL ID DE LA SOLICITUD
+	RETURN id_solicitud;
+END$$
+DELIMITER ;
