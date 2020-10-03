@@ -11,6 +11,7 @@ import backend.enums.TipoTarjeta;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -37,6 +38,11 @@ public class Tarjeta {
     private String codigoCVC;
     private String tasaInteres;
 
+    /***
+     * Para creacion de tarjeta de CREDITO
+     * @param tipo
+     * @param dpiCuentaHabiente 
+     */
     public Tarjeta(TipoDeTarjetaSolicitud tipo, String dpiCuentaHabiente) {
         this.numeroDeTarjeta = generarNumeroDeTarjeta();
         this.numeroCuenta = null;
@@ -49,6 +55,21 @@ public class Tarjeta {
         this.codigoCVC = generarCodigoDeSeguridad();
         this.tasaInteres=establecerTasaDeInteres(tipo);
         
+    }
+    
+    /**
+     * Para creacion de tarjeta de DEBITO
+     * @param dpiCuentaHabiente 
+     * @param numeroDeCuenta 
+     */
+    public Tarjeta(String dpiCuentaHabiente, String numeroDeCuenta){
+        this.numeroDeTarjeta = generarNumeroDeTarjeta();
+        this.numeroCuenta = numeroDeCuenta;
+        this.tipoTarjeta = TipoTarjeta.DEBITO;
+        this.dpiCuentaHabiente = dpiCuentaHabiente;
+        this.estadoTarjeta = EstadoTarjeta.ACTIVA;
+        this.fechaVencimiento = generarFechaDeCaducidad();
+        this.codigoCVC = generarCodigoDeSeguridad();
     }
 
     public String getNumeroDeTarjeta() {
@@ -169,6 +190,9 @@ public class Tarjeta {
 
     private Timestamp generarFechaDeCaducidad() {
         LocalDate fecha = LocalDate.now();
+        int dia = fecha.getDayOfMonth();
+        int restaDias = dia-1;
+        fecha=fecha.minusDays(restaDias);
         long years = 4L;
         fecha = fecha.plusYears(years);
         return new Timestamp(Date.valueOf(fecha).getTime());

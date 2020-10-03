@@ -15,6 +15,7 @@ import backend.enums.PeriodoInteres;
 import backend.enums.TipoCuenta;
 import backend.pojos.Cuenta;
 import backend.pojos.CuentaHabiente;
+import backend.pojos.Tarjeta;
 import backend.pojos.UsuarioCliente;
 import java.sql.Date;
 import java.util.LinkedList;
@@ -151,7 +152,7 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
+                        .addGap(41, 41, 41)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -172,14 +173,13 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
                                     .addComponent(txtDepositoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel1)
-                                                .addComponent(jLabel2))
-                                            .addGap(68, 68, 68))
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
+                                            .addComponent(jLabel2)
+                                            .addGap(83, 83, 83)))
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                             .addGap(89, 89, 89)
@@ -190,7 +190,8 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
                                             .addGap(90, 90, 90)
                                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(apellidosjTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(fechajDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                .addComponent(fechajDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
                             .addComponent(direccionjTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(73, 73, 73)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -250,7 +251,7 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(crearCuentaHabientejButton1)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Creacion de cuenta Habientes", jPanel2);
@@ -389,6 +390,8 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
                     this.logUusuariosjTextArea.setText(this.logUusuariosjTextArea.getText() + "-----------------------------\n"
                             + user.toString() +cuenta.toString() + "\n-----------------------------\n");
                     //notificar correo
+                    //Ingresar tarjeta de debito
+                    controladorCuentaHabiente.registroDeTarjetaDeDebito(new Tarjeta(cuenta.getDpiCliente(), cuenta.getNumCuenta()));
                     controladorCuentaHabiente.notificarCorreoCuentaHabiente(cuenta, user, cuentaHabiente.getEmail());
                 } else {
                     controladorCuentaHabiente.eliminarCuentaHabiente(this.dpijTextField1.getText());

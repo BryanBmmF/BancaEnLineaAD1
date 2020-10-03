@@ -8,6 +8,7 @@ package backend.controladores;
 import backend.database.ConexionBD;
 import backend.pojos.Cuenta;
 import backend.pojos.CuentaHabiente;
+import backend.pojos.Tarjeta;
 import backend.pojos.UsuarioCliente;
 import java.sql.Connection;
 import java.sql.Date;
@@ -33,15 +34,21 @@ public class ControladorCuentaHabiente {
     private static final String BUSQUEDA_DE_CUENTA_HABIENTES = "SELECT * FROM CUENTA_HABIENTE";
     private static final String MODIFICAR_CUENTA_HABIENTE = "UPDATE CUENTA_HABIENTE SET nombres=?,apellidos=?,fecha_nacimiento=?,direccion=?,telefono=?,celular=?,email=? WHERE dpi_cliente=?";
     private static final String ELIMINAR_CUENTA_HABIENTE = "DELETE FROM CUENTA_HABIENTE WHERE dpi_cliente=?";
+    private static final String CONSULTAR_TARJETA_DE_DEBITO = "SELECT no_tarjeta FROM TARJETA WHERE dpi_cuenta_habiente=? AND tipo='DEBITO'";
+    private static final String INSERTAR_TARJETA = "INSERT INTO "
+            + "TARJETA(no_tarjeta,numero_cuenta,tipo,dpi_cuenta_habiente,estado,fecha_vencimiento,codigoCVC) "
+            + "VALUES(?,?,?,?,?,?,?)";
 
     public ControladorCuentaHabiente() {
         connection = ConexionBD.getInstance();
     }
 
     /**
-     * Se elimina la cuenta de un CUnetaHabiente, solo si es completamente nuevo(no posee relacion con otras tablas)
+     * Se elimina la cuenta de un CUnetaHabiente, solo si es completamente
+     * nuevo(no posee relacion con otras tablas)
+     *
      * @param dpi
-     * @return 
+     * @return
      */
     public boolean eliminarCuentaHabiente(String dpi) {
         try {
@@ -195,23 +202,24 @@ public class ControladorCuentaHabiente {
         return new CuentaHabiente(dpi, nombres, apellidos, fechaNacimeitno, direccion, telefono, celular, email);
 
     }
-    
+
     /**
-     * Notifica por correo al Usuario registrado sus credenciales de acceso obtenidas por el banco 
+     * Notifica por correo al Usuario registrado sus credenciales de acceso
+     * obtenidas por el banco
      *
      * @param cuenta
      * @param cliente
      * @param correo
      */
-    public void notificarCorreoCuentaHabiente(Cuenta cuenta, UsuarioCliente cliente, String correo){
+    public void notificarCorreoCuentaHabiente(Cuenta cuenta, UsuarioCliente cliente, String correo) {
         ControladorPeticionesHttp controlador = new ControladorPeticionesHttp();
         String numCuenta = cuenta.getNumCuenta();
         String tipo = cuenta.getTipo().toString();
-        String saldo = "Q."+cuenta.getSaldo()+"0";
+        String saldo = "Q." + cuenta.getSaldo() + "0";
         String usuario = "";
         String pass = "";
         String fechaCaducidad = "";
-        if (cliente!=null) {
+        if (cliente != null) {
             /*Registro por primera vez*/
             usuario = cliente.getUsuarioCliente();
             pass = cliente.getContrasenaCopia();
@@ -222,20 +230,49 @@ public class ControladorCuentaHabiente {
             pass = "Confirmado";
             fechaCaducidad = "Confirmada";
         }
-        String params= "?Usuario="+usuario+"&Pass="+pass+"&FechaCaducidad="+fechaCaducidad+"&NumCuenta="+numCuenta+"&Tipo="+tipo+"&Saldo="+saldo+"&Email="+correo;
+        String params = "?Usuario=" + usuario + "&Pass=" + pass + "&FechaCaducidad=" + fechaCaducidad + "&NumCuenta=" + numCuenta + "&Tipo=" + tipo + "&Saldo=" + saldo + "&Email=" + correo;
         //String url = "http://192.168.20.3/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
-        String url = "http://192.168.0.200/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
+        String url = "http://192.168.0.200/j3b/servicios/switfMailer/envioDeCorreo.php" + params;
         //String url = "http://192.168.1.18/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
-        
-		String respuesta = "";
-		try {
-			respuesta = controlador.peticionHttpGetEnvioCorreo(url);
-			System.out.println("La respuesta es:\n" + respuesta);
-		} catch (Exception e) {
-			// Manejar excepción
-			e.printStackTrace();
-		}
-        
+
+        String respuesta = "";
+        try {
+            respuesta = controlador.peticionHttpGetEnvioCorreo(url);
+            System.out.println("La respuesta es:\n" + respuesta);
+        } catch (Exception e) {
+            // Manejar excepción
+            e.printStackTrace();
+        }
+
     }
-    
+
+    public boolean registroDeTarjetaDeDebito(Tarjeta tarjeta) {
+        try {
+            prepState = connection.prepareStatement(CONSULTAR_TARJETA_DE_DEBITO);
+            prepState.setString(1, tarjeta.getDpiCuentaHabiente());
+            res = prepState.executeQuery();
+            while (res.next()) {
+                return true;
+            }
+            res.close();
+            //Ingresando Tarjeta
+            prepState = connection.prepareStatement(INSERTAR_TARJETA);
+            prepState.setString(1, tarjeta.getNumeroDeTarjeta());
+            prepState.setString(2, tarjeta.getNumeroCuenta());
+            prepState.setString(3, tarjeta.getTipoTarjeta().toString());
+            prepState.setString(4, tarjeta.getDpiCuentaHabiente());
+            prepState.setString(5, tarjeta.getEstadoTarjeta().toString());
+            prepState.setTimestamp(6, tarjeta.getFechaVencimiento());
+            prepState.setString(7, tarjeta.getCodigoCVC());
+            System.out.println(prepState.toString());
+            prepState.executeUpdate();
+            prepState.close();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
 }

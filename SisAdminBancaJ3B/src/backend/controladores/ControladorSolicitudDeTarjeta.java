@@ -137,7 +137,7 @@ public class ControladorSolicitudDeTarjeta {
         return false;
     }
 
-    private boolean ingresarTarjeta(Tarjeta tarjeta) {
+    public boolean ingresarTarjeta(Tarjeta tarjeta) {
         try {
             prepared = conexion.prepareStatement(INSERTAR_TARJETA);
             prepared.setString(1, tarjeta.getNumeroDeTarjeta());
