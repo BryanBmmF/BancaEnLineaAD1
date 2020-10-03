@@ -207,6 +207,7 @@ public class ControladorCuentaHabiente {
      * Notifica por correo al Usuario registrado sus credenciales de acceso
      * obtenidas por el banco
      *
+     * @param tarjeta
      * @param cuenta
      * @param cliente
      * @param correo
@@ -219,21 +220,39 @@ public class ControladorCuentaHabiente {
         String usuario = "";
         String pass = "";
         String fechaCaducidad = "";
+        String numeroDeTarjeta = "";
+        String fechaCaducidadTarjeta = "";
+        String codigoDeSeguridadTarjeta = "";
+        String params;
+        String url;
         if (cliente != null) {
             /*Registro por primera vez*/
+            //Se crea la tarjeta de debito
+            ControladorCuentaHabiente controladorCuentaHabiente = new ControladorCuentaHabiente();
+            Tarjeta tarjeta = new Tarjeta(cuenta.getDpiCliente(), cuenta.getNumCuenta());
+            controladorCuentaHabiente.registroDeTarjetaDeDebito(tarjeta);
             usuario = cliente.getUsuarioCliente();
             pass = cliente.getContrasenaCopia();
-            fechaCaducidad = cliente.getFechaCaducidad().toString();
+            fechaCaducidad=cliente.getFechaCaducidad().toString();
+            numeroDeTarjeta = tarjeta.getNumeroDeTarjeta();
+            codigoDeSeguridadTarjeta = tarjeta.getCodigoCVC();
+            fechaCaducidadTarjeta = String.valueOf(new Date(tarjeta.getFechaVencimiento().getTime()));
+            params = "?Usuario=" + usuario + "&Pass=" + pass + "&FechaCaducidad=" + fechaCaducidad + "&NumCuenta=" + numCuenta + "&Tipo=" + tipo + "&Saldo=" + saldo + "&Email=" + correo +"&numeroDeTarjeta="+numeroDeTarjeta+"&codigoDeSeguridadTarjeta="+codigoDeSeguridadTarjeta+"&fechaCaducidadTarjeta="+fechaCaducidadTarjeta;
+            //String url = "http://192.168.20.3/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
+            url = "http://192.168.0.200/j3b/servicios/switfMailer/creacionCuentaY_tarjetaDeCredito.php" + params;
+            //String url = "http://192.168.1.18/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
+
         } else {
             /*ya possee un usuario*/
             usuario = "Confirmado";
             pass = "Confirmado";
             fechaCaducidad = "Confirmada";
+            params = "?Usuario=" + usuario + "&Pass=" + pass + "&FechaCaducidad=" + fechaCaducidad + "&NumCuenta=" + numCuenta + "&Tipo=" + tipo + "&Saldo=" + saldo + "&Email=" + correo;
+            //String url = "http://192.168.20.3/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
+            url = "http://192.168.0.200/j3b/servicios/switfMailer/envioDeCorreo.php" + params;
+            //String url = "http://192.168.1.18/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
+
         }
-        String params = "?Usuario=" + usuario + "&Pass=" + pass + "&FechaCaducidad=" + fechaCaducidad + "&NumCuenta=" + numCuenta + "&Tipo=" + tipo + "&Saldo=" + saldo + "&Email=" + correo;
-        //String url = "http://192.168.20.3/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
-        String url = "http://192.168.0.200/j3b/servicios/switfMailer/envioDeCorreo.php" + params;
-        //String url = "http://192.168.1.18/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
 
         String respuesta = "";
         try {
@@ -256,6 +275,7 @@ public class ControladorCuentaHabiente {
             }
             res.close();
             //Ingresando Tarjeta
+            System.out.println("FECHA VENCIMIENTO:"+tarjeta.getFechaVencimiento());
             prepState = connection.prepareStatement(INSERTAR_TARJETA);
             prepState.setString(1, tarjeta.getNumeroDeTarjeta());
             prepState.setString(2, tarjeta.getNumeroCuenta());

@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 
 /**
  *
@@ -38,10 +39,12 @@ public class Tarjeta {
     private String codigoCVC;
     private String tasaInteres;
 
-    /***
+    /**
+     * *
      * Para creacion de tarjeta de CREDITO
+     *
      * @param tipo
-     * @param dpiCuentaHabiente 
+     * @param dpiCuentaHabiente
      */
     public Tarjeta(TipoDeTarjetaSolicitud tipo, String dpiCuentaHabiente) {
         this.numeroDeTarjeta = generarNumeroDeTarjeta();
@@ -53,16 +56,17 @@ public class Tarjeta {
         this.deudaActual = 0;
         this.fechaVencimiento = generarFechaDeCaducidad();
         this.codigoCVC = generarCodigoDeSeguridad();
-        this.tasaInteres=establecerTasaDeInteres(tipo);
-        
+        this.tasaInteres = establecerTasaDeInteres(tipo);
+
     }
-    
+
     /**
      * Para creacion de tarjeta de DEBITO
-     * @param dpiCuentaHabiente 
-     * @param numeroDeCuenta 
+     *
+     * @param dpiCuentaHabiente
+     * @param numeroDeCuenta
      */
-    public Tarjeta(String dpiCuentaHabiente, String numeroDeCuenta){
+    public Tarjeta(String dpiCuentaHabiente, String numeroDeCuenta) {
         this.numeroDeTarjeta = generarNumeroDeTarjeta();
         this.numeroCuenta = numeroDeCuenta;
         this.tipoTarjeta = TipoTarjeta.DEBITO;
@@ -152,9 +156,6 @@ public class Tarjeta {
         this.tasaInteres = tasaInteres;
     }
 
-    
-    
-    
     private String establecerLimiteDeTarjeta(TipoDeTarjetaSolicitud tipo) {
         switch (tipo) {
             case ORO:
@@ -189,13 +190,23 @@ public class Tarjeta {
     }
 
     private Timestamp generarFechaDeCaducidad() {
+        //Fecha y hora
+
+        //Para sumar anios
         LocalDate fecha = LocalDate.now();
         int dia = fecha.getDayOfMonth();
-        int restaDias = dia-1;
-        fecha=fecha.minusDays(restaDias);
+        int restaDias = dia - 1;
+        fecha = fecha.minusDays(restaDias);
         long years = 4L;
         fecha = fecha.plusYears(years);
-        return new Timestamp(Date.valueOf(fecha).getTime());
+        //COnfigurando hora
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Date.valueOf(fecha));
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR, 0);
+        java.util.Date fechaUtil = calendar.getTime();
+        return new Timestamp(fechaUtil.getTime());
     }
 
     private String generarCodigoDeSeguridad() {

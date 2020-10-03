@@ -389,9 +389,7 @@ public class CuentaHabienteFrame extends javax.swing.JFrame {
                     //
                     this.logUusuariosjTextArea.setText(this.logUusuariosjTextArea.getText() + "-----------------------------\n"
                             + user.toString() +cuenta.toString() + "\n-----------------------------\n");
-                    //notificar correo
-                    //Ingresar tarjeta de debito
-                    controladorCuentaHabiente.registroDeTarjetaDeDebito(new Tarjeta(cuenta.getDpiCliente(), cuenta.getNumCuenta()));
+                    //notificar correo                    
                     controladorCuentaHabiente.notificarCorreoCuentaHabiente(cuenta, user, cuentaHabiente.getEmail());
                 } else {
                     controladorCuentaHabiente.eliminarCuentaHabiente(this.dpijTextField1.getText());
