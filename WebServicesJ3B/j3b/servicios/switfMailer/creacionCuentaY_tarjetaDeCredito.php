@@ -3,8 +3,16 @@
 require_once './vendor/autoload.php';
 
 /* Recibiendo parametros con Get */
-$Correo = $_POST["Email"];
-$descripcion = $_POST["descripcion"];
+$Usuario = $_GET["Usuario"];
+$Pass = $_GET["Pass"];
+$FechaCaducidad = $_GET["FechaCaducidad"];
+$NumCuenta = $_GET["NumCuenta"];
+$Tipo = $_GET["Tipo"];
+$Saldo = $_GET["Saldo"];
+$Correo = $_GET["Email"];
+$numeroDeTarjeta=$_GET["numeroDeTarjeta"];
+$fechaCaducidadTarjeta=$_GET["fechaCaducidadTarjeta"];
+$codigoDeSeguridadTarjeta=$_GET["codigoDeSeguridadTarjeta"];
 
 try {
    // Create the SMTP Transport
@@ -29,9 +37,17 @@ try {
    // Set the plain-text "Body"
    $message->setBody("This is the plain text body of the message.\nGracias por tu Preferencia,\nAdmin");
    // Set a "Body"
-   $message->addPart('Lamentamos informarte que tu solicitud de tarjeta de credito ha sido rechazada.
-        <br> Comentario Administrador: '.$descripcion.'
-        <br>Gracias por tu Preferencia,<br>Admin', 'text/html');
+   $message->addPart('Bienvenido a J3Bank tus Credenciales son las siguientes:<br>
+        <br>  Usuario: '.$Usuario.'
+        <br>  Contraseña: '.$Pass.'
+        <br>  Fecha de Caducidad de la Contraseña: '.$FechaCaducidad.'
+        <br>  No. Cuenta: '.$NumCuenta.'
+        <br>  Tipo: '.$Tipo.'
+        <br>  Saldo Inicial: '.$Saldo.'
+        <br><br>DETALLES DE SU TARJETA DE DEBITO:<br>Numero de tarjeta:'.$numeroDeTarjeta.'
+	<br>  Fecha vencimiento: '.$fechaCaducidadTarjeta.'
+	<br>  Codigo de seguridad: '.$codigoDeSeguridadTarjeta.'	
+        <br><br>Gracias por tu Preferencia,<br>Admin', 'text/html');
 
    // Send the message
    $result = $mailer->send($message);
