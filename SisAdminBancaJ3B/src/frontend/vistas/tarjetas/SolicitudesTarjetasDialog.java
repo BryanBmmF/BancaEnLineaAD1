@@ -59,7 +59,6 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -83,39 +82,14 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${listaObservableSolicitudTarjeta}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dpi}"));
-        columnBinding.setColumnName("Dpi");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipoDeTarjeta}"));
-        columnBinding.setColumnName("Tipo De Tarjeta");
-        columnBinding.setColumnClass(backend.enums.TipoDeTarjetaSolicitud.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${salarioMensual}"));
-        columnBinding.setColumnName("Salario Mensual");
-        columnBinding.setColumnClass(Double.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${empresa}"));
-        columnBinding.setColumnName("Empresa");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipoDeTrabajo}"));
-        columnBinding.setColumnName("Tipo De Trabajo");
-        columnBinding.setColumnClass(backend.enums.TipoDeTrabajoDeCliente.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaSolicitud}"));
-        columnBinding.setColumnName("Fecha Solicitud");
-        columnBinding.setColumnClass(java.sql.Timestamp.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descripcion}"));
-        columnBinding.setColumnName("Descripcion");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${estadoSolicitud}"));
-        columnBinding.setColumnName("Estado Solicitud");
-        columnBinding.setColumnClass(backend.enums.EstadoSolicitudDeTarjeta.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${email}"));
-        columnBinding.setColumnName("Email");
-        columnBinding.setColumnClass(String.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${solicitudSeleccionada}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
-        bindingGroup.addBinding(binding);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
+            },
+            new String [] {
+
+            }
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setText("Solicitudes de tarjeta de Credito");
@@ -282,8 +256,6 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        bindingGroup.bind();
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -421,7 +393,6 @@ public class SolicitudesTarjetasDialog extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JEditorPane resumenCuentajEditorPane1;
     private javax.swing.JComboBox<String> tipoTarjetajComboBox;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
     private void actualizarLista(List<SolicitudTarjeta> listado) {
