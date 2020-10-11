@@ -2,6 +2,7 @@ package frontend.vistas.Administracion;
 
 import backend.pojos.UsuarioAdministrador;
 import frontend.vistas.Login.Login;
+import frontend.vistas.Prestamos.SolicitudesPrestamosDialog;
 import frontend.vistas.Transacciones.TransaccionesMonetarias;
 import frontend.vistas.cuentaHabientes.CuentaHabienteFrame;
 import frontend.vistas.cuentas.PanelGestionCuentas;
@@ -45,21 +46,23 @@ public class VistaAdministracion extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel1.setText("Vista Administracion");
         desktopPane.add(jLabel1);
-        jLabel1.setBounds(10, 10, 270, 28);
+        jLabel1.setBounds(10, 10, 270, 29);
 
         jLabel2.setText("Usuario en Sesion:");
         desktopPane.add(jLabel2);
-        jLabel2.setBounds(480, 10, 140, 17);
+        jLabel2.setBounds(480, 10, 140, 18);
 
         textoUsuarioEnSesion.setText("Aqui va el usuario");
         desktopPane.add(textoUsuarioEnSesion);
-        textoUsuarioEnSesion.setBounds(620, 10, 120, 17);
+        textoUsuarioEnSesion.setBounds(620, 10, 120, 18);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Cerrar Sesion");
@@ -134,6 +137,19 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
         menuBar.add(jMenu4);
 
+        jMenu5.setText("Prestamos");
+
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem6.setText("Solicitudes");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem6);
+
+        menuBar.add(jMenu5);
+
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -182,6 +198,11 @@ public class VistaAdministracion extends javax.swing.JFrame {
         solicitud.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    SolicitudesPrestamosDialog solicitud = new SolicitudesPrestamosDialog(this, true);
+    solicitud.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
@@ -191,11 +212,13 @@ public class VistaAdministracion extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JLabel textoUsuarioEnSesion;

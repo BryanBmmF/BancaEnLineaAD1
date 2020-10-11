@@ -173,7 +173,7 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
                         Toast.makeText(getApplicationContext(), "Hay problemas de conexión al servidor.", Toast.LENGTH_SHORT).show();
                     }
                 }
-
+                //llenar list box
                 AdapterDatos adapterDatos = new AdapterDatos(listDatos);
                 recycler.setAdapter(adapterDatos);
 
@@ -183,8 +183,12 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
             public void onErrorResponse(VolleyError error) {
                 //En este punto no tendría que haber errores.
                 Toast.makeText(getApplicationContext(), "No se encontraron registros correspondientes a las fechas establecidas.", Toast.LENGTH_SHORT).show();
+                //llenar list box
+                AdapterDatos adapterDatos = new AdapterDatos(listDatos);
+                recycler.setAdapter(adapterDatos);
             }
         });
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
@@ -217,7 +221,7 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
                         Toast.makeText(getApplicationContext(), "Hay problemas de conexión al servidor.", Toast.LENGTH_SHORT).show();
                     }
                 }
-
+                //llenar list box
                 AdapterDatos adapterDatos = new AdapterDatos(listDatos);
                 recycler.setAdapter(adapterDatos);
 
@@ -227,8 +231,12 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
             public void onErrorResponse(VolleyError error) {
                 //En este punto no tendría que haber errores.
                 Toast.makeText(getApplicationContext(), "No se encontraron registros correspondientes a las fechas establecidas.", Toast.LENGTH_SHORT).show();
+                //llenar list box
+                AdapterDatos adapterDatos = new AdapterDatos(listDatos);
+                recycler.setAdapter(adapterDatos);
             }
         });
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
