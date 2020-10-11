@@ -4,120 +4,166 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".ui.tarjetaCredito.SolicitudTarjetaCreditoActivity">
+
+    <RelativeLayout
+        android:id="@+id/tituloActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textoBienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Realiza una Solicitud"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/textoNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textoBienvenida"
+            android:text="De tarjeta de crédito"
+            android:layout_marginLeft="16dp"
+            android:textColor="#D4D4D4"
+            android:textSize="15sp"></TextView>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menulogoj3b"></ImageView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="Ingreso Mensual"
+        android:textColor="#272727"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
+
+
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="86dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="Empresa Donde Trabaja"
+        android:textColor="#272727"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="76dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="Forma de Trabajo"
+        android:textColor="#272727"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="79dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="52dp"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="Motivo Solicitud"
+        android:textColor="#272727"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="81dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="Tipo Tarjeta"
+        android:textColor="#272727"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Solicitud Tarjeta de Credito"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="78dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="36dp"
-        android:text="Ingreso Mensual"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <EditText
         android:id="@+id/textIngresoMensual"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_width="220dp"
+        android:layout_height="45dp"
         android:layout_marginTop="32dp"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:textSize="20dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
 
     <EditText
         android:id="@+id/textNombreEmpresa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="220dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textSize="20dp"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView11"
         app:layout_constraintTop_toBottomOf="@+id/textIngresoMensual" />
 
     <Spinner
         android:id="@+id/spinnerFormaTrabajo"
-        android:layout_width="208dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="220dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/holo_blue_dark"
+        android:backgroundTint="#FF9300"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.281"
         app:layout_constraintStart_toEndOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textNombreEmpresa" />
 
     <Spinner
         android:id="@+id/spinnerTipoTarjeta"
-        android:layout_width="208dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="220dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.621"
+        android:background="@android:color/holo_blue_dark"
+        android:backgroundTint="#FF9300"
         app:layout_constraintStart_toEndOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/spinnerFormaTrabajo" />
 
     <EditText
         android:id="@+id/textMotivoSolicitudTarjeta"
-        android:layout_width="wrap_content"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
-        android:background="@null"
+        android:layout_marginTop="8dp"
+        android:background="#F4F4F4"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
@@ -126,17 +172,21 @@
         android:scrollbarStyle="insideInset"
         android:scrollbars="vertical"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#272727"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView13"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTipoTarjeta" />
 
     <Button
         android:id="@+id/buttonMandarSolicitud"
         android:layout_width="206dp"
-        android:layout_height="52dp"
+        android:layout_height="55dp"
         android:layout_marginTop="24dp"
-        android:text="Mandar Solicitud"
+        android:text="Enviar Solicitud"
+        android:textColor="@android:color/black"
+        android:background="@drawable/button_rounded_green"
+        android:drawableRight="@drawable/forward_30px_black"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
