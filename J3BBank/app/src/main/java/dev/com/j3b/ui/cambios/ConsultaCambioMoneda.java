@@ -74,14 +74,16 @@ public class ConsultaCambioMoneda extends AppCompatActivity {
 // Obtener la referencia del objeto spinner
         spinnerMonedaOrigen = (Spinner)findViewById(R.id.spinnerMonedaOrigen);
 // Construir los datos en el spinner
-        MySpinnerAdapter adapter = new MySpinnerAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, currency);
+        MySpinnerAdapter adapter = new MySpinnerAdapter(getApplicationContext(), R.layout.color_spinner_layout, currency);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         spinnerMonedaOrigen.setAdapter(adapter);
 // Evento selección del spinner
         spinnerMonedaOrigen.setOnItemSelectedListener(onItemSelectedListener1);
 // Obtener la referencia del objeto spinner
         spinnerMonedaDestino = (Spinner)findViewById(R.id.spinnerMonedaDestino);
 // Construir los datos en el spinner
-        MySpinnerAdapter adapter2 = new MySpinnerAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, currency);
+        MySpinnerAdapter adapter2 = new MySpinnerAdapter(getApplicationContext(), R.layout.color_spinner_layout, currency);
+        adapter2.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         spinnerMonedaDestino.setAdapter(adapter2);
 // Evento selección del spinner
         spinnerMonedaDestino.setOnItemSelectedListener(onItemSelectedListener2);
@@ -109,7 +111,7 @@ public class ConsultaCambioMoneda extends AppCompatActivity {
 
                 //Toast.makeText(getApplicationContext(),urls,Toast.LENGTH_LONG).show();
                 if(cantidad.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Porfavor ingresa una cantidad a consultar", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Porfavor ingresa una cantidad", Toast.LENGTH_LONG).show();
                 } else {
                     // Ejecutar la clase asincrona
                     webService task = new webService();

@@ -33,7 +33,6 @@ import dev.com.j3b.ui.aplicacion.VentanaPrincipal;
 
 public class TransaccionCuentasAjenas extends AppCompatActivity {
 
-    private Button btnRetroceder;
     private Button btnRegistrarCuentaAjena;
     private Button btnRealizarTransferencia;
     private EditText txtMonto;
@@ -67,7 +66,6 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
         //Asignando el spinner
         spinnerCuentaOrigen =(Spinner) findViewById(R.id.spinnerCuentaOrigen);
         spinnerCuentaDestino=(Spinner) findViewById(R.id.spinnerCuentaDestino);
-        btnRetroceder=(Button) findViewById(R.id.btnRetroceder);
         btnRealizarTransferencia=(Button) findViewById(R.id.btnRealizarTransferencia);
         btnRegistrarCuentaAjena=(Button) findViewById(R.id.btnRegistrarCuentaAjena);
         //Configuracion de listas y manejadores
@@ -77,16 +75,6 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
         //Consultando las cuentas del cliente y llenando espinner
         consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
         consultarCuentasDeUsuarioAjenas(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
-
-        //Evento del boton retroceder
-        btnRetroceder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast toast = Toast.makeText(getApplicationContext(), "RETROCEDIENDO", Toast.LENGTH_SHORT);
-                //toast.show();
-                volverAPaginaPrincipal();
-            }
-        });
 
         //Evento de Spinner para seleccionar cuenta origen
         spinnerCuentaOrigen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -145,11 +133,6 @@ public class TransaccionCuentasAjenas extends AppCompatActivity {
 
     }
 
-    public void volverAPaginaPrincipal(){
-        Intent intent = new Intent(this,VentanaPrincipal.class);
-        startActivity(intent);
-        finish();
-    }
 
     public void redirigirEvaluadorCodigo(){
         Intent intent = new Intent(this,EvaluadorCodigoTransferencia.class);

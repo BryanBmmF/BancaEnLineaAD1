@@ -24,18 +24,15 @@
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:background="#FFFFFF"
         android:gravity="center"
         android:spinnerMode="dropdown"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-
 
     <Button
         android:id="@+id/desdeBtn"
@@ -50,7 +47,7 @@
     <EditText
         android:id="@+id/fechaInicialTxt"
         android:layout_width="113dp"
-        android:layout_height="47dp"
+        android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:editable="false"
         android:ems="10"
@@ -75,7 +72,7 @@
     <EditText
         android:id="@+id/fechaFinalTxt"
         android:layout_width="100dp"
-        android:layout_height="48dp"
+        android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:editable="false"
         android:ems="10"
@@ -89,10 +86,12 @@
 
     <Button
         android:id="@+id/buscarBtn"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
+        android:layout_width="230dp"
+        android:layout_height="55dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_rounded"
+        android:drawableRight="@drawable/report_card_30px_white"
+        android:padding="16dp"
         android:text="Ver movimientos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,11 +99,13 @@
 
     <TextView
         android:id="@+id/textSaldo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
         android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/money_30px"
+        android:padding="16dp"
+        android:text="  SALDO ACTUAL: Q --"
         android:textColor="@color/cardview_dark_background"
-        android:text="SALDO ACTUAL: Q --"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

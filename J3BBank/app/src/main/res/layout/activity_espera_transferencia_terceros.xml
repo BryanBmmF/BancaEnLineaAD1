@@ -5,83 +5,129 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.transaccionesAjenas.EvaluadorCodigoTransferencia"
-    android:background="#192c37">
+    android:background="#FFFFFF">
+
+    <RelativeLayout
+        android:id="@+id/tituloActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textoBienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Verificación"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/textoNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textoBienvenida"
+            android:text="De seguridad"
+            android:layout_marginLeft="16dp"
+            android:textColor="#D4D4D4"
+            android:textSize="15sp"></TextView>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menulogoj3b"></ImageView>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textViewTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="20dp"
-        android:paddingStart="20dp"
-        android:paddingTop="20dp"
-        android:text="Porfavor Ingresa el còdigo que recibiste por correo"
-        android:textColor="#FFFFFF"
+        android:layout_width="351dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Ingresa a continuación el código de seguridad que hemos enviado a tu correo electrónico."
+        android:textColor="#272727"
         android:textSize="19sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRetroceder"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Còdigo:"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/textViewTitulo"
+        android:layout_marginTop="32dp"
+        android:text="Código de Seguridad:"
+        android:textColor="#272727"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitulo" />
 
     <EditText
         android:id="@+id/txtCodigo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/input_info1"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:gravity="center"
         android:inputType="number"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:textColor="#ff4a00"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:text="Tiempo restante para ingresar el código:"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/txtCodigo"
+        android:textColor="#272727"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCodigo" />
 
     <TextView
         android:id="@+id/tvTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/input_info1"
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:gravity="center"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="#ff4a00"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
+        android:textColor="#272727"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
     <Button
         android:id="@+id/btnCompletarTransferencia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginEnd="200dp"
-        android:layout_marginBottom="350dp"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/button_rounded"
-        android:text="Completar Transferencia"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:drawableRight="@drawable/security_shield_white_30px"
+        android:padding="16dp"
+        android:text="Validar Transferencia"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTime" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
