@@ -211,7 +211,7 @@ public class ConsultaCuentas extends AppCompatActivity implements View.OnClickLi
                     try {
                         jsonObjectDatosUsuario = response.getJSONObject(i);
                         String saldo = jsonObjectDatosUsuario.getString("saldo");
-                        textoFinalSaldo = "SALDO ACTUAL: Q "+saldo;
+                        textoFinalSaldo = "  SALDO ACTUAL: Q "+saldo;
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), "Hay problemas de conexión al servidor.", Toast.LENGTH_SHORT).show();
                     }

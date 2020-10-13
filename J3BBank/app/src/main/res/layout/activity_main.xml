@@ -5,22 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="#192c37">
+    android:background="#FFFFFF">
 
-    <ImageView
-        android:id="@+id/logoImageView"
-        android:layout_width="216dp"
-        android:layout_height="209dp"
-        android:layout_marginTop="100dp"
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:elevation="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_weight="0.5"
+        android:background="#192c37"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logoj3b" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            app:srcCompat="@drawable/logoj3b"/>
+
+    </RelativeLayout>
+
 
     <EditText
         android:id="@+id/editUsuarioTextNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/input_info1"
         android:ems="10"
@@ -28,7 +40,8 @@
         android:inputType="number"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="#ff4a00"
+        android:textColor="#000000"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,18 +62,18 @@
         android:id="@+id/usuarioTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Usuario"
         android:textColor="#ff4a00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/layout1" />
 
     <EditText
         android:id="@+id/editTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/input_info1"
         android:ems="10"
@@ -68,7 +81,8 @@
         android:inputType="textPassword"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="#ff4a00"
+        android:textColor="#000000"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +95,8 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/button_rounded"
         android:text="Ingresar"
+        android:drawableRight="@drawable/login_30px"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
