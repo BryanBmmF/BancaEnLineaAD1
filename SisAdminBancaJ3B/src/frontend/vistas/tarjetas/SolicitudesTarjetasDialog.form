@@ -156,102 +156,16 @@
           <SubComponents>
             <Component class="javax.swing.JTable" name="jTable1">
               <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="0" rowCount="0"/>
+                </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                  <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                  </TableColumnModel>
+                  <TableColumnModel selectionModel="0"/>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="elements" source="Form" sourcePath="${listaObservableSolicitudTarjeta}" target="jTable1" targetPath="elements" updateStrategy="0" immediately="true">
-                  <Subbinding sourcePath="${dpi}">
-                    <BindingParameter name="NAME" value="Dpi"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                  </Subbinding>
-                  <Subbinding sourcePath="${tipoDeTarjeta}">
-                    <BindingParameter name="NAME" value="Tipo De Tarjeta"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="backend.enums.TipoDeTarjetaSolicitud.class"/>
-                  </Subbinding>
-                  <Subbinding sourcePath="${salarioMensual}">
-                    <BindingParameter name="NAME" value="Salario Mensual"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Double.class"/>
-                  </Subbinding>
-                  <Subbinding sourcePath="${empresa}">
-                    <BindingParameter name="NAME" value="Empresa"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                  </Subbinding>
-                  <Subbinding sourcePath="${tipoDeTrabajo}">
-                    <BindingParameter name="NAME" value="Tipo De Trabajo"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="backend.enums.TipoDeTrabajoDeCliente.class"/>
-                  </Subbinding>
-                  <Subbinding sourcePath="${fechaSolicitud}">
-                    <BindingParameter name="NAME" value="Fecha Solicitud"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.sql.Timestamp.class"/>
-                  </Subbinding>
-                  <Subbinding sourcePath="${descripcion}">
-                    <BindingParameter name="NAME" value="Descripcion"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                  </Subbinding>
-                  <Subbinding sourcePath="${estadoSolicitud}">
-                    <BindingParameter name="NAME" value="Estado Solicitud"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="backend.enums.EstadoSolicitudDeTarjeta.class"/>
-                  </Subbinding>
-                  <Subbinding sourcePath="${email}">
-                    <BindingParameter name="NAME" value="Email"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                  </Subbinding>
-                </BindingProperty>
-                <BindingProperty name="selectedElement" source="Form" sourcePath="${solicitudSeleccionada}" target="jTable1" targetPath="selectedElement" updateStrategy="0" immediately="false">
-                  <BindingParameter name="IGNORE_ADJUSTING" value="N"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>

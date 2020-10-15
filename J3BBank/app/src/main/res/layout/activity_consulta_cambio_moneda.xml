@@ -4,45 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/menubackground"
+    android:background="#FFFFFF"
     tools:context=".ui.transaccionesPropias.TransaccionCuentasPropias">
 
+    <RelativeLayout
+        android:id="@+id/tituloActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textoBienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Tasa de Cambio"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/textoNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textoBienvenida"
+            android:text="Quetzal -- Dólar"
+            android:layout_marginLeft="16dp"
+            android:textColor="#D4D4D4"
+            android:textSize="15sp"></TextView>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menulogoj3b"></ImageView>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="20dp"
-        android:text="Total:"
+        android:text="  Tasa de cambio hoy:"
         android:textColor="#272727"
         android:textSize="18sp"
+        android:drawableLeft="@drawable/dollar_20px"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerMonedaDestino" />
 
-    <TextView
-        android:id="@+id/textInformation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="28dp"
-        android:text="Consultar Cambio de Moneda"
-        android:textColor="#FFFFFF"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinnerMonedaOrigen"
-        android:layout_width="385dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/holo_blue_dark"
         android:backgroundTint="@android:color/holo_green_dark"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -50,19 +82,19 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="Moneda origen *:"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInformation" />
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="Moneda Destino*:"
         android:textColor="#272727"
@@ -72,25 +104,28 @@
 
     <Spinner
         android:id="@+id/spinnerMonedaDestino"
-        android:layout_width="385dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/holo_blue_dark"
         android:backgroundTint="@android:color/holo_green_dark"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/btnRealizarConversion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="270dp"
+        android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/holo_green_light"
+        android:background="@drawable/button_rounded_green"
         android:text="Realizar Consulta"
-        android:textColor="@android:color/holo_blue_dark"
+        android:drawableRight="@drawable/search_30px"
+        android:padding="16dp"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,13 +135,14 @@
         android:id="@+id/cantidad"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="number|numberDecimal"
         android:textColor="@android:color/black"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +152,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="Cantidad *:"
         android:textColor="#272727"
@@ -126,14 +162,17 @@
 
     <TextView
         android:id="@+id/total"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="45dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
+        android:gravity="center"
         android:inputType="textPersonName"
+        android:textAlignment="gravity"
         android:textColor="@android:color/black"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 

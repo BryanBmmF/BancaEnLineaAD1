@@ -4,29 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/menubackground"
+    android:background="#FFFFFF"
     tools:context=".ui.transaccionesPropias.TransaccionCuentasPropias">
 
-
-    <TextView
-        android:id="@+id/textInformation"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/tituloActivity"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="56dp"
-        android:text="Transacciones, Cuentas Propias"
-        android:textColor="#FFFFFF"
-        android:textSize="25sp"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textoBienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Realiza una Transferencia"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/textoNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textoBienvenida"
+            android:text="Hacia un cuenta personal"
+            android:layout_marginLeft="16dp"
+            android:textColor="#D4D4D4"
+            android:textSize="15sp"></TextView>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menulogoj3b"></ImageView>
+
+    </RelativeLayout>
+
 
     <Spinner
         android:id="@+id/spinnerCuentaOrigen"
-        android:layout_width="385dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/holo_red_dark"
         android:backgroundTint="@android:color/holo_green_dark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,20 +68,20 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="Cuenta origen *:"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInformation" />
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="Cuenta Destino*:"
         android:textColor="#272727"
         android:textSize="18sp"
@@ -60,13 +90,13 @@
 
     <Spinner
         android:id="@+id/spinnerCuentaDestino"
-        android:layout_width="385dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/holo_blue_dark"
-        android:backgroundTint="@android:color/holo_red_dark"
+        android:backgroundTint="#FF9300"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,12 +104,15 @@
 
     <Button
         android:id="@+id/btnRealizarTransferencia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="298dp"
+        android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/holo_green_light"
+        android:background="@drawable/button_rounded_green"
+        android:drawableRight="@drawable/icons8_checked_30px"
+        android:gravity="center"
+        android:padding="16dp"
         android:text="Realizar transferencia"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,12 +122,13 @@
         android:id="@+id/cantidadDeTransferencia"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="number"
+        android:textSize="20dp"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +138,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Monto *:"
         android:textColor="#272727"
@@ -116,7 +150,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Descripcion:"
         android:textColor="#272727"
@@ -126,12 +160,15 @@
 
     <EditText
         android:id="@+id/editTextDescripcion"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textSize="20dp"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="@+id/cantidadDeTransferencia"
         app:layout_constraintStart_toStartOf="@+id/spinnerCuentaOrigen"

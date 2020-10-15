@@ -24,7 +24,7 @@
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:background="#FFFFFF"
         android:gravity="center"
@@ -48,7 +48,7 @@
     <EditText
         android:id="@+id/fechaInicialTxt"
         android:layout_width="124dp"
-        android:layout_height="47dp"
+        android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:editable="false"
         android:ems="10"
@@ -73,7 +73,7 @@
     <EditText
         android:id="@+id/fechaFinalTxt"
         android:layout_width="127dp"
-        android:layout_height="48dp"
+        android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:editable="false"
         android:ems="10"
@@ -86,23 +86,27 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <Button
-    android:id="@+id/buscarBtn"
-    android:layout_width="160dp"
-    android:layout_height="50dp"
-    android:layout_marginTop="8dp"
-    android:background="@drawable/button_rounded"
-    android:text="Ver Consumos"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/hastaBtn" />
+        android:id="@+id/buscarBtn"
+        android:layout_width="230dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_rounded"
+        android:drawableRight="@drawable/card_payment_30px_white"
+        android:padding="16dp"
+        android:text="Ver Consumos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hastaBtn" />
 
     <Button
         android:id="@+id/buscar2Btn"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
+        android:layout_width="230dp"
+        android:layout_height="55dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_rounded"
-        android:text="Ver Pagos Tarjeta"
+        android:drawableRight="@drawable/report_card_30px_white"
+        android:padding="16dp"
+        android:text="Ver Abonos Tarjeta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hastaBtn" />

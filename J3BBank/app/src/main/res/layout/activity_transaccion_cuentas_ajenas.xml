@@ -5,93 +5,116 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.transaccionesAjenas.TransaccionCuentasAjenas"
-    android:background="#192c37">
+    android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/textViewTitulo"
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:id="@+id/tituloActivity"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textoBienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Realiza una Transferencia"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/textoNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textoBienvenida"
+            android:text="Hacia una cuenta de terceros"
+            android:layout_marginLeft="16dp"
+            android:textColor="#D4D4D4"
+            android:textSize="15sp"></TextView>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menulogoj3b"></ImageView>
+
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/spinnerCuentaOrigen"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="20dp"
-        android:paddingStart="20dp"
-        android:paddingTop="20dp"
-        android:text="Transferencias a Cuentas de Confianza"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRetroceder"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- boton para retroceder-->
-
-    <!-- boton para registrar nueva cuenta ajena-->
-    <Button
-        android:id="@+id/btnRetroceder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/button_rounded"
-        android:text="regresar"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/holo_red_dark"
+        android:backgroundTint="@android:color/holo_green_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/btnRegistrarCuentaAjena"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/button_rounded"
-        android:text="Registrar cuenta"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
-
-    <!-- Spiner de cuenta origen-->
-    <Spinner
-        android:id="@+id/spinnerCuentaOrigen"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_width="210dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/button_rounded"
+        android:drawableRight="@drawable/add_property_30px"
+        android:padding="16dp"
+        android:text="Asociar cuenta"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCuentaOrigen" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="24dp"
         android:text="Cuenta origen:"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerCuentaOrigen"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textColor="#272727"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="Monto:"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/spinnerCuentaOrigen"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCuentaOrigen" />
+        android:textColor="#272727"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistrarCuentaAjena" />
 
     <EditText
         android:id="@+id/txtMonto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/input_info1"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
-        android:gravity="center"
         android:inputType="number"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="#ff4a00"
+        android:textSize="20dp"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
@@ -99,64 +122,69 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="16dp"
         android:text="Cuenta destino:"
-        android:textColor="#FFFFFF"
+        android:textColor="#272727"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtMonto" />
 
-    <!-- Spiner de cuenta destino-->
     <Spinner
         android:id="@+id/spinnerCuentaDestino"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="17dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:paddingEnd="50dp"
+        android:background="@android:color/holo_blue_dark"
+        android:backgroundTint="#FF9300"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Motivo (Opcional):"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/spinnerCuentaDestino"
+        android:textColor="#272727"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCuentaDestino" />
 
     <EditText
         android:id="@+id/txtMotivo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/input_info1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
-        android:gravity="center"
         android:inputType="text"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="#ff4a00"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
 
     <Button
         android:id="@+id/btnRealizarTransferencia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginEnd="116dp"
-        android:layout_marginBottom="140dp"
+        android:layout_width="209dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/button_rounded"
+        android:drawableRight="@drawable/checked_30px_white"
+        android:gravity="center"
+        android:padding="16dp"
         android:text="Realizar Transferencia"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtMotivo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

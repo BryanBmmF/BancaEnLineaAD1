@@ -31,7 +31,8 @@
     <EditText
         android:id="@+id/editActualTextPassword"
         android:layout_width="212dp"
-        android:layout_height="30dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/input_info1"
         android:ems="10"
         android:gravity="center"
@@ -54,7 +55,8 @@
     <EditText
         android:id="@+id/editNuevaTextPassword"
         android:layout_width="212dp"
-        android:layout_height="33dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/input_info1"
         android:ems="10"
         android:gravity="center"
@@ -67,7 +69,7 @@
         android:id="@+id/confirmPassTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="Confirma la contraseña"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +78,8 @@
     <EditText
         android:id="@+id/editConfirmarTextPassword"
         android:layout_width="211dp"
-        android:layout_height="35dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/input_info1"
         android:ems="10"
         android:gravity="center"
@@ -108,8 +111,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="148dp"
-        android:layout_height="143dp"
+        android:layout_width="135dp"
+        android:layout_height="112dp"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

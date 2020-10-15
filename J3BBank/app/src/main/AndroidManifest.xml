@@ -15,6 +15,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.tarjetaCredito.SolicitudTarjetaCreditoActivity"></activity>
+        <activity android:name=".ui.prestamos.SolicitudPrestamo" />
         <activity android:name=".ui.transaccionesPropias.TransaccionCuentasPropias" />
         <activity android:name=".ui.transaccionesAjenas.TransaccionCuentasAjenas" />
         <activity android:name=".ui.transaccionesAjenas.EvaluadorCodigoTransferencia" />

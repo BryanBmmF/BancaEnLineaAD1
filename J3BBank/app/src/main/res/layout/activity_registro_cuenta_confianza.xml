@@ -5,72 +5,106 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.transaccionesAjenas.RegistroCuentaConfianza"
-    android:background="#192c37">
+    android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/textViewTitulo"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/tituloActivity"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="20dp"
-        android:paddingStart="20dp"
-        android:paddingTop="20dp"
-        android:text="Registro de nueva Cuenta de Confianza"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRetroceder"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:background="@color/colorPrimaryDark"
+        android:elevation="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!-- boton para retroceder-->
+        <TextView
+            android:id="@+id/textoBienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Nueva cuenta de Confianza"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"></TextView>
 
-    <!-- boton para registrar nueva cuenta ajena-->
+        <TextView
+            android:id="@+id/textoNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textoBienvenida"
+            android:text="Ingresa el No. de Cuenta"
+            android:layout_marginLeft="16dp"
+            android:textColor="#D4D4D4"
+            android:textSize="15sp"></TextView>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menulogoj3b"></ImageView>
+
+    </RelativeLayout>
+
     <Button
         android:id="@+id/btnRetroceder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/button_rounded"
+        android:drawableRight="@drawable/cancel_30px_white"
+        android:padding="16dp"
         android:text="cancelar"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
+        app:layout_constraintEnd_toStartOf="@+id/btnRegistrarCuentaAjena"
+        app:layout_constraintTop_toBottomOf="@+id/txtCuenta" />
+
 
     <Button
         android:id="@+id/btnRegistrarCuentaAjena"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="28dp"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/button_rounded"
-        android:text="Registrar"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
+        android:drawableRight="@drawable/add_property_30px"
+        android:padding="16dp"
+        android:text="Asociar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCuenta" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="24dp"
         android:text="No.Cuenta: "
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/txtCuenta"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        android:textColor="#272727"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
 
     <EditText
         android:id="@+id/txtCuenta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/input_info1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:gravity="center"
+
         android:inputType="number"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:textColor="#ff4a00"
-
-        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
