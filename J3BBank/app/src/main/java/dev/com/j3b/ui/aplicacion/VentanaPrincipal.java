@@ -38,6 +38,7 @@ import dev.com.j3b.ui.consultaCuentas.ConsultaCuentas;
 
 import dev.com.j3b.ui.prestamos.SolicitudPrestamo;
 import dev.com.j3b.ui.tarjetaCredito.ConsultaTarjeta;
+import dev.com.j3b.ui.tarjetaCredito.PagarTarjeta;
 import dev.com.j3b.ui.tarjetaCredito.SolicitudTarjetaCreditoActivity;
 import dev.com.j3b.ui.transaccionesAjenas.TransaccionCuentasAjenas;
 import dev.com.j3b.ui.transaccionesPropias.TransaccionCuentasPropias;
@@ -169,9 +170,12 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 startActivity(intentTCC);
                 break;
             case R.id.transaccionesButton :
-                Toast toast = Toast.makeText(getApplicationContext(), "TRANSACCIONES", Toast.LENGTH_SHORT);
+/*                Toast toast = Toast.makeText(getApplicationContext(), "TRANSACCIONES", Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = new Intent(this,TransaccionCuentasPropias.class);
+                startActivity(intent);
+*/
+             Intent intent = new Intent(this,PagarTarjeta.class);
                 startActivity(intent);
                 break;
             case R.id.segurosButton :
@@ -189,6 +193,10 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 /*temporal solo para prueba*/
                 Intent solicitudPrestamo = new Intent(getApplicationContext(), SolicitudPrestamo.class);
                 startActivity(solicitudPrestamo);
+                break;
+            case R.id.salirButton3:
+                Toast toast5 = Toast.makeText(getApplicationContext(), "PAGAR TARJETA", Toast.LENGTH_SHORT);
+                toast5.show();
                 break;
             case R.id.salirButton : cerrarSesionBack(); break;
         }

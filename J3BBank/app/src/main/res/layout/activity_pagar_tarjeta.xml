@@ -4,6 +4,142 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".ui.tarjetaCredito.PagarTarjeta">
+
+
+    <RelativeLayout
+        android:id="@+id/tituloActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textoBienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Paga tu tarjeta de credito"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/textoNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textoBienvenida"
+            android:text="Usando alguna de tus cuentas"
+            android:layout_marginLeft="16dp"
+            android:textColor="#D4D4D4"
+            android:textSize="15sp"></TextView>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menulogoj3b"></ImageView>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Tarjetas con deuda:"
+        android:textColor="#272727"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
+
+    <Spinner
+        android:id="@+id/spinnerTarjetasConDeuda"
+        android:layout_width="370dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/holo_red_dark"
+        android:backgroundTint="@android:color/holo_green_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:text="Cuentas con saldo:"
+        android:textColor="#272727"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTarjetasConDeuda" />
+
+    <Spinner
+        android:id="@+id/spinnerCuentasDisponibles"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/holo_green_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:text="Saldo que desea ingresar"
+        android:textColor="#272727"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCuentasDisponibles" />
+
+    <EditText
+        android:id="@+id/editTextMonto"
+        android:layout_width="302dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView17" />
+
+
+    <Button
+        android:id="@+id/buttonPagarTarjeta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="100dp"
+        android:text="Pagar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextMonto" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
