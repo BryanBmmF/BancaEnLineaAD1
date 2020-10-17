@@ -42,6 +42,9 @@ import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.modelos.Tarjeta;
 
 public class PagarTarjeta extends AppCompatActivity {
+    //Formato
+    private static final DecimalFormat df = new DecimalFormat("#.00");
+
 
     //Spinners
     private Spinner spinnerTarjetasConDeuda;
@@ -195,7 +198,6 @@ public class PagarTarjeta extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "El monto es obligatorio", Toast.LENGTH_LONG).show();
             return false;
         }
-        DecimalFormat df = new DecimalFormat("#.00");
         final String montoPagoCadena=df.format(Double.parseDouble(editTextMonto.getText().toString()));
         final Double montoPago=Double.parseDouble(montoPagoCadena);
         //MONTO_PAGO <= SALDO_CUENTA
@@ -216,7 +218,7 @@ public class PagarTarjeta extends AppCompatActivity {
                 builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        efectuarPago(numeroTarjeta,montoPago,fecha,numeroCuenta,saldoDeuda,saldoCuenta);
+                        efectuarPago(numeroTarjeta,montoPago,fecha,numeroCuenta,df.format(saldoDeuda),df.format(saldoCuenta));
                         Toast.makeText(getApplicationContext(), "SE PAGO LA TARJETA DE CREDITO", Toast.LENGTH_LONG).show();
                         //consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
                         editTextMonto.setText("");
@@ -240,7 +242,7 @@ public class PagarTarjeta extends AppCompatActivity {
     return true;
     }
 
-    public void efectuarPago(String numeroTarjeta,Double montoPago,Timestamp fecha,String numeroCuenta,Double saldoCuenta,Double saldoDeuda){
+    public void efectuarPago(String numeroTarjeta,Double montoPago,Timestamp fecha,String numeroCuenta,String saldoCuenta,String saldoDeuda){
                 String consultaSQL=ServidorSQL.SERVIDORSQL_CONRETORNO+"SELECT pago_de_tarjeta('"+numeroTarjeta+"',"+montoPago+",'"+fecha+"','"+numeroCuenta+"',"+saldoCuenta+","+saldoDeuda+")";
         System.out.println("-------------------------------********CONSULTA"+consultaSQL);
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL,
