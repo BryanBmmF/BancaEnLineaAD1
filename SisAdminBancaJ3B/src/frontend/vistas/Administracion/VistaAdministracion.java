@@ -7,6 +7,7 @@ import frontend.vistas.Transacciones.TransaccionesMonetarias;
 import frontend.vistas.cuentaHabientes.CuentaHabienteFrame;
 import frontend.vistas.cuentas.PanelGestionCuentas;
 import frontend.vistas.tarjetas.SolicitudesTarjetasDialog;
+import frontend.vistas.tarjetas.TarjetasFrame;
 
 public class VistaAdministracion extends javax.swing.JFrame {
 
@@ -46,6 +47,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
 
@@ -127,6 +129,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
         jMenu4.setText("Tarjetas de credito");
 
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_9, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setText("Solicitudes");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +137,15 @@ public class VistaAdministracion extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem5);
+
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_0, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem7.setText("Ver Tarjetas Bloqueadas");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem7);
 
         menuBar.add(jMenu4);
 
@@ -199,9 +211,14 @@ public class VistaAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-    SolicitudesPrestamosDialog solicitud = new SolicitudesPrestamosDialog(this, true);
-    solicitud.setVisible(true);
+        SolicitudesPrestamosDialog solicitud = new SolicitudesPrestamosDialog(this, true);
+        solicitud.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        TarjetasFrame tarjetas = new TarjetasFrame(this, true);
+        tarjetas.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
@@ -219,6 +236,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JLabel textoUsuarioEnSesion;
