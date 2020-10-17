@@ -7,12 +7,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -26,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import dev.com.j3b.MainActivity;
@@ -105,6 +111,7 @@ public class PagarTarjeta extends AppCompatActivity {
                 evaluarDatos();
             }
         });
+
 
     }
 
@@ -188,7 +195,9 @@ public class PagarTarjeta extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "El monto es obligatorio", Toast.LENGTH_LONG).show();
             return false;
         }
-        final Double montoPago=Double.valueOf(editTextMonto.getText().toString());
+        DecimalFormat df = new DecimalFormat("#.00");
+        final String montoPagoCadena=df.format(Double.parseDouble(editTextMonto.getText().toString()));
+        final Double montoPago=Double.parseDouble(montoPagoCadena);
         //MONTO_PAGO <= SALDO_CUENTA
         //MONTO_PAGO <= DEUDA
         if(montoPago<=listaCuentas.get(posicionCuentaSeleccionada).getSaldo()){
@@ -201,7 +210,7 @@ public class PagarTarjeta extends AppCompatActivity {
                  //Preguntar si esta seguro
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Desea realizar el pago de su tarjeta?");
+                builder.setMessage("Desea cancelar la cantidad de:"+montoPago+"?");
                 builder.setTitle("Confirmacion");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
@@ -238,7 +247,8 @@ public class PagarTarjeta extends AppCompatActivity {
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-
+                                buscarTarjetasDeCredito();
+                                buscarCuentas();
                             }
                         }, new Response.ErrorListener() {
                     @Override

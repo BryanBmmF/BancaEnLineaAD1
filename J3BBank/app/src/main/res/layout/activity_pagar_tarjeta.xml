@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
-        android:text="Saldo que desea ingresar"
+        android:text="Saldo que desea ingresar*"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,6 +138,9 @@
         android:layout_marginStart="140dp"
         android:layout_marginTop="100dp"
         android:text="Pagar"
+        android:background="@drawable/button_rounded_green"
+        android:drawableRight="@drawable/icons8_checked_30px"
+        android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editTextMonto" />
 

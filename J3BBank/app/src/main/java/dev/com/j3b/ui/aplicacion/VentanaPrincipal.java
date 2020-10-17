@@ -49,7 +49,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
     private Usuario usuarioRecivido = new Usuario();
     private TextView displayNombre, displayEmail;
     public static CuentaHabiente cuentaHabienteLogueado = new CuentaHabiente();
-    private CardView salirCardview, monetariasCardview, ahorrosCardview, tarjetasCardview, transaccionesCardview, segurosCardview, gestionesCardview, creditosCardview;
+    private CardView salirCardview, monetariasCardview, ahorrosCardview, tarjetasCardview, transaccionesCardview, segurosCardview, gestionesCardview, creditosCardview ,pagarTarjetCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
         gestionesCardview = (CardView) findViewById(R.id.gestionesButton);
         creditosCardview = (CardView) findViewById(R.id.creditosButton);
         salirCardview = (CardView) findViewById(R.id.salirButton);
+        pagarTarjetCardView = (CardView) findViewById(R.id.pagarTarjetaButton);
 
         monetariasCardview.setOnClickListener(this);
         ahorrosCardview.setOnClickListener(this);
@@ -75,6 +76,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
         gestionesCardview.setOnClickListener(this);
         creditosCardview.setOnClickListener(this);
         salirCardview.setOnClickListener(this);
+        pagarTarjetCardView.setOnClickListener(this);
         try { recibirDatos(); } catch (NoSuchAlgorithmException e) { e.printStackTrace(); }
     }
 
@@ -170,12 +172,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 startActivity(intentTCC);
                 break;
             case R.id.transaccionesButton :
-/*                Toast toast = Toast.makeText(getApplicationContext(), "TRANSACCIONES", Toast.LENGTH_SHORT);
-                toast.show();
                 Intent intent = new Intent(this,TransaccionCuentasPropias.class);
-                startActivity(intent);
-*/
-             Intent intent = new Intent(this,PagarTarjeta.class);
                 startActivity(intent);
                 break;
             case R.id.segurosButton :
@@ -194,9 +191,9 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 Intent solicitudPrestamo = new Intent(getApplicationContext(), SolicitudPrestamo.class);
                 startActivity(solicitudPrestamo);
                 break;
-            case R.id.salirButton3:
-                Toast toast5 = Toast.makeText(getApplicationContext(), "PAGAR TARJETA", Toast.LENGTH_SHORT);
-                toast5.show();
+            case R.id.pagarTarjetaButton:
+                Intent pagarTarjeta = new Intent(this,PagarTarjeta.class);
+                startActivity(pagarTarjeta);
                 break;
             case R.id.salirButton : cerrarSesionBack(); break;
         }
