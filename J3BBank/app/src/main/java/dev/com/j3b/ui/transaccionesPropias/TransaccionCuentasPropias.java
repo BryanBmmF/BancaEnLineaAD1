@@ -170,10 +170,7 @@ public class TransaccionCuentasPropias extends AppCompatActivity {
                         listaDeCuentas= new ArrayList<>();
                         for (int i = 0; i < response.length(); i++) {
                             try {
-                                Cuenta cuenta = new Cuenta();
                                 jsonObjectDatosCuenta = response.getJSONObject(i);
-                                cuenta.setNoCuentaBancaria(jsonObjectDatosCuenta.getString("no_cuenta_bancaria"));
-                                cuenta.setSaldo(jsonObjectDatosCuenta.getDouble("saldo"));
                                 listaDeCuentas.add(new Cuenta(jsonObjectDatosCuenta.getString("no_cuenta_bancaria"),jsonObjectDatosCuenta.getDouble("saldo")));
                                 System.out.println("En lista:"+ listaDeCuentas.get(i).toString());
                             }catch (JSONException e){
