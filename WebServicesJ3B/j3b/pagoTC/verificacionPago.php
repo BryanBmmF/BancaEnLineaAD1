@@ -7,7 +7,7 @@ $varYear = $_POST['year'];
 $varCodigoCVC = $_POST['codigocvc'];
 $varNombrePropietario = $_POST['nombre'];
 $varMontoPago = $_POST['montoPago'];
-$varFechaVencimiento = $varYear."-".$varMes."-31 00:00:00";
+$varFechaVencimiento = $varYear."-".$varMes."-01 00:00:00";
 
 $errorID = 0;
 //select no_tarjeta, tipo, estado, limite, deuda_actual, fecha_vencimiento, codigoCVC, tasa_interes, numero_cuenta, concat_ws(' ', nombres, apellidos) as nombre_completo from tarjeta a INNER JOIN cuenta_habiente b on a.dpi_cuenta_habiente = b.dpi_cliente where fecha_vencimiento > '2020-9-1' and estado='ACTIVA';
