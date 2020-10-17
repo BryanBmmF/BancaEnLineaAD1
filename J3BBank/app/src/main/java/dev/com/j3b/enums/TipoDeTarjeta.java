@@ -6,6 +6,5 @@ public enum TipoDeTarjeta {
     BRONCE_LIMITE_Q25000,
     ORO,
     PLATA,
-    BRONCE
-
+    BRONCE,
 }
