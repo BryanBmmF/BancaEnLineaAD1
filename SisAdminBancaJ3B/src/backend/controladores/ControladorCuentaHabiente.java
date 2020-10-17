@@ -241,7 +241,7 @@ public class ControladorCuentaHabiente {
             //String url = "http://192.168.20.3/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
             url = "http://192.168.0.200/j3b/servicios/switfMailer/creacionCuentaY_tarjetaDeCredito.php" + params;
             //String url = "http://192.168.1.18/j3b/servicios/switfMailer/envioDeCorreo.php"+params;
-
+            System.out.println(url);
         } else {
             /*ya possee un usuario*/
             usuario = "Confirmado";
