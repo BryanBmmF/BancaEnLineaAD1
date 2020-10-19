@@ -12,6 +12,8 @@ public class ServidorSQL {
     public static final String SERVIDORSQL_NOTIFICACION_CODIGO_TRANSFERENCIA= "http://192.168.0.200/j3b/servicios/switfMailer/envioCodigoTransferencia.php";
     public static final String SERVIDORSQL_NOTIFICACION_REGISTRO_CUENTA_TERCEROS= "http://192.168.0.200/j3b/servicios/switfMailer/envioNotificacionRegistroTerceros.php";
     public static final String SERVIDORSQL_NOTIFICACION_CODIGO_REGISTRO_TERCEROS= "http://192.168.0.200/j3b/servicios/switfMailer/envioCodigoRegistroCuenta.php";
+    public static final String SERVIDORSQL_PAGO_PRESTAMO = "http://192.168.0.200/j3b/servicios/pagoPrestamo.php";
+
 
 
     //utilizado por bryan con ip propia
