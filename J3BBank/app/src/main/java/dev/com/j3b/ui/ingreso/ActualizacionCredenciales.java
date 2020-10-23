@@ -169,7 +169,6 @@ public class ActualizacionCredenciales extends AppCompatActivity {
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-                System.out.println(consultaSQLUpdate);
                 Map<String, String> parametros = new HashMap<String, String>();
                 parametros.put("consultaSQL", consultaSQLUpdate);
                 return parametros;
