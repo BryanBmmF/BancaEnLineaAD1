@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".ui.tarjetaCredito.PagarTarjeta">
-
+    tools:context=".ui.tarjetaCredito.ReportarTarjeta">
 
     <RelativeLayout
         android:id="@+id/tituloActivity"
@@ -25,7 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="30dp"
-            android:text="Paga tu tarjeta de crédito"
+            android:text="Reporta tu Tarjeta"
             android:textColor="#FFFFFF"
             android:textSize="20sp"></TextView>
 
@@ -34,116 +33,84 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textoBienvenida"
-            android:text="Usando alguna de tus cuentas"
             android:layout_marginLeft="16dp"
+            android:text="En caso de extravío o robo"
             android:textColor="#D4D4D4"
             android:textSize="15sp"></TextView>
 
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
             android:src="@drawable/menulogoj3b"></ImageView>
 
     </RelativeLayout>
 
-
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Tarjetas con deuda:"
+        android:text="Selecciona una de tus tarjetas:"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
 
     <Spinner
-        android:id="@+id/spinnerTarjetasConDeuda"
+        android:id="@+id/spinnerTarjetas"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:background="@android:color/holo_red_dark"
-        android:backgroundTint="@android:color/holo_green_dark"
+        android:background="#E4E4E4"
+        android:gravity="center"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Cuentas con saldo:"
+        android:text="Selecciona el motivo del bloqueo:"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTarjetasConDeuda" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTarjetas" />
 
     <Spinner
-        android:id="@+id/spinnerCuentasDisponibles"
+        android:id="@+id/spinnerMotivoBloqueo"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@android:color/holo_blue_dark"
-        android:backgroundTint="@android:color/holo_green_dark"
+        android:backgroundTint="#E4E4E4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="Saldo que desea ingresar*"
-        android:textColor="#272727"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCuentasDisponibles" />
-
-    <EditText
-        android:id="@+id/editTextMonto"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <Button
-        android:id="@+id/buttonPagarTarjeta"
-        android:layout_width="120dp"
+        android:id="@+id/bloquearButton"
+        android:layout_width="210dp"
         android:layout_height="55dp"
         android:layout_marginTop="32dp"
-        android:background="@drawable/button_rounded_green"
-        android:drawableRight="@drawable/icons8_checked_30px"
-        android:text="Pagar"
+        android:background="@drawable/button_rounded"
+        android:drawableRight="@drawable/security_shield_white_30px"
         android:padding="16dp"
-        android:textColor="@android:color/black"
+        android:text="Bloquear Tarjeta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMonto" />
-
+        app:layout_constraintTop_toBottomOf="@+id/spinnerMotivoBloqueo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
