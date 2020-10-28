@@ -7,6 +7,7 @@ import frontend.vistas.Transacciones.TransaccionesMonetarias;
 import frontend.vistas.cuentaHabientes.CuentaHabienteFrame;
 import frontend.vistas.cuentas.PanelGestionCuentas;
 import frontend.vistas.tarjetas.SolicitudesTarjetasDialog;
+import frontend.vistas.tarjetas.TarjetasFrame;
 
 public class VistaAdministracion extends javax.swing.JFrame {
 
@@ -41,11 +42,13 @@ public class VistaAdministracion extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        cambioDeContrasenajMenuItem7 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
 
@@ -54,15 +57,15 @@ public class VistaAdministracion extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel1.setText("Vista Administracion");
         desktopPane.add(jLabel1);
-        jLabel1.setBounds(10, 10, 270, 29);
+        jLabel1.setBounds(10, 10, 270, 28);
 
         jLabel2.setText("Usuario en Sesion:");
         desktopPane.add(jLabel2);
-        jLabel2.setBounds(480, 10, 140, 18);
+        jLabel2.setBounds(480, 10, 140, 17);
 
         textoUsuarioEnSesion.setText("Aqui va el usuario");
         desktopPane.add(textoUsuarioEnSesion);
-        textoUsuarioEnSesion.setBounds(620, 10, 120, 18);
+        textoUsuarioEnSesion.setBounds(620, 10, 120, 17);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Cerrar Sesion");
@@ -102,6 +105,14 @@ public class VistaAdministracion extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem2);
 
+        cambioDeContrasenajMenuItem7.setText("Cambio de contraseña");
+        cambioDeContrasenajMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambioDeContrasenajMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(cambioDeContrasenajMenuItem7);
+
         menuBar.add(jMenu2);
 
         jMenu3.setText("Cuentas Bancarias");
@@ -127,6 +138,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
 
         jMenu4.setText("Tarjetas de credito");
 
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_9, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setText("Solicitudes");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +146,15 @@ public class VistaAdministracion extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem5);
+
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_0, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem7.setText("Ver Tarjetas Bloqueadas");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem7);
 
         menuBar.add(jMenu4);
 
@@ -199,11 +220,23 @@ public class VistaAdministracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-    SolicitudesPrestamosDialog solicitud = new SolicitudesPrestamosDialog(this, true);
-    solicitud.setVisible(true);
+        SolicitudesPrestamosDialog solicitud = new SolicitudesPrestamosDialog(this, true);
+        solicitud.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void cambioDeContrasenajMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioDeContrasenajMenuItem7ActionPerformed
+        CambiarContrasenaDialog cambioDeContrasena = new CambiarContrasenaDialog(this, true);
+        cambioDeContrasena.setVisible(true);
+    }//GEN-LAST:event_cambioDeContrasenajMenuItem7ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        TarjetasFrame tarjetas = new TarjetasFrame(this, true);
+        tarjetas.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem cambioDeContrasenajMenuItem7;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JLabel jLabel1;
@@ -219,6 +252,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JLabel textoUsuarioEnSesion;

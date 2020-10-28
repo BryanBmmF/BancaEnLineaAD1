@@ -4,17 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/menubackground"
+    android:background="#FFFFFF"
     tools:context=".ui.prestamos.SolicitudPrestamo">
 
+    <RelativeLayout
+        android:id="@+id/tituloActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textoBienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Realiza una Solicitud"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/textoNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textoBienvenida"
+            android:text="De préstamos personal/hipotecario"
+            android:layout_marginLeft="16dp"
+            android:textColor="#D4D4D4"
+            android:textSize="15sp"></TextView>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menulogoj3b"></ImageView>
+
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/textDireccionBienRaiz"
-        android:layout_width="393dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="text"
@@ -28,9 +68,8 @@
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Direcciòn de Bien Raiz (P.Hipotecario):"
+        android:layout_marginStart="16dp"
+        android:text="Dirección de Bien Inmueble (P. Hipotecario):"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,11 +77,10 @@
 
     <EditText
         android:id="@+id/textMotivo"
-        android:layout_width="393dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="text"
@@ -56,20 +94,19 @@
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
         android:text="Motivo *:"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMontoSolicitud" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="Tipo de Prestamo *:"
         android:textColor="#272727"
         android:textSize="18sp"
@@ -78,27 +115,24 @@
 
     <EditText
         android:id="@+id/textMontoSolicitud"
-        android:layout_width="234dp"
+        android:layout_width="220dp"
         android:layout_height="44dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="number|numberDecimal"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.993"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTipoPrestamo" />
 
     <TextView
         android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Monto a solicitar *:"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Monto a solicitar*:"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,27 +140,23 @@
 
     <EditText
         android:id="@+id/textNombreEmpresa"
-        android:layout_width="234dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="220dp"
+        android:layout_height="45dp"
         android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="text"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.987"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textIngresoMensual" />
 
     <Spinner
         android:id="@+id/spinnerTipoPrestamo"
-        android:layout_width="394dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/holo_blue_dark"
         android:backgroundTint="@android:color/holo_green_dark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -134,97 +164,79 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
-    <TextView
-        android:id="@+id/textInformation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:text="Solicitud de nuevo  prestamo"
-        android:textColor="#FFFFFF"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Spinner
         android:id="@+id/spinnerFormaTrabajo"
-        android:layout_width="393dp"
+        android:layout_width="match_parent"
         android:layout_height="39dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/holo_blue_dark"
         android:backgroundTint="@android:color/holo_green_dark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Ingreso Mensual *:"
+        android:text="Ingreso Mensual*:"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMandarSolicitud" />
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="16dp"
         android:text="Forma de Trabajo*:"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNombreEmpresa" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <Button
         android:id="@+id/buttonMandarSolicitud"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@android:color/holo_green_light"
+        android:layout_width="220dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
         android:text="Enviar Solicitud"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:background="@drawable/button_rounded_green"
+        android:drawableRight="@drawable/forward_30px_black"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.965"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInformation" />
+        app:layout_constraintTop_toBottomOf="@+id/textDireccionBienRaiz" />
 
     <EditText
         android:id="@+id/textIngresoMensual"
-        android:layout_width="235dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="220dp"
+        android:layout_height="45dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
         android:backgroundTint="@android:color/holo_red_dark"
         android:ems="5"
         android:inputType="number|numberDecimal"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMandarSolicitud" />
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="150dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
         android:text="Empresa/Org. *:"
         android:textColor="#272727"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textIngresoMensual" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

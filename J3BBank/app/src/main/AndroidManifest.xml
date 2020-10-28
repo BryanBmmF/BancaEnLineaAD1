@@ -14,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.tarjetaCredito.SolicitudTarjetaCreditoActivity"></activity>
+        <activity android:name=".ui.prestamos.PagosPrestamos"></activity>
+        <activity android:name=".ui.prestamos.ConsultarPrestamos" />
+        <activity android:name=".ui.prestamos.PagarPrestamoActivity"></activity>
+        <activity android:name=".ui.tarjetaCredito.ReportarTarjeta" />
+        <activity android:name=".ui.tarjetaCredito.PagarTarjeta" />
+        <activity android:name=".ui.tarjetaCredito.SolicitudTarjetaCreditoActivity" />
         <activity android:name=".ui.prestamos.SolicitudPrestamo" />
         <activity android:name=".ui.transaccionesPropias.TransaccionCuentasPropias" />
         <activity android:name=".ui.transaccionesAjenas.TransaccionCuentasAjenas" />

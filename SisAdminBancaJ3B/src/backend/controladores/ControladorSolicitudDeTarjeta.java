@@ -86,7 +86,7 @@ public class ControladorSolicitudDeTarjeta {
         try {
             prepared = conexion.prepareStatement(CONSULTAR_SOLICITUDES);
             prepared.setString(1, estado.toString());
-            //System.out.println("CONSULTA:"+prepared.toString());
+            System.out.println("CONSULTA:"+prepared.toString());
             result = prepared.executeQuery();
             while (result.next()) {
                 listaSolicitudes.add(new SolicitudTarjeta(result.getInt("id_solicitud_tarjeta"), result.getString("tipo_de_trabajo"), result.getString("dpi_cliente"), result.getString("empresa"), result.getString("estado"), result.getDouble("salario_mensual"), result.getString("tarjeta"), result.getString("descripcion"), result.getTimestamp("fecha_solicitud"), result.getTimestamp("fecha_verificacion"), result.getString("email")));

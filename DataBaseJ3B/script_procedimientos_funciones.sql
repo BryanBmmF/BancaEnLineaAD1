@@ -210,3 +210,25 @@ BEGIN
 	RETURN id_solicitud;
 END$$
 DELIMITER ;
+
+
+DROP FUNCTION IF exists pago_de_tarjeta;
+ /*Procedimiento almacenado para cancelaciòn de cuentas bancarias*/
+ DELIMITER $$
+ CREATE FUNCTION pago_de_tarjeta (numero_tarjeta VARCHAR(16), pago DOUBLE,fechaPago TIMESTAMP, no_cuenta VARCHAR(10),saldo_deuda DOUBLE,saldo_cuenta DOUBLE)
+ RETURNS VARCHAR(15)
+ BEGIN
+
+         -- Insercion de pago
+         INSERT INTO PAGO_TARJETA(no_tarjeta,monto,fecha_pago) VALUES(numero_tarjeta,pago,fechaPago);
+
+         -- hacemos el update de la Tarjeta
+         UPDATE TARJETA SET deuda_actual = saldo_deuda WHERE no_tarjeta=numero_tarjeta;
+
+         -- hacemos el update de la cuenta
+         UPDATE CUENTA SET saldo=saldo_cuenta WHERE no_cuenta_bancaria=no_cuenta;
+
+         RETURN "TERMINADO";
+
+ END$$
+ DELIMITER ;

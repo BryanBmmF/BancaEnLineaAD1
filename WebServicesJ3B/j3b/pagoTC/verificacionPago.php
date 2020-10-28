@@ -52,7 +52,7 @@ if ($num_rows > 0) {
         $insertTransaccionTarjeta = "UPDATE tarjeta SET deuda_actual='$nuevaDeudaActual' WHERE no_tarjeta = '$varNumTarjeta';";
         if ($conexion->query($insertTransaccionTarjeta) === true) {
           //header("location: ./asignacionExitosa.php");
-          header("location: ./pagoExitoso.php");
+          header("location: ./pagoExitoso.php?dpiCliente=$datoDpi&monto=$varMontoPago&tarjeta=$varNumTarjeta");
 
         } else {
           header("location: ./errorDeCompra.php?error=3");

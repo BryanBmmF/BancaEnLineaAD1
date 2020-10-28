@@ -101,7 +101,6 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
                 String opcionFinal = "";
                 String tipo ="";
                 String numTarjeta = "";
-                String numCuenta = "";
                 String limite = "";
                 String estado = "";
                 String deudaActual = "";
@@ -118,7 +117,6 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
                         tipo = jsonObjectDatosUsuario.getString("tipo");
                         //datos de tarjeta credito
                         numTarjeta = jsonObjectDatosUsuario.getString("no_tarjeta");
-                        numCuenta = jsonObjectDatosUsuario.getString("no_tarjeta");
                         limite = jsonObjectDatosUsuario.getString("limite");
                         estado = jsonObjectDatosUsuario.getString("estado");
                         fechaVencimiento = jsonObjectDatosUsuario.getString("fecha_vencimiento");
@@ -126,7 +124,7 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
                         deudaActual = jsonObjectDatosUsuario.getString("deuda_actual");
                         tasaInteres = jsonObjectDatosUsuario.getString("tasa_interes");
                         calInteres = Double.parseDouble(tasaInteres)*100;
-                        opcionFinal =numTarjeta+"\n  No.Cuenta: "+numCuenta+ "\n  Limite: Q."+limite+"\n  Estado: "+estado+"\n  Adeudo: "+deudaActual+"\n  Interes: "+calInteres+"%\n  Vence: "+fechaVencimiento+ "\n  CVC: "+codigoCVC;
+                        opcionFinal =numTarjeta+"\n  Limite: Q."+limite+"\n  Estado: "+estado+"\n  Adeudo: "+deudaActual+"\n  Interes: "+calInteres+"%\n  Vence: "+fechaVencimiento+ "\n  CVC: "+codigoCVC;
 
                         arrayListTarjetas.add(opcionFinal); //guarda solo los datos importantes de la tarjeta
                     } catch (JSONException e) {
@@ -246,13 +244,18 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
             Date fechaInicial = new SimpleDateFormat("yyyy-MM-dd").parse(fechaIni.getText().toString());
             Date fechaFinal = new SimpleDateFormat("yyyy-MM-dd").parse(fechaFin.getText().toString());
             if (fechaInicial.before(fechaFinal) || fechaInicial.equals(fechaFinal)){
-                String noTarjetaSeleccionada = spinner.getSelectedItem().toString().substring(0,16);
-                if (consulta.equalsIgnoreCase("consumos")) {
-                    buscarConsumos(noTarjetaSeleccionada, fechaIni.getText().toString(), fechaFin.getText().toString());
+                if (spinner.getSelectedItem() == null){
+                    Toast.makeText(getApplicationContext(), "Actualmente no tienes tarjetas activas asociadas.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Actualmente no tienes tarjetas activas asociadas.", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
-                    buscarPagos(noTarjetaSeleccionada, fechaIni.getText().toString(), fechaFin.getText().toString());
+                    String noTarjetaSeleccionada = spinner.getSelectedItem().toString().substring(0,16);
+                    if (consulta.equalsIgnoreCase("consumos")) {
+                        buscarConsumos(noTarjetaSeleccionada, fechaIni.getText().toString(), fechaFin.getText().toString());
+                    } else {
+                        buscarPagos(noTarjetaSeleccionada, fechaIni.getText().toString(), fechaFin.getText().toString());
+                    }
                 }
-
             } else {
                 Toast.makeText(getApplicationContext(), "¡Hubo una confusion! La fecha inicial debe ser anterior a la final.", Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(), "¡Hubo una confusion! La fecha inicial debe ser anterior a la final.", Toast.LENGTH_SHORT).show();
