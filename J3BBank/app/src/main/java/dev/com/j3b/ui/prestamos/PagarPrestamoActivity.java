@@ -103,7 +103,7 @@ public class PagarPrestamoActivity extends AppCompatActivity {
 
             if (this.arrayListPrestamosActivos.size() > 0) {
                 if (this.arrayListCuentas.size() > 0) {
-                    Double saldoActualCuenta = obtenerMontoDeCuenta(numeroCuenta);
+                    Double saldoActualCuenta = obtenerMontoDeCuenta(numeroCuenta, this.arrayListCuentas);
                     if (saldoActualCuenta == ERROR) {
                         Toast.makeText(getApplicationContext(), "LA CUENTA QUE SE HA SELECCIONADO YA NO ESTA ACTIVA O HABILITADA, VERIFICA SU ESTADO POR FAVOR.", Toast.LENGTH_SHORT).show();
                     } else {
@@ -163,10 +163,10 @@ public class PagarPrestamoActivity extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
-    public Double obtenerMontoDeCuenta(String numeroCuenta){
-        for (int i = 0; i < this.arrayListCuentas.size(); i++) {
-            if(arrayListCuentas.get(i).getNumeroCuenta().equals(numeroCuenta)){
-                return arrayListCuentas.get(i).getSaldoActual();
+    public Double obtenerMontoDeCuenta(String numeroCuenta,ArrayList<CuentaSaldo> listado){
+        for (int i = 0; i < listado.size(); i++) {
+            if(listado.get(i).getNumeroCuenta().equals(numeroCuenta)){
+                return listado.get(i).getSaldoActual();
             }
         }
         return ERROR;
