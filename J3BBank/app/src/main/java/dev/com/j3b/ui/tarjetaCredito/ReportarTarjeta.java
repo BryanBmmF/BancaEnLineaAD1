@@ -116,7 +116,6 @@ public class ReportarTarjeta extends AppCompatActivity {
                 //arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerTarjetas.setAdapter(arrayAdapter);
                 tamañoLista = arrayListTarjetas.size();
-                Toast.makeText(getApplicationContext(), "Tamaño: "+arrayListTarjetas.size(), Toast.LENGTH_SHORT).show();
 
             }
         }, new Response.ErrorListener() {

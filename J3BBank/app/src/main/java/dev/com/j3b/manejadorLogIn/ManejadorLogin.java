@@ -38,7 +38,7 @@ public class ManejadorLogin {
     Este metodo recibe como parametro la contraseña en texto plano ingresada por el usuario y retorna
     su equivalente en Hash MD5 para realizar la busqueda en base de datos.
      */
-    public String generarMD5(String textoOriginal) throws NoSuchAlgorithmException {
+    public static String generarMD5(String textoOriginal) throws NoSuchAlgorithmException {
         String original = textoOriginal;
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(original.getBytes());
@@ -89,7 +89,7 @@ public class ManejadorLogin {
      * @param cadena
      * @return int: porcentage de la evaluación
      */
-    public int comprobarSeguridadPassword(String cadena){
+    public static int comprobarSeguridadPassword(String cadena){
         //String cadena = "BmmF0497";
         int porcentaje = 0; //iniciamos porcentaje en 0
 
@@ -111,7 +111,7 @@ public class ManejadorLogin {
         return porcentaje;
     }
 
-    public boolean verificarSiNuevasContraseñasCoinciden(String contraseñaNueva, String confirmacionContraseña){
+    public static boolean verificarSiNuevasContraseñasCoinciden(String contraseñaNueva, String confirmacionContraseña){
         if (contraseñaNueva.equals(confirmacionContraseña)){
             return true;
         }
