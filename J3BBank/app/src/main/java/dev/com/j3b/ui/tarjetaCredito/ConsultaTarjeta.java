@@ -101,7 +101,6 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
                 String opcionFinal = "";
                 String tipo ="";
                 String numTarjeta = "";
-                String numCuenta = "";
                 String limite = "";
                 String estado = "";
                 String deudaActual = "";
@@ -118,7 +117,6 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
                         tipo = jsonObjectDatosUsuario.getString("tipo");
                         //datos de tarjeta credito
                         numTarjeta = jsonObjectDatosUsuario.getString("no_tarjeta");
-                        numCuenta = jsonObjectDatosUsuario.getString("no_tarjeta");
                         limite = jsonObjectDatosUsuario.getString("limite");
                         estado = jsonObjectDatosUsuario.getString("estado");
                         fechaVencimiento = jsonObjectDatosUsuario.getString("fecha_vencimiento");
@@ -126,7 +124,7 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
                         deudaActual = jsonObjectDatosUsuario.getString("deuda_actual");
                         tasaInteres = jsonObjectDatosUsuario.getString("tasa_interes");
                         calInteres = Double.parseDouble(tasaInteres)*100;
-                        opcionFinal =numTarjeta+"\n  No.Cuenta: "+numCuenta+ "\n  Limite: Q."+limite+"\n  Estado: "+estado+"\n  Adeudo: "+deudaActual+"\n  Interes: "+calInteres+"%\n  Vence: "+fechaVencimiento+ "\n  CVC: "+codigoCVC;
+                        opcionFinal =numTarjeta+"\n  Limite: Q."+limite+"\n  Estado: "+estado+"\n  Adeudo: "+deudaActual+"\n  Interes: "+calInteres+"%\n  Vence: "+fechaVencimiento+ "\n  CVC: "+codigoCVC;
 
                         arrayListTarjetas.add(opcionFinal); //guarda solo los datos importantes de la tarjeta
                     } catch (JSONException e) {
