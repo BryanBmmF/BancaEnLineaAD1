@@ -55,7 +55,13 @@ public class ConsultarPrestamos extends AppCompatActivity {
         consultarPrestamoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                consultarEstadoPrestamo(spinnerPrestamos.getSelectedItem().toString().substring(0,4));
+                if (spinnerPrestamos.getSelectedItem() == null){
+                    Toast.makeText(getApplicationContext(), "Actualmente no tienes prestamos activos asociados.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Actualmente no tienes prestamos activos asociados.", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    consultarEstadoPrestamo(spinnerPrestamos.getSelectedItem().toString().substring(0,4));
+                }
             }
         });
     }

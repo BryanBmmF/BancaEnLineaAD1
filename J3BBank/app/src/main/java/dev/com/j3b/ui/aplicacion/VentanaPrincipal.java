@@ -54,7 +54,8 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
     private Usuario usuarioRecivido = new Usuario();
     private TextView displayNombre, displayEmail;
     public static CuentaHabiente cuentaHabienteLogueado = new CuentaHabiente();
-    private CardView salirCardview, monetariasCardview, ahorrosCardview, tarjetasCardview, transaccionesCardview, segurosCardview, gestionesCardview, creditosCardview ,pagarTarjetCardView, reportCardCardview, estadoPrestamosCardView;
+    private CardView salirCardview, monetariasCardview, ahorrosCardview, tarjetasCardview, transaccionesCardview, segurosCardview,
+            gestionesCardview, creditosCardview ,pagarTarjetCardView, reportCardCardview, estadoPrestamosCardView, abonarPrestamosCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
         pagarTarjetCardView = (CardView) findViewById(R.id.pagarTarjetaButton);
         reportCardCardview = (CardView) findViewById(R.id.reportCardButton);
         estadoPrestamosCardView = (CardView) findViewById(R.id.estadoPrestamosButton);
+        abonarPrestamosCardView = (CardView) findViewById(R.id.abonarPrestamosButton);
 
         monetariasCardview.setOnClickListener(this);
         ahorrosCardview.setOnClickListener(this);
@@ -86,6 +88,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
         pagarTarjetCardView.setOnClickListener(this);
         reportCardCardview.setOnClickListener(this);
         estadoPrestamosCardView.setOnClickListener(this);
+        abonarPrestamosCardView.setOnClickListener(this);
         try { recibirDatos(); } catch (NoSuchAlgorithmException e) { e.printStackTrace(); }
     }
 
@@ -196,11 +199,10 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 startActivity(consultarCuentas);
                 break;
             case R.id.creditosButton :
-                /*temporal solo para prueba*/
-                // las que estan comentadas es de solicitud prestamo, las que no estan comentadas es de abonos prestamo
-                /*LINEAS COMENTADAS AQUI*/
-                //Intent solicitudPrestamo = new Intent(getApplicationContext(), SolicitudPrestamo.class);
-                //startActivity(solicitudPrestamo);
+                Intent solicitudPrestamo = new Intent(getApplicationContext(), SolicitudPrestamo.class);
+                startActivity(solicitudPrestamo);
+                break;
+            case R.id.abonarPrestamosButton:
                 Intent pagarPrestamo = new Intent(getApplicationContext(), PagarPrestamoActivity.class);
                 startActivity(pagarPrestamo);
                 break;

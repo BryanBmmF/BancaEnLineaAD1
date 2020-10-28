@@ -17,7 +17,6 @@
         <activity android:name=".ui.prestamos.PagosPrestamos"></activity>
         <activity android:name=".ui.prestamos.ConsultarPrestamos" />
         <activity android:name=".ui.prestamos.PagarPrestamoActivity"></activity>
-        <activity android:name=".ui.prestamos.ConsultarPrestamos"></activity>
         <activity android:name=".ui.tarjetaCredito.ReportarTarjeta" />
         <activity android:name=".ui.tarjetaCredito.PagarTarjeta" />
         <activity android:name=".ui.tarjetaCredito.SolicitudTarjetaCreditoActivity" />

@@ -111,6 +111,9 @@ public class PagarTarjeta extends AppCompatActivity {
         buttonPagarTarjeta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 evaluarDatos();
             }
         });
@@ -124,8 +127,7 @@ public class PagarTarjeta extends AppCompatActivity {
     public void buscarTarjetasDeCredito(){
         String consultaSql= ServidorSQL.SERVIDORSQL_CONRETORNO+""+
         "SELECT no_tarjeta,tipo,limite,dpi_cuenta_habiente,estado,deuda_actual,fecha_vencimiento,codigoCVC,tasa_interes " +
-                "FROM TARJETA WHERE dpi_cuenta_habiente='"+ MainActivity.usuarioLogueado.getDpiCliente() +"' AND estado='ACTIVA' AND deuda_actual>0 and tipo='CREDITO'";
-        System.out.println("\n\nCONSULTA:"+consultaSql);
+                "FROM TARJETA WHERE dpi_cuenta_habiente='"+ MainActivity.usuarioLogueado.getDpiCliente() +"' AND deuda_actual>0 and tipo='CREDITO'";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSql,
                 new Response.Listener<JSONArray>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -203,37 +205,45 @@ public class PagarTarjeta extends AppCompatActivity {
         //MONTO_PAGO <= SALDO_CUENTA
         //MONTO_PAGO <= DEUDA
         if(montoPago<=listaCuentas.get(posicionCuentaSeleccionada).getSaldo()){
-            if(montoPago<=listaTarjetasDeCredito.get(posicionTarjetaSeleccionada).getDeudaActual()){
-                final String numeroTarjeta = listaTarjetasDeCredito.get(posicionTarjetaSeleccionada).getNoTarjeta();
-                final Timestamp fecha = new Timestamp(System.currentTimeMillis());
-                final String numeroCuenta = listaCuentas.get(posicionCuentaSeleccionada).getNoCuentaBancaria();
-                final Double saldoDeuda = listaTarjetasDeCredito.get(posicionTarjetaSeleccionada).getDeudaActual()-montoPago;
-                final Double saldoCuenta = listaCuentas.get(posicionCuentaSeleccionada).getSaldo()-montoPago;
-                 //Preguntar si esta seguro
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Desea cancelar la cantidad de:"+montoPago+"?");
-                builder.setTitle("Confirmacion");
-                builder.setCancelable(false);
-                builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        efectuarPago(numeroTarjeta,montoPago,fecha,numeroCuenta,df.format(saldoDeuda),df.format(saldoCuenta));
-                        Toast.makeText(getApplicationContext(), "SE PAGO LA TARJETA DE CREDITO", Toast.LENGTH_LONG).show();
-                        //consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
-                        editTextMonto.setText("");
-                    }
-                });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getApplicationContext(), "Transferencia cancelada", Toast.LENGTH_LONG).show();
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }else{
-                Toast.makeText(getApplicationContext(), "El monto sobrepasa la deuda", Toast.LENGTH_LONG).show();
+            if (listaTarjetasDeCredito == null){
+                Toast.makeText(getApplicationContext(), "Actualmente no tienes tarjetas activas asociadas.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Actualmente no tienes tarjetas activas asociadas.", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                if(montoPago<=listaTarjetasDeCredito.get(posicionTarjetaSeleccionada).getDeudaActual()){
+                    final String numeroTarjeta = listaTarjetasDeCredito.get(posicionTarjetaSeleccionada).getNoTarjeta();
+                    final Timestamp fecha = new Timestamp(System.currentTimeMillis());
+                    final String numeroCuenta = listaCuentas.get(posicionCuentaSeleccionada).getNoCuentaBancaria();
+                    final Double saldoDeuda = listaTarjetasDeCredito.get(posicionTarjetaSeleccionada).getDeudaActual()-montoPago;
+                    final Double saldoCuenta = listaCuentas.get(posicionCuentaSeleccionada).getSaldo()-montoPago;
+                    //Preguntar si esta seguro
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("¿Desea cancelar la cantidad de:"+montoPago+"?");
+                    builder.setTitle("Confirmacion");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            efectuarPago(numeroTarjeta,montoPago,fecha,numeroCuenta,df.format(saldoDeuda),df.format(saldoCuenta));
+                            Toast.makeText(getApplicationContext(), "SE PAGO LA TARJETA DE CREDITO", Toast.LENGTH_LONG).show();
+                            finish();
+                            //consultarCuentasDeUsuario(MainActivity.usuarioLogueado.getDpiCliente(),EstadoDeCuenta.ACTIVA);
+                            //editTextMonto.setText("");
+                        }
+                    });
+                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(getApplicationContext(), "Transferencia cancelada", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "El monto sobrepasa la deuda", Toast.LENGTH_LONG).show();
+                }
             }
         }else{
             Toast.makeText(getApplicationContext(), "No posees el monto en la cuenta", Toast.LENGTH_LONG).show();
@@ -244,7 +254,6 @@ public class PagarTarjeta extends AppCompatActivity {
 
     public void efectuarPago(String numeroTarjeta,Double montoPago,Timestamp fecha,String numeroCuenta,String saldoCuenta,String saldoDeuda){
                 String consultaSQL=ServidorSQL.SERVIDORSQL_CONRETORNO+"SELECT pago_de_tarjeta('"+numeroTarjeta+"',"+montoPago+",'"+fecha+"','"+numeroCuenta+"',"+saldoCuenta+","+saldoDeuda+")";
-        System.out.println("-------------------------------********CONSULTA"+consultaSQL);
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL,
                         new Response.Listener<JSONArray>() {
                             @Override
@@ -266,7 +275,6 @@ public class PagarTarjeta extends AppCompatActivity {
 
 
     public void escribirTarjetasEnSpinner(){
-        System.out.println("---------->Tamano de Spinner:"+listaTarjetasDeCredito.size());
         String[] arrayCuentas = new String[listaTarjetasDeCredito.size()];
         for (int i = 0; i < listaTarjetasDeCredito.size(); i++) {
             arrayCuentas[i]="Tarjeta:"+listaTarjetasDeCredito.get(i).getNoTarjeta()+"   Deuda:"+listaTarjetasDeCredito.get(i).getDeudaActual();
@@ -279,7 +287,6 @@ public class PagarTarjeta extends AppCompatActivity {
     }
 
     public void escribirCuentasDisponibles(){
-        System.out.println("---------->Tamano de Spinner:"+listaCuentas.size());
         String[] arrayCuentas = new String[listaCuentas.size()];
         for (int i = 0; i < listaCuentas.size(); i++) {
             arrayCuentas[i]="Cuenta:"+listaCuentas.get(i).getNoCuentaBancaria()+"   Saldo:"+listaCuentas.get(i).getSaldo();

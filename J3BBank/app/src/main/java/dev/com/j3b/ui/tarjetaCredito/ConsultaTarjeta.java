@@ -244,13 +244,18 @@ public class ConsultaTarjeta extends AppCompatActivity implements View.OnClickLi
             Date fechaInicial = new SimpleDateFormat("yyyy-MM-dd").parse(fechaIni.getText().toString());
             Date fechaFinal = new SimpleDateFormat("yyyy-MM-dd").parse(fechaFin.getText().toString());
             if (fechaInicial.before(fechaFinal) || fechaInicial.equals(fechaFinal)){
-                String noTarjetaSeleccionada = spinner.getSelectedItem().toString().substring(0,16);
-                if (consulta.equalsIgnoreCase("consumos")) {
-                    buscarConsumos(noTarjetaSeleccionada, fechaIni.getText().toString(), fechaFin.getText().toString());
+                if (spinner.getSelectedItem() == null){
+                    Toast.makeText(getApplicationContext(), "Actualmente no tienes tarjetas activas asociadas.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Actualmente no tienes tarjetas activas asociadas.", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
-                    buscarPagos(noTarjetaSeleccionada, fechaIni.getText().toString(), fechaFin.getText().toString());
+                    String noTarjetaSeleccionada = spinner.getSelectedItem().toString().substring(0,16);
+                    if (consulta.equalsIgnoreCase("consumos")) {
+                        buscarConsumos(noTarjetaSeleccionada, fechaIni.getText().toString(), fechaFin.getText().toString());
+                    } else {
+                        buscarPagos(noTarjetaSeleccionada, fechaIni.getText().toString(), fechaFin.getText().toString());
+                    }
                 }
-
             } else {
                 Toast.makeText(getApplicationContext(), "¡Hubo una confusion! La fecha inicial debe ser anterior a la final.", Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(), "¡Hubo una confusion! La fecha inicial debe ser anterior a la final.", Toast.LENGTH_SHORT).show();

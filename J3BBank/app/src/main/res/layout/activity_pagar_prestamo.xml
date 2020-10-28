@@ -4,15 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".ui.prestamos.PagarPrestamoActivity">
+
+    <RelativeLayout
+        android:id="@+id/tituloActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textoBienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Abona tus prestamos"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/textoNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textoBienvenida"
+            android:text="Con tus cuentas"
+            android:layout_marginLeft="16dp"
+            android:textColor="#D4D4D4"
+            android:textSize="15sp"></TextView>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menulogoj3b"></ImageView>
+
+    </RelativeLayout>
 
     <Spinner
         android:id="@+id/spinnerCuentaPrestamo"
-        android:layout_width="364dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="12dp"
-        android:background="#FFFFFF"
-
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="#E4E4E4"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,12 +66,13 @@
 
     <Spinner
         android:id="@+id/spinnerPrestamosActivos"
-        android:layout_width="364dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="24dp"
-        android:background="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="#E4E4E4"
         android:gravity="center"
-
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
@@ -38,28 +83,35 @@
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#272727"
         android:text="Selecciona el prestamo que deseas pagar, por su id:"
-        app:layout_constraintTop_toBottomOf="@+id/textView25"
-        tools:layout_editor_absoluteX="35dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloActivity" />
 
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="#272727"
         android:text="Monto a Cancelar:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerPrestamosActivos" />
 
     <EditText
         android:id="@+id/editTextMontoCancelarPrestamo"
-        android:layout_width="364dp"
+        android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:editable="false"
         android:ems="10"
+        android:textColor="#272727"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:enabled="false"
         android:hint="Monto "
         android:inputType="numberDecimal"
@@ -72,48 +124,49 @@
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Descripcion:"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMontoCancelarPrestamo"
-        tools:layout_editor_absoluteX="35dp" />
+        android:textColor="#272727"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMontoCancelarPrestamo" />
 
     <TextView
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:textColor="#272727"
         android:text="Selecciona la cuenta con la que deseas pagar:"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescripcionPagoPrestamo"
-        tools:layout_editor_absoluteX="37dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescripcionPagoPrestamo" />
 
     <Button
         android:id="@+id/buttonPagarPrestamo"
-        android:layout_width="342dp"
-        android:layout_height="52dp"
+        android:layout_width="180dp"
+        android:layout_height="55dp"
         android:layout_marginTop="24dp"
+        android:background="@drawable/button_rounded"
+        android:drawableRight="@drawable/checked_30px_white"
+        android:padding="16dp"
         android:text="Realizar Pago"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCuentaPrestamo" />
 
-    <TextView
-        android:id="@+id/textView25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="PAGO DE PRESTAMO"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
         android:id="@+id/editTextDescripcionPagoPrestamo"
-        android:layout_width="345dp"
+        android:layout_width="match_parent"
         android:layout_height="183dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:editable="false"
         android:ems="10"
+        android:textColor="#272727"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:enabled="false"
         android:gravity="start|top"
         android:inputType="textMultiLine"

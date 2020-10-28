@@ -35,7 +35,7 @@ tools:context=".ui.prestamos.PagosPrestamos">
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:textSize="20dp"
-        android:text="Pagos Realizados"
+        android:text="Pagos Pendientes"
         android:textColor="#FF5722" />
 
     <androidx.recyclerview.widget.RecyclerView
