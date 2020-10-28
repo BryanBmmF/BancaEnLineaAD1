@@ -90,6 +90,8 @@ public class ControladorUsuarioCliente {
             prepStatement.setDate(3, fechaCaducidad);
             prepStatement.setString(4, dpi_cliente);
             prepStatement.executeUpdate();
+            System.out.println(prepStatement.toString());
+
             prepStatement.close();
             return true;
         } catch (SQLException ex) {
