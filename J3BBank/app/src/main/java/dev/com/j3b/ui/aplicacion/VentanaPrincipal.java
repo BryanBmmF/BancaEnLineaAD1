@@ -40,6 +40,7 @@ import dev.com.j3b.ui.prestamos.PagarPrestamoActivity;
 import dev.com.j3b.ui.prestamos.SolicitudPrestamo;
 import dev.com.j3b.ui.tarjetaCredito.ConsultaTarjeta;
 import dev.com.j3b.ui.tarjetaCredito.PagarTarjeta;
+import dev.com.j3b.ui.tarjetaCredito.ReportarTarjeta;
 import dev.com.j3b.ui.tarjetaCredito.SolicitudTarjetaCreditoActivity;
 import dev.com.j3b.ui.transaccionesAjenas.TransaccionCuentasAjenas;
 import dev.com.j3b.ui.transaccionesPropias.TransaccionCuentasPropias;
@@ -50,7 +51,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
     private Usuario usuarioRecivido = new Usuario();
     private TextView displayNombre, displayEmail;
     public static CuentaHabiente cuentaHabienteLogueado = new CuentaHabiente();
-    private CardView salirCardview, monetariasCardview, ahorrosCardview, tarjetasCardview, transaccionesCardview, segurosCardview, gestionesCardview, creditosCardview ,pagarTarjetCardView;
+    private CardView salirCardview, monetariasCardview, ahorrosCardview, tarjetasCardview, transaccionesCardview, segurosCardview, gestionesCardview, creditosCardview ,pagarTarjetCardView, reportCardCardview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
         creditosCardview = (CardView) findViewById(R.id.creditosButton);
         salirCardview = (CardView) findViewById(R.id.salirButton);
         pagarTarjetCardView = (CardView) findViewById(R.id.pagarTarjetaButton);
+        reportCardCardview = (CardView) findViewById(R.id.reportCardButton);
 
         monetariasCardview.setOnClickListener(this);
         ahorrosCardview.setOnClickListener(this);
@@ -78,6 +80,7 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
         creditosCardview.setOnClickListener(this);
         salirCardview.setOnClickListener(this);
         pagarTarjetCardView.setOnClickListener(this);
+        reportCardCardview.setOnClickListener(this);
         try { recibirDatos(); } catch (NoSuchAlgorithmException e) { e.printStackTrace(); }
     }
 
@@ -199,6 +202,13 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
             case R.id.pagarTarjetaButton:
                 Intent pagarTarjeta = new Intent(this,PagarTarjeta.class);
                 startActivity(pagarTarjeta);
+                break;
+            case R.id.reportCardButton :
+                Intent reportarTarjetas = new Intent(getApplicationContext(), ReportarTarjeta.class);
+                Bundle nuevoBundleReporteTarjetas = new Bundle();
+                nuevoBundleReporteTarjetas.putString("dpiusuario", usuarioRecivido.getDpiCliente());
+                reportarTarjetas.putExtras(nuevoBundleReporteTarjetas);
+                startActivity(reportarTarjetas);
                 break;
             case R.id.salirButton : cerrarSesionBack(); break;
         }
