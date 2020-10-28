@@ -319,7 +319,7 @@ public class EvaluadorCodigoTransferencia extends AppCompatActivity {
      * @param numCuenta
      */
     public String consultarDatosDeUsuarioAcreedor(String numCuenta){
-
+        RequestQueue  requestQueue = Volley.newRequestQueue(this);
         String consultaSQL = ServidorSQL.SERVIDORSQL_CONRETORNO+"" +
                 "SELECT * FROM cuenta c JOIN cuenta_habiente ch " +
                 " ON c.dpi_cliente = ch.dpi_cliente WHERE c.no_cuenta_bancaria ='"+numCuenta+"'";
