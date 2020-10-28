@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void buscarUsuario(String usuarioIngresado, final String contraseñaIngresada) throws NoSuchAlgorithmException {
         String consultaSQL = ServidorSQL.SERVIDORSQL_CONRETORNO+"SELECT * FROM USUARIO_CLIENTE WHERE usuario_cliente='"+usuarioIngresado+"'";
-        System.out.println(consultaSQL);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL, new Response.Listener<JSONArray>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -210,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
         }){ @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 String consultaSQLUpdate = "UPDATE USUARIO_CLIENTE SET intento_de_ingresos = '0' WHERE usuario_cliente = '"+usuarioCliente+"'";
-                System.out.println(consultaSQLUpdate);
                 Map<String, String> parametros = new HashMap<String, String>();
                 parametros.put("consultaSQL", consultaSQLUpdate);
                 return parametros;
@@ -265,7 +263,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 String consultaSQLUpdate = "UPDATE USUARIO_CLIENTE SET estado = 'BLOQUEADO' WHERE usuario_cliente = '"+usuarioCliente+"'";
-                System.out.println(consultaSQLUpdate);
                 Map<String, String> parametros = new HashMap<String, String>();
                 parametros.put("consultaSQL", consultaSQLUpdate);
                 return parametros;
