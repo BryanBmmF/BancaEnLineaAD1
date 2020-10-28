@@ -29,12 +29,15 @@ import org.json.JSONObject;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import dev.com.j3b.MainActivity;
 import dev.com.j3b.R;
+import dev.com.j3b.enums.EstadoDeCuenta;
 import dev.com.j3b.manejadorLogIn.ManejadorCuentaAjena;
+import dev.com.j3b.modelos.Cuenta;
 import dev.com.j3b.modelos.ServidorSQL;
 import dev.com.j3b.ui.aplicacion.VentanaPrincipal;
 
@@ -48,6 +51,7 @@ public class EvaluadorCodigoTransferencia extends AppCompatActivity {
     public String monto;
     public String motivo;
     public String codigoGenerado;
+    public static String emailRecep;
 
     private ManejadorCuentaAjena manejadorCuentaAjena;
     private RequestQueue requestQueue ;
@@ -67,6 +71,7 @@ public class EvaluadorCodigoTransferencia extends AppCompatActivity {
         monto = "";
         motivo = "";
         codigoGenerado = "";
+        emailRecep = "";
         //voley global
         requestQueue = Volley.newRequestQueue(this);
         //campos recibidos
@@ -298,7 +303,8 @@ public class EvaluadorCodigoTransferencia extends AppCompatActivity {
                 parametros.put("CuentaDestino",cuentaDestino);
                 parametros.put("Monto",montoEnviar);
                 parametros.put("Fecha",fechaEnviar);
-                parametros.put("Email", VentanaPrincipal.cuentaHabienteLogueado.getEmail());
+                parametros.put("EmailEmisor", VentanaPrincipal.cuentaHabienteLogueado.getEmail());
+                parametros.put("EmailReceptor", consultarDatosDeUsuarioAcreedor(cuentaDestino));
 
                 return parametros;
             }
@@ -306,6 +312,47 @@ public class EvaluadorCodigoTransferencia extends AppCompatActivity {
 
         requestQueue.add(stringRequest);
 
+    }
+
+    /**
+     * Se consultan los datos del usuario acreedor y se retorna su email para ser notificado
+     * @param numCuenta
+     */
+    public String consultarDatosDeUsuarioAcreedor(String numCuenta){
+
+        String consultaSQL = ServidorSQL.SERVIDORSQL_CONRETORNO+"" +
+                "SELECT * FROM cuenta c JOIN cuenta_habiente ch " +
+                " ON c.dpi_cliente = ch.dpi_cliente WHERE c.no_cuenta_bancaria ='"+numCuenta+"'";
+        System.out.println("\n\nCONSULTA:"+consultaSQL);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(consultaSQL,
+                new Response.Listener<JSONArray>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        JSONObject jsonObjectDatosCuenta=null;
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                jsonObjectDatosCuenta = response.getJSONObject(i);
+                                emailRecep = jsonObjectDatosCuenta.getString("email");
+                                //System.out.println("1.++++++++++++++++++++++++++++++++++++++++++ email recup:  "+ emailRecep);
+
+                            }catch (JSONException e){
+                                Toast.makeText(null, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //En caso de que la consulta SQL no encuentre ningún dato, el codigo ingresa en esta sección.
+                System.out.println("ERROR AL CONSULTAR LOS DATOS DEL USUARIO ACREEDOR");
+                Toast.makeText(null, "ERROR AL CONSULTAR LOS DATOS DEL USUARIO ACREEDOR", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+        //System.out.println("2.++++++++++++++++++++++++++++++++++++++++++ email recup:  "+ emailRecep);
+        return emailRecep;
     }
 
 
