@@ -6,6 +6,7 @@
 package backend.controladores;
 
 import backend.database.ConexionBD;
+import backend.enums.EstadoPagosPrestamo;
 import backend.enums.EstadoSolicitudDeTarjeta;
 import backend.enums.EstadoSolicitudPrestamo;
 import backend.enums.TipoDeTarjetaSolicitud;
@@ -60,7 +61,9 @@ public class ControladorSolicitudPrestamo {
     private static final String INSERTAR_PRESTAMO = "INSERT INTO "
             + "PRESTAMO "
             + "VALUES(null,?,?,?,?,?,?,?,?,?)";
-
+    private static final String INSERTAR_PAGO_PRESTAMO = "INSERT INTO "
+            + "PAGO_PRESTAMO "
+            + "VALUES(null,?,?,?,null)";
 
     public ControladorSolicitudPrestamo() {
         conexion = ConexionBD.getInstance();
@@ -175,6 +178,7 @@ public class ControladorSolicitudPrestamo {
             if (resultado.next()) {
                 int id = resultado.getInt(1);
                 prestamo.setId(id);
+                crearPagosPendientesPrestamo(prestamo);
             }
             return true;
         } catch (SQLException ex) {
@@ -183,15 +187,28 @@ public class ControladorSolicitudPrestamo {
         return false;
     }
 
-    public void notificarRechazoDePrestamo(String descripcion,SolicitudPrestamo solicitud, String resultado) throws IOException {
-        ControladorPeticionesHttp controlador = new ControladorPeticionesHttp();
-        String idSolicitud = solicitud.getId()+"";
-        String estado = resultado;
-        String salarioMensual = solicitud.getSalarioMensual()+"";
-        String montoSolicitud = solicitud.getMontoSolicitud()+"";
-        String tipo = solicitud.getTipo()+"";
+    public boolean crearPagosPendientesPrestamo(Prestamo prestamo) throws SQLException {
 
-         String correo = "&Email=" + solicitud.getEmail();
+        double cuotaMensual = prestamo.getMontoTotal() / prestamo.getCantidadMeses();
+        for (int i = 0; i < prestamo.getCantidadMeses(); i++) {
+            prepared = conexion.prepareStatement(INSERTAR_PAGO_PRESTAMO);
+            prepared.setInt(1, prestamo.getId());
+            prepared.setDouble(2, cuotaMensual);
+            prepared.setString(3, EstadoPagosPrestamo.PENDIENTE.toString());
+            prepared.executeUpdate();
+        }
+        return true;
+    }
+
+    public void notificarRechazoDePrestamo(String descripcion, SolicitudPrestamo solicitud, String resultado) throws IOException {
+        ControladorPeticionesHttp controlador = new ControladorPeticionesHttp();
+        String idSolicitud = solicitud.getId() + "";
+        String estado = resultado;
+        String salarioMensual = solicitud.getSalarioMensual() + "";
+        String montoSolicitud = solicitud.getMontoSolicitud() + "";
+        String tipo = solicitud.getTipo() + "";
+
+        String correo = "&Email=" + solicitud.getEmail();
         URL url = new URL("http://192.168.0.200/j3b/servicios/switfMailer/respuestaRechazoSolicitudPrestamo.php");
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("idSolicitud", idSolicitud);
@@ -231,18 +248,18 @@ public class ControladorSolicitudPrestamo {
         for (int c; (c = in.read()) >= 0;) {
             System.out.print((char) c);
         }
-    
-    }
-    
-     public void notificarAprobacionDePrestamo(String descripcion,SolicitudPrestamo solicitud,Prestamo prestamo, String resultado) throws IOException {
-        ControladorPeticionesHttp controlador = new ControladorPeticionesHttp();
-        String idSolicitud = solicitud.getId()+"";
-        String estado = resultado;
-        String salarioMensual = solicitud.getSalarioMensual()+"";
-        String montoSolicitud = solicitud.getMontoSolicitud()+"";
-        String tipo = solicitud.getTipo()+"";
 
-         String correo = "&Email=" + solicitud.getEmail();
+    }
+
+    public void notificarAprobacionDePrestamo(String descripcion, SolicitudPrestamo solicitud, Prestamo prestamo, String resultado) throws IOException {
+        ControladorPeticionesHttp controlador = new ControladorPeticionesHttp();
+        String idSolicitud = solicitud.getId() + "";
+        String estado = resultado;
+        String salarioMensual = solicitud.getSalarioMensual() + "";
+        String montoSolicitud = solicitud.getMontoSolicitud() + "";
+        String tipo = solicitud.getTipo() + "";
+
+        String correo = "&Email=" + solicitud.getEmail();
         URL url = new URL("http://192.168.0.200/j3b/servicios/switfMailer/respuestaAprobacionSolicitudPrestamo.php");
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("idSolicitud", idSolicitud);
@@ -251,8 +268,7 @@ public class ControladorSolicitudPrestamo {
         params.put("montoSolicitud", montoSolicitud);
         params.put("tipo", tipo);
         params.put("descripcion", descripcion);
-        
-        
+
         params.put("meses", prestamo.getCantidadMeses());
         params.put("deuda", prestamo.getDeudaRestante());
         params.put("fechaVencimiento", fechaTimestamp.format(new Date(prestamo.getFechaVencimiento().getTime())));
@@ -260,9 +276,7 @@ public class ControladorSolicitudPrestamo {
         params.put("montoTotal", prestamo.getMontoTotal());
         params.put("tasaInteres", prestamo.getTasaInteres());
         params.put("tipoPrestamo", prestamo.getTipoPrestamo());
-        
-        
-        
+
         StringBuilder postData = new StringBuilder();
         // POST as urlencoded is basically key-value pairs, as with GET
         // This creates key=value&key=value&... pairs
@@ -294,6 +308,6 @@ public class ControladorSolicitudPrestamo {
         for (int c; (c = in.read()) >= 0;) {
             System.out.print((char) c);
         }
-    
+
     }
 }

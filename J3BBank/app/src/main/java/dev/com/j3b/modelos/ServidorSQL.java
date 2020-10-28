@@ -5,6 +5,7 @@ public class ServidorSQL {
     public static final String ipServer = "192.168.0.200";
 
     //utilizado por todos
+
     public static final String SERVIDORSQL_CONRETORNO = "http://"+ipServer+"/j3b/servicios/consultaConRetorno.php?consultaSQL=";
     public static final String SERVIDORSQL_SINRETORNO = "http://"+ipServer+"/j3b/servicios/consultaSinRetorno.php";
     public static final String SERVIDORSQL_TRANSACCION = "http://"+ipServer+"/j3b/servicios/transaccion.php?consultaSQL=";
@@ -14,6 +15,8 @@ public class ServidorSQL {
     public static final String SERVIDORSQL_NOTIFICACION_CODIGO_TRANSFERENCIA= "http://"+ipServer+"/j3b/servicios/switfMailer/envioCodigoTransferencia.php";
     public static final String SERVIDORSQL_NOTIFICACION_REGISTRO_CUENTA_TERCEROS= "http://"+ipServer+"/j3b/servicios/switfMailer/envioNotificacionRegistroTerceros.php";
     public static final String SERVIDORSQL_NOTIFICACION_CODIGO_REGISTRO_TERCEROS= "http://"+ipServer+"/j3b/servicios/switfMailer/envioCodigoRegistroCuenta.php";
+    public static final String SERVIDORSQL_PAGO_PRESTAMO = "http://"+ipServer+"/j3b/servicios/pagoPrestamo.php";
+
 
 
     //utilizado por bryan con ip propia
