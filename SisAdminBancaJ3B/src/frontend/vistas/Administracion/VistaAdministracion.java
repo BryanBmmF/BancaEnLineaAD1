@@ -42,6 +42,7 @@ public class VistaAdministracion extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        cambioDeContrasenajMenuItem7 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -56,15 +57,15 @@ public class VistaAdministracion extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel1.setText("Vista Administracion");
         desktopPane.add(jLabel1);
-        jLabel1.setBounds(10, 10, 270, 29);
+        jLabel1.setBounds(10, 10, 270, 28);
 
         jLabel2.setText("Usuario en Sesion:");
         desktopPane.add(jLabel2);
-        jLabel2.setBounds(480, 10, 140, 18);
+        jLabel2.setBounds(480, 10, 140, 17);
 
         textoUsuarioEnSesion.setText("Aqui va el usuario");
         desktopPane.add(textoUsuarioEnSesion);
-        textoUsuarioEnSesion.setBounds(620, 10, 120, 18);
+        textoUsuarioEnSesion.setBounds(620, 10, 120, 17);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Cerrar Sesion");
@@ -103,6 +104,14 @@ public class VistaAdministracion extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem2);
+
+        cambioDeContrasenajMenuItem7.setText("Cambio de contraseña");
+        cambioDeContrasenajMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambioDeContrasenajMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(cambioDeContrasenajMenuItem7);
 
         menuBar.add(jMenu2);
 
@@ -215,12 +224,19 @@ public class VistaAdministracion extends javax.swing.JFrame {
         solicitud.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void cambioDeContrasenajMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioDeContrasenajMenuItem7ActionPerformed
+        CambiarContrasenaDialog cambioDeContrasena = new CambiarContrasenaDialog(this, true);
+        cambioDeContrasena.setVisible(true);
+    }//GEN-LAST:event_cambioDeContrasenajMenuItem7ActionPerformed
+
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         TarjetasFrame tarjetas = new TarjetasFrame(this, true);
         tarjetas.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem cambioDeContrasenajMenuItem7;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JLabel jLabel1;

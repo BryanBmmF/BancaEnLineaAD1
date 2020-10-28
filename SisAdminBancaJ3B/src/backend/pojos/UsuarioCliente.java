@@ -31,6 +31,7 @@ public class UsuarioCliente {
     private int intentoDeIngresos;
     //Extra
     private String contrasenaCopia;
+    private String email;
 
     public UsuarioCliente(String dpi) {
         this.usuarioCliente = generarUsuario();
@@ -39,6 +40,13 @@ public class UsuarioCliente {
         this.fechaCaducidad = generarFechaDeCaducidad();
         this.estado = EstadoUsuarioCliente.NUEVO;
         this.intentoDeIngresos = 0;
+    }
+    
+    public UsuarioCliente(String usuarioCliente, String dpiCliente, EstadoUsuarioCliente estadoUusario,String email){
+        this.usuarioCliente=usuarioCliente;
+        this.dpiCliente =dpiCliente;
+        this.estado=estadoUusario;
+        this.email=email;
     }
 
     @Override
@@ -120,6 +128,15 @@ public class UsuarioCliente {
         this.intentoDeIngresos = intentoDeIngresos;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+
     private String generarUsuario() {
         Integer numero;
         do {
@@ -128,7 +145,7 @@ public class UsuarioCliente {
         return String.valueOf(numero);
     }
 
-    private Date generarFechaDeCaducidad() {
+    public Date generarFechaDeCaducidad() {
         LocalDate fecha = LocalDate.now();
         long meses = 3L;
         fecha = fecha.plusMonths(meses);

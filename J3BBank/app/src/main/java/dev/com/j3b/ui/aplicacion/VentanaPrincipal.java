@@ -37,6 +37,9 @@ import dev.com.j3b.ui.cambios.ConsultaCambioMoneda;
 import dev.com.j3b.ui.consultaCuentas.ConsultaCuentas;
 
 import dev.com.j3b.ui.prestamos.ConsultarPrestamos;
+
+import dev.com.j3b.ui.prestamos.PagarPrestamoActivity;
+
 import dev.com.j3b.ui.prestamos.SolicitudPrestamo;
 import dev.com.j3b.ui.tarjetaCredito.ConsultaTarjeta;
 import dev.com.j3b.ui.tarjetaCredito.PagarTarjeta;
@@ -194,8 +197,12 @@ public class VentanaPrincipal extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.creditosButton :
                 /*temporal solo para prueba*/
-                Intent solicitudPrestamo = new Intent(getApplicationContext(), SolicitudPrestamo.class);
-                startActivity(solicitudPrestamo);
+                // las que estan comentadas es de solicitud prestamo, las que no estan comentadas es de abonos prestamo
+                /*LINEAS COMENTADAS AQUI*/
+                //Intent solicitudPrestamo = new Intent(getApplicationContext(), SolicitudPrestamo.class);
+                //startActivity(solicitudPrestamo);
+                Intent pagarPrestamo = new Intent(getApplicationContext(), PagarPrestamoActivity.class);
+                startActivity(pagarPrestamo);
                 break;
             case R.id.pagarTarjetaButton:
                 Intent pagarTarjeta = new Intent(this,PagarTarjeta.class);
