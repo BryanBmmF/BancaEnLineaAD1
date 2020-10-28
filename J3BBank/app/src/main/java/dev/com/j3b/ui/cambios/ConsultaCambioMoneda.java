@@ -71,30 +71,30 @@ public class ConsultaCambioMoneda extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_cambio_moneda);
-// Obtener la referencia del objeto spinner
+        // Obtener la referencia del objeto spinner
         spinnerMonedaOrigen = (Spinner)findViewById(R.id.spinnerMonedaOrigen);
-// Construir los datos en el spinner
+        // Construir los datos en el spinner
         MySpinnerAdapter adapter = new MySpinnerAdapter(getApplicationContext(), R.layout.color_spinner_layout, currency);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         spinnerMonedaOrigen.setAdapter(adapter);
-// Evento selección del spinner
+        // Evento selección del spinner
         spinnerMonedaOrigen.setOnItemSelectedListener(onItemSelectedListener1);
-// Obtener la referencia del objeto spinner
+        // Obtener la referencia del objeto spinner
         spinnerMonedaDestino = (Spinner)findViewById(R.id.spinnerMonedaDestino);
-// Construir los datos en el spinner
+        // Construir los datos en el spinner
         MySpinnerAdapter adapter2 = new MySpinnerAdapter(getApplicationContext(), R.layout.color_spinner_layout, currency);
         adapter2.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         spinnerMonedaDestino.setAdapter(adapter2);
-// Evento selección del spinner
+        // Evento selección del spinner
         spinnerMonedaDestino.setOnItemSelectedListener(onItemSelectedListener2);
-// Obtener la refencia del Button
+        // Obtener la refencia del Button
         btnConvert = (Button) findViewById(R.id.btnRealizarConversion);
         btnConvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-// Obtener referencia del objeto editText
+        // Obtener referencia del objeto editText
                 edtCantidad = (EditText)findViewById(R.id.cantidad);
-// Asignar el valor a la variable string
+        // Asignar el valor a la variable string
                 cantidad = edtCantidad.getText().toString();
                 /*Esta url funcionaba antes cuando era gratis*/
                 //urls = "https://api.fixer.io/latest?base="+divisa+"&symbols="+divisa2+"&amount="+cantidad+"";
